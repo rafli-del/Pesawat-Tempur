@@ -7,16 +7,16 @@
     <meta name="theme-color" content="#070b16" />
     <link rel="icon" href="data:," />
     <title>Arcade Tembak-tembakan 2D</title>
-    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Lobby hangar baru, pesawat Aetherion termahal, mode campaign 5 level dan Boss Rush, rank Bronze sampai Legendary, misi harian dan hadiah login berhadiah diamond, spin berlian untuk skin langka, galeri musuh, 4 latar, dan 5 level kesulitan." />
+    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Lobby hangar baru, pesawat Aetherion termahal, mode campaign 5 level dan Boss Rush, rank Bronze sampai Legendary, misi harian dan hadiah login berhadiah diamond, spin berlian untuk skin langka, galeri musuh, tambah teman dan chat, akun cloud save, 4 latar, dan 5 level kesulitan." />
     <meta name="keywords" content="game tembak-tembakan, arcade 2d, game pesawat, space shooter, game gratis, game browser, game HP, tembak-tembakan 2D" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="rfyjntan" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:title" content="Arcade Tembak-tembakan 2D — Game Pesawat Gratis" />
-    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: lobby hangar, auto-fire, XP dan skill acak, senjata laser dan plasma, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, mode campaign dan Boss Rush, misi harian, spin berlian, dan 5 level kesulitan. Main langsung, tanpa install." />
+    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: lobby hangar, auto-fire, XP dan skill acak, senjata laser dan plasma, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, mode campaign dan Boss Rush, misi harian, spin berlian, teman dan chat, akun cloud save, dan 5 level kesulitan. Main langsung, tanpa install." />
     <meta property="og:url" content="https://rafli-del.github.io/Pesawat-Tempur/" />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: lobby hangar, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless, campaign, dan Boss Rush dengan 5 level kesulitan."}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: lobby hangar, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless, campaign, dan Boss Rush dengan 5 level kesulitan, plus teman, chat, dan akun cloud save."}</script>
     <style>
       /* Font lokal — tanpa permintaan jaringan, halaman selalu bisa dibuka */
       @font-face{
@@ -581,6 +581,61 @@
       .lbProfile{ cursor:pointer; }
       @media (prefers-reduced-motion: reduce){ .misBar{ transition:none; } }
 
+      /* ---------- Akun, Teman & Chat (fitur online Firebase) ---------- */
+      .acctBar{
+        display:flex; align-items:center; gap:10px; width:100%; box-sizing:border-box;
+        background:var(--panel2); border:1px solid var(--line); border-radius:14px;
+        padding:10px 12px; color:var(--ink); font-family:inherit; margin:0 0 12px; text-align:left; cursor:pointer;
+      }
+      .acctBar .aic{ font-size:22px; flex:0 0 auto; }
+      .acctBar b{ display:block; font-size:15px; }
+      .acctBar small{ color:var(--muted); font-weight:600; font-size:12.5px; line-height:1.3; display:block; }
+      .acctBar .arr{ font-size:22px; color:var(--muted); flex:0 0 auto; }
+      .acctBar:active{ transform:scale(.99); }
+      .txtIn{
+        width:100%; box-sizing:border-box; background:var(--panel); border:1px solid var(--line); border-radius:10px;
+        color:var(--ink); font-family:inherit; font-weight:600; font-size:16px; padding:11px 12px; min-height:48px; margin:0 0 6px;
+      }
+      .txtIn:focus{ outline:2px solid var(--cyan); border-color:var(--cyan); }
+      .nickRow .txtIn{ margin:0; }
+      .idRow{ display:flex; gap:8px; align-items:stretch; margin:0 0 6px; }
+      .idRow code{
+        flex:1; min-width:0; display:flex; align-items:center; justify-content:center;
+        background:var(--panel); border:1px dashed var(--cyan); border-radius:10px;
+        font-family:"Orbitron",monospace; font-size:16.5px; letter-spacing:.06em; color:var(--cyan); padding:10px 6px;
+      }
+      .frHint{ color:var(--muted); font-weight:600; font-size:13px; line-height:1.45; margin:0 0 6px; }
+      .frMsg{ font-weight:700; font-size:14px; min-height:20px; margin:2px 0 4px; line-height:1.4; }
+      .frRow{ display:flex; gap:10px; align-items:center; background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin:0 0 8px; }
+      .frRow .who{ flex:1; min-width:0; }
+      .frRow b{ display:block; font-size:15.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .frRow small{ color:var(--muted); font-weight:600; font-size:12.5px; display:block; line-height:1.35; }
+      .onDot{ flex:0 0 auto; width:11px; height:11px; border-radius:50%; background:#5b6b8c; }
+      .onDot.on{ background:#2ee66b; box-shadow:0 0 8px #2ee66b; }
+      .frBtn{
+        flex:0 0 auto; border-radius:9px; border:1px solid var(--cyan); background:rgba(49,230,255,.10);
+        color:var(--cyan); font-weight:800; font-size:13px; padding:9px 11px; min-height:40px; font-family:inherit; cursor:pointer;
+      }
+      .frBtn.warn{ border-color:var(--pink); background:rgba(255,77,126,.10); color:var(--pink); }
+      .frBtn.plain{ border-color:var(--line); background:transparent; color:var(--muted); }
+      .frBtn:active{ transform:scale(.96); }
+      .frEmpty{
+        color:var(--muted); font-weight:600; font-size:14px; background:var(--panel2);
+        border:1px dashed var(--line); border-radius:12px; padding:12px; text-align:center; margin:0 0 8px; line-height:1.45;
+      }
+      .frOffBox{ background:rgba(255,197,61,.08); border:1px solid var(--amber); border-radius:12px; padding:13px 14px; margin:0 0 10px; }
+      .frOffBox b{ display:block; font-size:16px; margin-bottom:4px; }
+      .frOffBox p{ margin:0 0 10px; color:var(--muted); font-weight:600; font-size:13.5px; line-height:1.5; }
+      .chatB{ max-width:82%; padding:8px 11px; border-radius:14px; font-size:14.5px; line-height:1.4; font-weight:600; overflow-wrap:anywhere; }
+      .chatB small{ display:block; font-size:11px; opacity:.75; font-weight:700; margin-top:3px; }
+      .chatB.me{ align-self:flex-end; background:rgba(49,230,255,.16); border:1px solid var(--cyan); border-bottom-right-radius:4px; }
+      .chatB.them{ align-self:flex-start; background:var(--panel2); border:1px solid var(--line); border-bottom-left-radius:4px; }
+      .rulesBox{
+        width:100%; box-sizing:border-box; background:#0a1220; color:#9fd8e8; border:1px solid var(--line);
+        border-radius:10px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; line-height:1.45;
+        padding:10px; resize:vertical; margin:0 0 4px;
+      }
+
       /* bantuan pemulihan kalau mesin game gagal jalan di perangkat */
       #bootHelp{
         position:fixed; left:12px; right:12px; bottom:12px; z-index:60;
@@ -680,6 +735,12 @@
                 </div>
               </div>
             </div>
+            <!-- ===== LOBBY: bar akun (di bawah bar profil) ===== -->
+            <button class="acctBar" id="btnAcctBar">
+              <span class="aic" id="acctBarIcon">👤</span>
+              <span style="flex:1; min-width:0;"><b id="acctBarTitle">Mode Tamu</b><small id="acctBarSub">Progres hanya tersimpan di HP ini — ketuk untuk daftar / login akun</small></span>
+              <span class="arr">›</span>
+            </button>
             <!-- ===== LOBBY: baris ikon fitur ===== -->
             <div class="lbIcons">
               <button class="lbIco" id="lbIcoEvent"><span class="ic">🎁</span>Event<span class="dot" id="dotEvent"></span></button>
@@ -746,6 +807,14 @@
               <button class="mbtn" id="btnProfile">
                 <span style="font-size:19px; line-height:1;">🪪</span>
                 Profil <span class="sub" id="profInfo">Nickname, background &amp; banner</span>
+              </button>
+              <button class="mbtn" id="btnFriends">
+                <span style="font-size:19px; line-height:1;">👥</span>
+                Teman <span class="sub" id="friendsInfo">Tambah teman via ID &amp; chat</span>
+              </button>
+              <button class="mbtn" id="btnAccount">
+                <span style="font-size:19px; line-height:1;">🔐</span>
+                Akun <span class="sub" id="acctInfo">Tamu · daftar agar progres tidak hilang</span>
               </button>
               <button class="mbtn" id="btnSpin">
                 <span style="font-size:19px; line-height:1;">🎰</span>
@@ -1108,6 +1177,15 @@
                 <button class="gBtn use" id="btnSaveNick" style="border-radius:10px;">Simpan</button>
               </div>
               <p style="color:var(--muted); font-weight:600; font-size:13.5px; margin:0 0 4px; line-height:1.4;">Nickname tampil di profil &amp; jadi nama default di leaderboard lokal + global — tidak perlu ketik ulang tiap game over, tapi tetap bisa diganti di layar game over.</p>
+              <p class="secLbl">🆔 ID PEMAIN (UNTUK TEMAN)</p>
+              <div class="idRow">
+                <code id="profIdVal">—</code>
+                <button class="gBtn use" id="btnCopyId" style="border-radius:10px;">Salin ID</button>
+              </div>
+              <p class="frHint">Bagikan ID ini ke temanmu supaya mereka bisa menambahkanmu sebagai teman, melihatmu saat online, dan chat denganmu lewat menu 👥 Teman. ID ini tetap sama di perangkat ini.</p>
+              <p class="secLbl">🔐 AKUN</p>
+              <p style="color:var(--muted); font-weight:600; font-size:13.5px; margin:0 0 6px; line-height:1.4;">Status akun: <b id="profAcctVal" style="color:var(--ink);">Tamu</b> — dengan akun, progresmu (koin, diamond, pesawat, upgrade, statistik) tersimpan di cloud dan ikut saat login di HP lain.</p>
+              <button class="mbtn" id="btnProfAccount" style="margin:0 0 4px;">🔐 Kelola Akun <span class="sub">Daftar / login · simpan progres ke cloud</span></button>
               <p class="secLbl">STATISTIK SINGKAT</p>
               <div class="statGrid" id="profStats"></div>
               <p class="secLbl">🖼️ BACKGROUND PROFIL</p>
@@ -1115,6 +1193,91 @@
               <p class="secLbl">🎌 BANNER PROFIL</p>
               <div class="pickGrid" id="profBannerGrid"></div>
               <button class="mbtn" id="btnProfileSpin" style="margin-top:8px;">🎰 Spin Skin Langka <span class="sub">Background &amp; banner langka ada di roda spin!</span></button>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== TEMAN ===== -->
+        <section class="screen" id="scrFriends">
+          <div class="card cardFlex">
+            <h2>👥 Teman</h2>
+            <div class="growScroll">
+              <div id="frOff" class="frOffBox" style="display:none;">
+                <b>🌙 Fitur Teman belum aktif</b>
+                <p>Server game belum mengizinkan fitur Teman &amp; Chat (rules Firebase-nya belum diperbarui). Ini bukan error di HP kamu — pemilik game perlu menempel rules baru sekali saja di Firebase Console. Setelah itu fitur ini langsung menyala untuk semua pemain.</p>
+                <button class="mbtn" id="btnFrRules" style="justify-content:center; width:100%;">📋 Buka Rules Firebase</button>
+              </div>
+              <div id="frMain">
+                <p class="secLbl" style="margin-top:2px;">🆔 ID PEMAIN KAMU</p>
+                <div class="idRow">
+                  <code id="frMyId">—</code>
+                  <button class="gBtn use" id="btnCopyId2" style="border-radius:10px;">Salin</button>
+                </div>
+                <p class="frHint">Bagikan ID ini ke temanmu. Teman yang membuka game akan tampil 🟢 Online di daftar temanmu.</p>
+                <p class="secLbl">➕ TAMBAH TEMAN LEWAT ID</p>
+                <div class="nickRow">
+                  <input class="txtIn" id="frAddInput" type="text" maxlength="14" placeholder="ID teman, mis. PL-XXXX-XXXX" autocomplete="off" autocapitalize="characters" enterkeyhint="send" />
+                  <button class="gBtn use" id="btnFrAdd" style="border-radius:10px;">Tambah</button>
+                </div>
+                <p class="frMsg" id="frAddMsg"></p>
+                <p class="frHint">Permintaan harus <b>diterima</b> dulu oleh temanmu sebelum kalian bisa chat — orang asing tidak bisa langsung menghubungimu.</p>
+                <p class="secLbl" id="frReqLbl">📥 PERMINTAAN MASUK</p>
+                <div id="frReqList"></div>
+                <p class="secLbl">👥 DAFTAR TEMAN</p>
+                <div id="frList"></div>
+                <p class="frHint">Daftar diperbarui otomatis tiap beberapa detik selama layar ini terbuka.</p>
+              </div>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== CHAT ===== -->
+        <section class="screen" id="scrChat">
+          <div class="card cardFlex">
+            <h2 id="chatTitle">💬 Chat</h2>
+            <p class="lbNote" id="chatStatus" style="margin:0 0 8px;">—</p>
+            <div class="growScroll" id="chatMsgs" style="display:flex; flex-direction:column; gap:6px; padding:2px;"></div>
+            <p class="frMsg" id="chatMsg"></p>
+            <div class="nickRow" style="margin-top:6px;">
+              <input class="txtIn" id="chatInput" type="text" maxlength="500" placeholder="Tulis pesan…" autocomplete="off" enterkeyhint="send" />
+              <button class="gBtn use" id="btnChatSend" style="border-radius:10px;">Kirim ➤</button>
+            </div>
+            <div class="backRow"><button class="ghostBtn" id="btnChatBack">‹ Kembali ke Teman</button></div>
+          </div>
+        </section>
+
+        <!-- ===== AKUN PILOT ===== -->
+        <section class="screen" id="scrAccount">
+          <div class="card cardFlex">
+            <h2>🔐 Akun Pilot</h2>
+            <div class="growScroll">
+              <div id="acctGuestBox">
+                <p class="lbNote">Kamu sedang bermain sebagai <b>Tamu</b> — progres hanya tersimpan di HP ini dan bisa hilang kalau data browser dihapus atau kamu ganti HP. Daftar akun (gratis) supaya progresmu tersimpan di cloud dan bisa dilanjutkan di HP mana pun!</p>
+                <p class="secLbl" style="margin-top:2px;">USERNAME</p>
+                <input class="txtIn" id="acctUser" type="text" maxlength="16" placeholder="3–16 huruf kecil, angka, atau _" autocomplete="username" autocapitalize="none" />
+                <p class="secLbl">PASSWORD</p>
+                <input class="txtIn" id="acctPass" type="password" maxlength="64" placeholder="Minimal 6 karakter" autocomplete="current-password" />
+                <p class="frMsg" id="acctMsg"></p>
+                <div style="display:flex; gap:8px; margin:8px 0;">
+                  <button class="mbtn primary" id="btnAcctLogin" style="flex:1; justify-content:center;">Masuk</button>
+                  <button class="mbtn" id="btnAcctRegister" style="flex:1; justify-content:center;">Daftar Baru</button>
+                </div>
+                <p class="frHint">⚠️ Password <b>tidak</b> disimpan apa adanya — passwordmu diolah dengan PBKDF2 + SHA-256 (ribuan iterasi) di HP ini, dan hasilnya hanya dipakai sebagai alamat rahasia simpanan cloud-mu (tidak disimpan di server). Tapi ini sistem akun game sederhana, bukan keamanan bank: <b>jangan pakai password yang sama dengan akun penting</b> (email, bank, media sosial). Pakai password khusus untuk game ini saja.</p>
+                <p class="frHint">Saat login, progres di HP ini <b>digabungkan</b> dengan progres akun (koin, diamond &amp; statistik diambil yang tertinggi, pesawat &amp; skin digabung) — tidak ada yang hilang.</p>
+              </div>
+              <div id="acctInBox" style="display:none;">
+                <p class="lbNote">Kamu masuk sebagai <b id="acctInName">@pilot</b> ☁️<br>Progres tersimpan otomatis ke cloud: berkala, setiap game over, dan saat game ditutup.<br><small id="acctSyncInfo">—</small></p>
+                <button class="mbtn" id="btnAcctSync" style="justify-content:center; width:100%;">☁️ Simpan Progres Sekarang</button>
+                <button class="mbtn pink" id="btnAcctLogout" style="justify-content:center; width:100%; margin-top:8px;">Keluar Akun</button>
+                <p class="frHint">Keluar akun tidak menghapus progres di HP ini — kamu lanjut bermain sebagai Tamu dengan progres yang sama.</p>
+              </div>
+              <p class="secLbl">📋 RULES FIREBASE (UNTUK PEMILIK GAME)</p>
+              <p class="frHint">Fitur Akun, Teman &amp; Chat butuh rules baru sekali saja: buka <b>Firebase Console → Realtime Database → Rules</b>, salin teks di bawah ini dan tempel menggantikan rules lama, lalu Publish. Rules leaderboard yang lama <b>sudah termasuk</b> di dalamnya, jadi papan global tetap berjalan seperti biasa.</p>
+              <textarea id="rulesText" class="rulesBox" readonly rows="14" spellcheck="false"></textarea>
+              <button class="mbtn" id="btnCopyRules" style="justify-content:center; width:100%; margin-top:8px;">📋 Salin Rules</button>
+              <p class="frHint">Kalau rules belum diperbarui, layar Akun/Teman akan menampilkan pesan ramah "belum aktif" — bukan error — dan game tetap bisa dimainkan seperti biasa.</p>
             </div>
             <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
           </div>
@@ -4587,6 +4750,609 @@ $("btnTutPlay").addEventListener("click", ()=> startGame(false));
 $("btnTutMenu").addEventListener("click", ()=>{ G.mode = "menu"; updateMenuMeta(); showScreen("scrMenu"); });
 const lbProfEl = document.querySelector(".lbProfile");
 if(lbProfEl) lbProfEl.addEventListener("click", openProfile);
+
+/* ============================================================
+   FITUR ONLINE: AKUN (daftar/login + simpan progres ke cloud),
+   TEMAN (tambah lewat ID, status online) & CHAT — semua lewat
+   Firebase Realtime Database yang sama dengan leaderboard global
+   (REST + polling berkala, tanpa SDK). Kalau rules Firebase belum
+   diperbarui, server menolak (401/403) dan game menampilkan pesan
+   ramah "belum aktif" — bukan error — dan mode Tamu tetap jalan.
+   ============================================================ */
+const FB_RULES_TEXT = `{
+  "rules": {
+    "leaderboard": {
+      ".read": true,
+      "$entry": {
+        ".write": "!data.exists()",
+        ".validate": "newData.hasChildren(['name', 'score']) && newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 20 && newData.child('score').isNumber() && newData.child('score').val() >= 0"
+      }
+    },
+    "accounts": {
+      "$user": {
+        ".read": true,
+        ".write": "!data.exists()",
+        ".validate": "newData.hasChildren(['created']) && newData.child('created').isNumber()"
+      }
+    },
+    "saves": {
+      "$key": {
+        ".read": true,
+        ".write": true,
+        ".validate": "newData.hasChildren(['data'])"
+      }
+    },
+    "players": {
+      "$pid": {
+        ".read": true,
+        ".write": true,
+        ".validate": "!newData.exists() || (newData.hasChildren(['name', 'ts']) && newData.child('name').isString() && newData.child('name').val().length <= 20 && newData.child('ts').isNumber())"
+      }
+    },
+    "presence": {
+      ".read": true,
+      "$pid": {
+        ".write": true,
+        ".validate": "!newData.exists() || (newData.hasChildren(['ts']) && newData.child('ts').isNumber())"
+      }
+    },
+    "requests": {
+      "$to": {
+        ".read": true,
+        "$from": {
+          ".write": true,
+          ".validate": "!newData.exists() || (newData.hasChildren(['name', 'ts']) && newData.child('name').isString() && newData.child('name').val().length <= 20 && newData.child('ts').isNumber())"
+        }
+      }
+    },
+    "friends": {
+      "$uid": {
+        ".read": true,
+        "$fid": {
+          ".write": true,
+          ".validate": "!newData.exists() || (newData.hasChildren(['name', 'ts']) && newData.child('name').isString() && newData.child('name').val().length <= 20 && newData.child('ts').isNumber())"
+        }
+      }
+    },
+    "chats": {
+      "$from": {
+        "$to": {
+          ".read": true,
+          "$msg": {
+            ".write": "!data.exists() && newData.child('from').val() === $from",
+            ".validate": "newData.hasChildren(['from', 'text', 'ts']) && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 500 && newData.child('ts').isNumber()"
+          }
+        }
+      }
+    }
+  }
+}`;
+const ACCT_OFF_MSG = "🌙 Fitur Akun belum aktif — server belum mengizinkan akun karena rules Firebase belum diperbarui. Ini bukan error di HP kamu: pemilik game perlu menempel rules baru sekali saja di Firebase Console (teksnya ada di bagian bawah layar ini). Setelah itu daftar & login langsung bisa dipakai.";
+
+/* ---------- Pembantu REST Firebase (401/403 = rules belum diperbarui) ---------- */
+function fbReq(path, opts){
+  return fbFetchWithTimeout(FB_BASE + path + ".json", opts, 10000).then(r=>{
+    if(r && (r.status === 401 || r.status === 403)){ const e = new Error("denied"); e.code = "denied"; throw e; }
+    if(!r || !r.ok){ const e2 = new Error("http"); e2.code = "http"; throw e2; }
+    return r.json().catch(()=> null);
+  });
+}
+function fbGet(path){ return fbReq(path, null); }
+function fbPut(path, data){ return fbReq(path, { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(data) }); }
+function fbPost(path, data){ return fbReq(path, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(data) }); }
+function fbDel(path){ return fbReq(path, { method:"DELETE" }); }
+function showInfoToast(icon, title, desc){
+  const box = $("toasts"); if(!box) return;
+  const el = document.createElement("div"); el.className = "toast";
+  el.innerHTML = '<span class="medal">' + icon + '</span><span><b>' + escapeHtml(title) + '</b><small>' + escapeHtml(desc) + '</small></span>';
+  box.appendChild(el);
+  setTimeout(()=>{ el.classList.add("out"); setTimeout(()=> el.remove(), 450); }, 3400);
+}
+function copyText(txt, btn){
+  const done = ()=>{ if(btn){ const old = btn.textContent; btn.textContent = "Tersalin ✓"; setTimeout(()=>{ btn.textContent = old; }, 1500); } };
+  const fallback = ()=>{
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = txt; ta.style.cssText = "position:fixed; opacity:0; left:0; top:0;";
+      document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
+    }catch(e){}
+    done();
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done).catch(fallback);
+  else fallback();
+}
+function agoText(ts){
+  if(!ts) return "belum pernah online";
+  const s = Math.max(0, Math.floor((Date.now() - ts) / 1000));
+  if(s < 90) return "baru saja";
+  if(s < 3600) return Math.floor(s / 60) + " mnt lalu";
+  if(s < 86400) return Math.floor(s / 3600) + " jam lalu";
+  return Math.floor(s / 86400) + " hari lalu";
+}
+function chatTime(ts){
+  try{
+    const d = new Date(ts), now = new Date();
+    const sameDay = d.toDateString() === now.toDateString();
+    return (sameDay ? "" : d.toLocaleDateString("id-ID", { day:"numeric", month:"short" }) + " ") + d.toLocaleTimeString("id-ID", { hour:"2-digit", minute:"2-digit" });
+  }catch(e){ return ""; }
+}
+
+/* ---------- ID PEMAIN unik (untuk fitur Teman) ---------- */
+function genPlayerId(){
+  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  let s = "";
+  for(let i = 0; i < 8; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  return "PL-" + s.slice(0, 4) + "-" + s.slice(4);
+}
+if(!store.data.playerId || typeof store.data.playerId !== "string"){ store.data.playerId = genPlayerId(); store.save(); }
+if(!("account" in store.data)) store.data.account = null;
+function myId(){ return store.data.playerId; }
+function myName(){ return (store.data.playerName || "").trim() || "Pemain"; }
+function normPid(s){
+  const n = String(s || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if(n.length === 10 && n.indexOf("PL") === 0) return "PL-" + n.slice(2, 6) + "-" + n.slice(6, 10);
+  return null;
+}
+
+/* ---------- Hash password SHA-256 (password asli TIDAK pernah disimpan/dikirim) ---------- */
+async function sha256Hex(str){
+  try{
+    if(window.crypto && crypto.subtle && window.TextEncoder){
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+  }catch(e){}
+  /* Cadangan untuk konteks sangat lama tanpa crypto.subtle: FNV-1a ganda (bukan kriptografi kuat) */
+  let h1 = 0x811c9dc5, h2 = 0x01000193;
+  for(let i = 0; i < str.length; i++){ const c = str.charCodeAt(i); h1 = Math.imul(h1 ^ c, 0x01000193); h2 = (Math.imul(h2 + c, 0x85ebca6b) ^ h1) >>> 0; }
+  return "fnv" + (h1 >>> 0).toString(16).padStart(8, "0") + (h2 >>> 0).toString(16).padStart(8, "0");
+}
+
+/* ---------- AKUN: daftar, login, simpan progres ke cloud ---------- */
+let acctBusy = false, acctDenied = false;
+let cloudBusy = false, cloudQueued = false, cloudLastOk = 0, cloudLastJson = "";
+function setAcctMsg(t){ const m = $("acctMsg"); if(m) m.textContent = t || ""; }
+function syncAcctBtns(){
+  ["btnAcctLogin", "btnAcctRegister", "btnAcctLogout", "btnAcctSync"].forEach(id=>{ const b = $(id); if(b) b.disabled = acctBusy; });
+}
+function normUserInput(){
+  const raw = $("acctUser").value.trim().toLowerCase();
+  if(!/^[a-z0-9_]{3,16}$/.test(raw)){ setAcctMsg("⚠️ Username harus 3–16 karakter: huruf kecil, angka, atau garis bawah (_) saja."); return null; }
+  return raw;
+}
+function cloudSnapshot(){
+  const d = {};
+  Object.keys(store.data).forEach(k=>{ if(k !== "account") d[k] = store.data[k]; });
+  return JSON.parse(JSON.stringify(d));
+}
+/* Kunci simpanan cloud: PBKDF2-SHA256 (12.000 iterasi, salt = username) dari
+   password. Kunci ini TIDAK pernah disimpan di server — ia hanya menjadi
+   ALAMAT simpanan (/saves/<kunci>), jadi tidak ada kredensial apa pun yang
+   bisa dibaca orang lain di database, dan menebak alamatnya lewat brute-force
+   password dibuat lambat oleh ribuan iterasi hash. */
+async function saveKeyFor(user, pass){
+  const saltStr = "arcade-save::" + user;
+  try{
+    if(window.crypto && crypto.subtle && window.TextEncoder){
+      const enc = new TextEncoder();
+      const km = await crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveBits"]);
+      const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: enc.encode(saltStr), iterations: 12000, hash: "SHA-256" }, km, 256);
+      return Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+  }catch(e){}
+  /* Cadangan konteks lama tanpa crypto.subtle: FNV-1a diulang 2.000× (jauh lebih lemah — hanya darurat) */
+  let h = saltStr + "::" + pass;
+  for(let r = 0; r < 2000; r++){
+    let h1 = 0x811c9dc5;
+    for(let i = 0; i < h.length; i++) h1 = Math.imul(h1 ^ h.charCodeAt(i), 0x01000193);
+    h = (h1 >>> 0).toString(16) + h;
+  }
+  return "fnv" + h.slice(0, 24);
+}
+function cloudSync(){
+  const acc = store.data.account;
+  if(!acc || !acc.user || !acc.key) return Promise.resolve(false);
+  if(cloudBusy){ cloudQueued = true; return Promise.resolve(false); }
+  let snap, snapJson;
+  try{ snap = cloudSnapshot(); snapJson = JSON.stringify(snap); }catch(e){ return Promise.resolve(false); }
+  if(snapJson === cloudLastJson) return Promise.resolve(true);
+  cloudBusy = true;
+  return fbPut("/saves/" + acc.key, { created: acc.created || Date.now(), savedAt: Date.now(), data: snap })
+    .then(()=>{
+      cloudBusy = false; cloudLastOk = Date.now(); cloudLastJson = snapJson; acctDenied = false;
+      if($("scrAccount").classList.contains("open")) renderAccount();
+      if(cloudQueued){ cloudQueued = false; cloudSync(); }
+      return true;
+    })
+    .catch(e=>{
+      cloudBusy = false;
+      if(e && e.code === "denied"){ acctDenied = true; if($("scrAccount").classList.contains("open")) renderAccount(); }
+      return false;
+    });
+}
+async function acctSyncNow(){
+  if(!store.data.account || acctBusy) return;
+  cloudLastJson = "__force__";
+  const ok = await cloudSync();
+  renderAccount();
+  if(ok) showInfoToast("☁️", "Progres tersimpan!", "Semua progresmu sudah aman di cloud.");
+  else if(acctDenied) showInfoToast("🌙", "Belum bisa menyimpan", "Server menolak — rules Firebase mungkin belum diperbarui.");
+  else showInfoToast("📡", "Gagal menyimpan", "Periksa internetmu lalu coba lagi.");
+}
+async function acctRegister(){
+  if(acctBusy) return;
+  const user = normUserInput(); if(!user) return;
+  const pass = $("acctPass").value;
+  if(pass.length < 6){ setAcctMsg("⚠️ Password minimal 6 karakter."); return; }
+  acctBusy = true; syncAcctBtns(); setAcctMsg("⏳ Membuat akun @" + user + "…");
+  try{
+    let existing = null;
+    try{ existing = await fbGet("/accounts/" + user); }
+    catch(e){ if(e && e.code === "denied"){ setAcctMsg(ACCT_OFF_MSG); return; } throw e; }
+    if(existing){ setAcctMsg("⚠️ Username @" + user + " sudah dipakai. Coba nama lain — atau ketuk Masuk kalau itu akunmu."); return; }
+    const key = await saveKeyFor(user, pass);
+    const created = Date.now();
+    const snap = cloudSnapshot();
+    try{
+      await fbPut("/accounts/" + user, { created: created });
+      await fbPut("/saves/" + key, { created: created, savedAt: created, data: snap });
+    }
+    catch(e){ if(e && e.code === "denied"){ setAcctMsg(ACCT_OFF_MSG); return; } throw e; }
+    store.data.account = { user: user, key: key, created: created };
+    store.save(); cloudLastOk = Date.now(); cloudLastJson = JSON.stringify(snap); acctDenied = false;
+    setAcctMsg(""); renderAccount(); updateMenuMeta(); frBeat();
+    showInfoToast("🔐", "Akun dibuat!", "@" + user + " — progresmu sekarang tersimpan di cloud.");
+  }catch(e){ setAcctMsg("📡 Gagal terhubung ke server. Periksa internetmu lalu coba lagi."); }
+  finally{ acctBusy = false; syncAcctBtns(); }
+}
+async function acctLogin(){
+  if(acctBusy) return;
+  const user = normUserInput(); if(!user) return;
+  const pass = $("acctPass").value;
+  if(!pass){ setAcctMsg("⚠️ Isi password dulu."); return; }
+  acctBusy = true; syncAcctBtns(); setAcctMsg("⏳ Memeriksa akun @" + user + "…");
+  try{
+    let rec = null;
+    try{ rec = await fbGet("/accounts/" + user); }
+    catch(e){ if(e && e.code === "denied"){ setAcctMsg(ACCT_OFF_MSG); return; } throw e; }
+    if(!rec){ setAcctMsg("⚠️ Akun @" + user + " tidak ditemukan. Periksa username-nya, atau ketuk Daftar Baru untuk membuat akun."); return; }
+    const key = await saveKeyFor(user, pass);
+    let saveRec = null;
+    try{ saveRec = await fbGet("/saves/" + key); }
+    catch(e){ if(e && e.code === "denied"){ setAcctMsg(ACCT_OFF_MSG); return; } throw e; }
+    if(!saveRec || typeof saveRec.data !== "object"){ setAcctMsg("❌ Password salah untuk @" + user + ". Coba lagi."); return; }
+    const localName = (store.data.playerName || "").trim();
+    store.data = mergeSavedData(store.data, saveRec.data);
+    if(!(store.data.playerName || "").trim() && localName) store.data.playerName = localName;
+    store.data.account = { user: user, key: key, created: rec.created || saveRec.created || Date.now() };
+    store.save(); acctDenied = false; cloudLastJson = ""; frPubKey = "__reset__";
+    setAcctMsg(""); renderAccount(); updateMenuMeta(); updateHUD();
+    if($("scrProfile").classList.contains("open")) renderProfile();
+    showInfoToast("☁️", "Login berhasil!", "Progres @" + user + " digabungkan ke HP ini — tidak ada yang hilang.");
+    cloudSync();
+    frBeat();
+  }catch(e){ setAcctMsg("📡 Gagal terhubung ke server. Periksa internetmu lalu coba lagi."); }
+  finally{ acctBusy = false; syncAcctBtns(); }
+}
+async function acctLogout(){
+  if(acctBusy) return;
+  acctBusy = true; syncAcctBtns();
+  try{ await cloudSync(); }catch(e){}
+  store.data.account = null; store.save();
+  acctBusy = false; syncAcctBtns();
+  renderAccount(); updateMenuMeta();
+  showInfoToast("👋", "Kamu keluar akun", "Lanjut sebagai Tamu — progres di HP ini tetap ada.");
+}
+function renderAccount(){
+  const acc = store.data.account;
+  $("acctGuestBox").style.display = acc ? "none" : "";
+  $("acctInBox").style.display = acc ? "" : "none";
+  if(acc){
+    $("acctInName").textContent = "@" + acc.user;
+    $("acctSyncInfo").textContent = acctDenied
+      ? "⚠️ Server menolak simpanan terakhir — rules Firebase mungkin belum diperbarui (lihat rules di bawah)."
+      : (cloudLastOk ? ("Terakhir tersimpan ke cloud: " + chatTime(cloudLastOk) + " ✓") : "Belum ada simpanan sejak login ini — ketuk Simpan Progres Sekarang.");
+  }
+  const rt = $("rulesText"); if(rt && !rt.value) rt.value = FB_RULES_TEXT;
+}
+function openAccount(){ renderAccount(); showScreen("scrAccount"); }
+
+/* ---------- TEMAN: direktori pemain, presence (online), permintaan, daftar ---------- */
+let frReady = null; /* null = belum tahu · true = aktif · false = rules belum diperbarui */
+let frFriends = {}, frRequests = {}, frPresence = {}, frLoading = false;
+let frBeatBusy = false, frPubKey = "";
+function isOnline(fid){
+  const p = frPresence[fid];
+  return !!(p && typeof p.ts === "number" && Date.now() - p.ts < 60000);
+}
+/* Detak jantung: tandai diri online + publikasikan nama di direktori pemain */
+function frBeat(){
+  if(frBeatBusy || document.hidden) return;
+  frBeatBusy = true;
+  const payload = { name: myName(), ts: Date.now() };
+  fbPut("/presence/" + myId(), payload)
+    .then(()=>{ if(frReady !== true){ frReady = true; updateOnlineMeta(); } frBeatBusy = false; })
+    .catch(e=>{
+      frBeatBusy = false;
+      if(e && e.code === "denied" && frReady !== false){
+        frReady = false;
+        if($("scrFriends").classList.contains("open")) renderFriends();
+        updateOnlineMeta();
+      }
+    });
+  const key = myId() + "|" + myName();
+  if(frPubKey !== key){
+    frPubKey = key;
+    fbPut("/players/" + myId(), payload).catch(()=>{});
+  }
+}
+function frLoad(){
+  if(frLoading) return;
+  frLoading = true;
+  Promise.all([ fbGet("/friends/" + myId()), fbGet("/requests/" + myId()), fbGet("/presence") ])
+    .then(res=>{
+      frLoading = false; frReady = true;
+      frFriends = (res[0] && typeof res[0] === "object") ? res[0] : {};
+      frRequests = (res[1] && typeof res[1] === "object") ? res[1] : {};
+      frPresence = (res[2] && typeof res[2] === "object") ? res[2] : {};
+      if($("scrFriends").classList.contains("open")) renderFriends();
+      if(chatWith) renderChatHead();
+      updateOnlineMeta();
+    })
+    .catch(e=>{
+      frLoading = false;
+      if(e && e.code === "denied"){
+        frReady = false;
+        if($("scrFriends").classList.contains("open")) renderFriends();
+        updateOnlineMeta();
+      }
+    });
+}
+function frBadgeCheck(){
+  if(frReady === false) return;
+  fbGet("/requests/" + myId()).then(d=>{
+    frRequests = (d && typeof d === "object") ? d : {};
+    updateOnlineMeta();
+  }).catch(()=>{});
+}
+function openFriends(){
+  showScreen("scrFriends");
+  renderFriends();
+  frLoad();
+  frBeat();
+}
+function renderFriends(){
+  const idEl = $("frMyId"); if(idEl) idEl.textContent = myId();
+  const off = frReady === false;
+  $("frOff").style.display = off ? "" : "none";
+  $("frMain").style.display = off ? "none" : "";
+  if(off) return;
+  const reqIds = Object.keys(frRequests);
+  $("frReqLbl").textContent = "📥 PERMINTAAN MASUK" + (reqIds.length ? " (" + reqIds.length + ")" : "");
+  const rq = $("frReqList"); rq.innerHTML = "";
+  if(!reqIds.length) rq.innerHTML = '<div class="frEmpty">Belum ada permintaan pertemanan masuk.</div>';
+  reqIds.sort((a, b)=> (frRequests[b].ts || 0) - (frRequests[a].ts || 0)).forEach(fid=>{
+    const r = frRequests[fid] || {};
+    const row = document.createElement("div"); row.className = "frRow";
+    row.innerHTML = '<div class="who"><b>' + escapeHtml(r.name || "Pemain") + '</b><small>' + escapeHtml(fid) + ' · ' + agoText(r.ts) + '</small></div>';
+    const ok = document.createElement("button"); ok.className = "frBtn"; ok.textContent = "✓ Terima";
+    ok.addEventListener("click", ()=> frAccept(fid, r.name || "Pemain"));
+    const no = document.createElement("button"); no.className = "frBtn warn"; no.textContent = "✕ Tolak";
+    no.addEventListener("click", ()=> frReject(fid));
+    row.appendChild(ok); row.appendChild(no);
+    rq.appendChild(row);
+  });
+  const fIds = Object.keys(frFriends);
+  const fl = $("frList"); fl.innerHTML = "";
+  if(!fIds.length) fl.innerHTML = '<div class="frEmpty">Belum punya teman. Tambahkan teman lewat ID di atas — bagikan juga ID kamu ke mereka!</div>';
+  fIds.sort((a, b)=>{
+    const oa = isOnline(a) ? 0 : 1, ob = isOnline(b) ? 0 : 1;
+    if(oa !== ob) return oa - ob;
+    return String((frFriends[a] || {}).name || "").localeCompare(String((frFriends[b] || {}).name || ""));
+  }).forEach(fid=>{
+    const f = frFriends[fid] || {};
+    const on = isOnline(fid);
+    const p = frPresence[fid];
+    const row = document.createElement("div"); row.className = "frRow";
+    row.innerHTML = '<span class="onDot' + (on ? " on" : "") + '"></span><div class="who"><b>' + escapeHtml(f.name || "Pemain") + '</b><small>' + (on ? "🟢 Online sekarang" : ("⚪ Offline · terakhir " + agoText(p && p.ts))) + ' · ' + escapeHtml(fid) + '</small></div>';
+    const cb = document.createElement("button"); cb.className = "frBtn"; cb.textContent = "💬 Chat";
+    cb.addEventListener("click", ()=> openChat(fid, f.name || "Pemain"));
+    const del = document.createElement("button"); del.className = "frBtn plain"; del.textContent = "✕"; del.title = "Hapus teman";
+    del.addEventListener("click", ()=>{
+      if(del.dataset.arm){ frRemove(fid); }
+      else{
+        del.dataset.arm = "1"; del.textContent = "Hapus?"; del.className = "frBtn warn";
+        setTimeout(()=>{ if(del.isConnected){ delete del.dataset.arm; del.textContent = "✕"; del.className = "frBtn plain"; } }, 2600);
+      }
+    });
+    row.appendChild(cb); row.appendChild(del);
+    fl.appendChild(row);
+  });
+}
+let frAddBusy = false;
+async function frAdd(){
+  if(frAddBusy) return;
+  const msg = $("frAddMsg");
+  const say = t => { msg.textContent = t; };
+  const tid = normPid($("frAddInput").value);
+  if(!tid){ say("⚠️ Format ID tidak dikenal. Contoh ID yang benar: PL-XXXX-XXXX."); return; }
+  if(tid === myId()){ say("⚠️ Itu ID kamu sendiri — bagikan ke temanmu, jangan ditambahkan sendiri ya."); return; }
+  if(frFriends[tid]){ say("✅ Pemain ini sudah jadi temanmu."); return; }
+  frAddBusy = true; say("⏳ Mencari pemain " + tid + "…");
+  try{
+    const prof = await fbGet("/players/" + tid);
+    if(!prof){ say("❓ ID " + tid + " tidak ditemukan. Pastikan temanmu sudah pernah membuka game versi ini dan ID-nya benar."); return; }
+    await fbPut("/requests/" + tid + "/" + myId(), { name: myName(), ts: Date.now() });
+    say("✅ Permintaan pertemanan terkirim ke " + (prof.name || "Pemain") + "! Tunggu sampai dia menerimanya — setelah itu kalian bisa chat.");
+    $("frAddInput").value = "";
+  }catch(e){
+    if(e && e.code === "denied"){ frReady = false; renderFriends(); }
+    else say("📡 Gagal terhubung ke server. Periksa internetmu lalu coba lagi.");
+  }
+  finally{ frAddBusy = false; }
+}
+function frAccept(fid, fname){
+  const ts = Date.now();
+  Promise.all([
+    fbPut("/friends/" + myId() + "/" + fid, { name: fname, ts: ts }),
+    fbPut("/friends/" + fid + "/" + myId(), { name: myName(), ts: ts }),
+    fbDel("/requests/" + myId() + "/" + fid)
+  ]).then(()=>{
+    frLoad();
+    showInfoToast("👥", "Teman baru!", fname + " sekarang temanmu — kalian sudah bisa chat.");
+  }).catch(e=>{ if(e && e.code === "denied"){ frReady = false; renderFriends(); } });
+}
+function frReject(fid){ fbDel("/requests/" + myId() + "/" + fid).then(()=> frLoad()).catch(()=> frLoad()); }
+function frRemove(fid){
+  Promise.all([ fbDel("/friends/" + myId() + "/" + fid), fbDel("/friends/" + fid + "/" + myId()) ])
+    .then(()=> frLoad()).catch(()=> frLoad());
+}
+
+/* ---------- CHAT: hanya dengan teman yang sudah diterima, riwayat tersimpan ---------- */
+let chatWith = null, chatLoading = false, chatSig = "", chatSendBusy = false;
+/* Pesan disimpan searah per pengirim: /chats/<pengirim>/<penerima>/<pesan>.
+   Rules Firebase memvalidasi field "from" harus sama dengan segmen pengirim
+   di jalurnya, jadi tidak ada yang bisa memalsukan pesan atas nama orang lain. */
+function openChat(fid, fname){
+  chatWith = { id: fid, name: fname };
+  chatSig = "";
+  $("chatMsgs").innerHTML = "";
+  $("chatMsg").textContent = "";
+  renderChatHead();
+  showScreen("scrChat");
+  chatLoad(true);
+}
+function renderChatHead(){
+  if(!chatWith) return;
+  $("chatTitle").textContent = "💬 " + chatWith.name;
+  const p = frPresence[chatWith.id];
+  $("chatStatus").textContent = isOnline(chatWith.id) ? "🟢 Online sekarang" : ("⚪ Offline · terakhir online " + agoText(p && p.ts));
+}
+function scrollChat(){ const box = $("chatMsgs"); if(box) box.scrollTop = box.scrollHeight; }
+function chatLoad(scroll){
+  if(!chatWith || chatLoading) return;
+  chatLoading = true;
+  Promise.all([
+    fbGet("/chats/" + myId() + "/" + chatWith.id),
+    fbGet("/chats/" + chatWith.id + "/" + myId())
+  ]).then(res=>{
+    chatLoading = false; frReady = true;
+    const msgs = [];
+    res.forEach(data=>{
+      if(data && typeof data === "object") Object.keys(data).forEach(k=>{
+        const m = data[k];
+        if(m && typeof m === "object" && typeof m.text === "string") msgs.push(m);
+      });
+    });
+    msgs.sort((a, b)=> (a.ts || 0) - (b.ts || 0));
+    const recent = msgs.slice(-120);
+    const sig = recent.length + "|" + (recent.length ? (recent[recent.length - 1].ts + ":" + recent[recent.length - 1].text) : "");
+    if(sig === chatSig){ if(scroll) scrollChat(); return; }
+    chatSig = sig;
+    const box = $("chatMsgs"); box.innerHTML = "";
+    if(!recent.length) box.innerHTML = '<div class="frEmpty">Belum ada pesan. Sapa ' + escapeHtml(chatWith.name) + ' duluan! 👋</div>';
+    recent.forEach(m=>{
+      const d = document.createElement("div");
+      d.className = "chatB " + (m.from === myId() ? "me" : "them");
+      d.innerHTML = escapeHtml(m.text) + "<small>" + (m.from === myId() ? "Kamu" : escapeHtml(m.name || chatWith.name)) + " · " + chatTime(m.ts) + "</small>";
+      box.appendChild(d);
+    });
+    scrollChat();
+    renderChatHead();
+  }).catch(e=>{
+    chatLoading = false;
+    if(e && e.code === "denied"){ frReady = false; $("chatMsg").textContent = "🌙 Fitur chat belum aktif — rules Firebase belum diperbarui."; }
+  });
+}
+async function chatSend(){
+  if(!chatWith || chatSendBusy) return;
+  const inp = $("chatInput");
+  const text = inp.value.trim().slice(0, 500);
+  if(!text) return;
+  chatSendBusy = true;
+  try{
+    await fbPost("/chats/" + myId() + "/" + chatWith.id, { from: myId(), name: myName(), text: text, ts: Date.now() });
+    inp.value = ""; chatSig = ""; chatLoad(true);
+  }catch(e){
+    if(e && e.code === "denied"){ frReady = false; $("chatMsg").textContent = "🌙 Fitur chat belum aktif — rules Firebase belum diperbarui."; }
+    else $("chatMsg").textContent = "📡 Pesan gagal terkirim — periksa internetmu lalu coba lagi.";
+  }
+  finally{ chatSendBusy = false; }
+}
+
+/* ---------- Info online di lobi & profil (membungkus fungsi lama) ---------- */
+function updateOnlineMeta(){
+  const acc = store.data.account;
+  const ai = $("acctInfo"); if(ai) ai.textContent = acc ? ("@" + acc.user + " · progres tersimpan di cloud ☁️") : "Tamu · daftar agar progres tidak hilang";
+  const bt = $("acctBarTitle"); if(bt) bt.textContent = acc ? ("Akun: @" + acc.user) : "Mode Tamu";
+  const bs = $("acctBarSub"); if(bs) bs.textContent = acc ? "Progresmu tersimpan di cloud — aman walau ganti HP ☁️" : "Progres hanya di HP ini — ketuk untuk daftar / login akun";
+  const bi = $("acctBarIcon"); if(bi) bi.textContent = acc ? "☁️" : "👤";
+  const nReq = Object.keys(frRequests || {}).length;
+  const fi = $("friendsInfo");
+  if(fi) fi.textContent = frReady === false ? "Belum aktif — butuh rules Firebase baru" : (nReq > 0 ? ("📥 " + nReq + " permintaan pertemanan baru!") : "Tambah teman via ID & chat");
+}
+const _ummOnline = updateMenuMeta;
+updateMenuMeta = function(){ _ummOnline(); updateOnlineMeta(); };
+const _rpOnline = renderProfile;
+renderProfile = function(){
+  _rpOnline();
+  const iv = $("profIdVal"); if(iv) iv.textContent = store.data.playerId || "—";
+  const av = $("profAcctVal"); if(av) av.textContent = store.data.account ? ("☁️ @" + store.data.account.user + " — progres tersimpan di cloud") : "Tamu (progres hanya di HP ini)";
+};
+const _snOnline = saveNick;
+saveNick = function(){ _snOnline(); frBeat(); };
+const _goOnline = gameOver;
+gameOver = function(){ _goOnline(); cloudSync(); };
+
+/* ---------- Kabel tombol fitur online ---------- */
+$("btnFriends").addEventListener("click", openFriends);
+$("btnAccount").addEventListener("click", openAccount);
+$("btnAcctBar").addEventListener("click", openAccount);
+$("btnProfAccount").addEventListener("click", openAccount);
+$("btnFrRules").addEventListener("click", openAccount);
+$("btnCopyId").addEventListener("click", e=> copyText(store.data.playerId, e.currentTarget));
+$("btnCopyId2").addEventListener("click", e=> copyText(store.data.playerId, e.currentTarget));
+$("btnFrAdd").addEventListener("click", frAdd);
+$("frAddInput").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); frAdd(); } });
+$("btnChatSend").addEventListener("click", chatSend);
+$("chatInput").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); chatSend(); } });
+$("btnChatBack").addEventListener("click", ()=>{ chatWith = null; openFriends(); });
+$("btnAcctLogin").addEventListener("click", acctLogin);
+$("btnAcctRegister").addEventListener("click", acctRegister);
+$("btnAcctLogout").addEventListener("click", acctLogout);
+$("btnAcctSync").addEventListener("click", acctSyncNow);
+$("acctPass").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); acctLogin(); } });
+$("btnCopyRules").addEventListener("click", e=> copyText(FB_RULES_TEXT, e.currentTarget));
+
+/* ---------- Jadwal berkala: presence, polling teman/chat, simpan cloud ---------- */
+setTimeout(frBeat, 1200);
+setInterval(frBeat, 20000);
+setInterval(()=>{ if($("scrFriends").classList.contains("open")) frLoad(); }, 5000);
+setInterval(()=>{ if($("scrChat").classList.contains("open") && chatWith){ chatLoad(false); frLoad(); } }, 3000);
+setTimeout(frBadgeCheck, 4000);
+setInterval(frBadgeCheck, 30000);
+setInterval(()=>{ cloudSync(); }, 30000);
+document.addEventListener("visibilitychange", ()=>{
+  if(document.hidden) cloudSync();
+  else frBeat();
+});
+window.addEventListener("pagehide", ()=>{
+  const acc = store.data.account;
+  if(acc && acc.user && acc.key){
+    try{
+      const snap = cloudSnapshot();
+      if(JSON.stringify(snap) !== cloudLastJson){
+        fetch(FB_BASE + "/saves/" + acc.key + ".json", {
+          method: "PUT", headers: { "Content-Type": "application/json" }, keepalive: true,
+          body: JSON.stringify({ created: acc.created || Date.now(), savedAt: Date.now(), data: snap })
+        }).catch(()=>{});
+      }
+    }catch(e){}
+  }
+  try{ fetch(FB_BASE + "/presence/" + myId() + ".json", { method: "DELETE", keepalive: true }).catch(()=>{}); }catch(e){}
+});
+(function(){ const rt = $("rulesText"); if(rt) rt.value = FB_RULES_TEXT; })();
+updateOnlineMeta();
 
 /* ---------- Mulai ---------- */
 window.addEventListener("resize", resize);
