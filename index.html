@@ -7,16 +7,16 @@
     <meta name="theme-color" content="#070b16" />
     <link rel="icon" href="data:," />
     <title>Arcade Tembak-tembakan 2D</title>
-    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Lobby hangar baru, pesawat Aetherion termahal, mode campaign 5 level dan Boss Rush, rank Bronze sampai Legendary, misi harian dan hadiah login berhadiah diamond, spin berlian untuk skin langka, galeri musuh, tambah teman dan chat, akun cloud save, Season Pass, klan, turnamen mingguan, duel teman dan 1v1 live race, 4 latar, dan 5 level kesulitan." />
+    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Lobby hangar baru, pesawat Aetherion termahal, mode campaign 5 level dan Boss Rush, rank Bronze sampai Legendary, misi harian dan hadiah login berhadiah diamond, spin berlian untuk skin langka, galeri musuh, tambah teman dan chat, akun cloud save, Season Pass, klan, turnamen mingguan, duel teman dan 1v1 live race, Level Ancaman yang makin sulit tiap level, 4 latar, dan 5 level kesulitan." />
     <meta name="keywords" content="game tembak-tembakan, arcade 2d, game pesawat, space shooter, game gratis, game browser, game HP, tembak-tembakan 2D" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="rfyjntan" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:title" content="Arcade Tembak-tembakan 2D — Game Pesawat Gratis" />
-    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: lobby hangar, auto-fire, XP dan skill acak, senjata laser dan plasma, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, mode campaign dan Boss Rush, misi harian, spin berlian, teman dan chat, akun cloud save, Season Pass, klan, turnamen mingguan, duel teman dan 1v1 live race, dan 5 level kesulitan. Main langsung, tanpa install." />
+    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: lobby hangar, auto-fire, XP dan skill acak, senjata laser dan plasma, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, mode campaign dan Boss Rush, misi harian, spin berlian, teman dan chat, akun cloud save, Season Pass, klan, turnamen mingguan, duel teman dan 1v1 live race, Level Ancaman yang makin sulit, dan 5 level kesulitan. Main langsung, tanpa install." />
     <meta property="og:url" content="https://rafli-del.github.io/Pesawat-Tempur/" />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: lobby hangar, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless, campaign, dan Boss Rush dengan 5 level kesulitan, plus teman, chat, akun cloud save, Season Pass, klan, dan 1v1 live race."}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: lobby hangar, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless, campaign, dan Boss Rush dengan 5 level kesulitan, plus teman, chat, akun cloud save, Season Pass, klan, 1v1 live race, dan Level Ancaman yang makin sulit tiap level."}</script>
     <style>
       /* Font lokal — tanpa permintaan jaringan, halaman selalu bisa dibuka */
       @font-face{
@@ -98,6 +98,7 @@
       #xpBarOuter{ flex:1; height:9px; background:#12203c; border:1px solid var(--line); border-radius:99px; overflow:hidden; }
       #xpBar{ height:100%; width:0%; background:linear-gradient(90deg, #ffb52e, #ffc53d); transition:width .2s; }
       #xpText{ font-size:12.5px; color:var(--muted); font-weight:700; white-space:nowrap; }
+      #hudThreat{ font-family:"Orbitron",sans-serif; font-size:11.5px; font-weight:700; white-space:nowrap; background:rgba(255,82,82,.10); border:1px solid currentColor; border-radius:99px; padding:3px 9px; }
       #skillChips{ display:flex; gap:5px; flex-wrap:nowrap; overflow:hidden; }
       .chip{
         font-size:14px; line-height:1; background:var(--panel2); border:1px solid var(--amber);
@@ -287,6 +288,8 @@
       button.diffBtn.sel .dd{ color:var(--ink); }
       #hudDiff{ font-size:13px !important; white-space:nowrap; }
       #hudRank{ font-family:"Orbitron",sans-serif; font-size:11px; font-weight:700; color:#d08a4e; white-space:nowrap; }
+      /* layar sempit: bar XP sudah padat — rank disembunyikan (tetap tampil di Lobi & Jeda) supaya pil Ancaman muat */
+      @media (max-width:620px){ #hudRank{ display:none; } #hudThreat{ font-size:10.5px; padding:2px 7px; } #xpText{ display:none; } }
       /* ---------- Pemilih latar & rank & kampanye ---------- */
       .bgGrid{ display:grid; grid-template-columns:1fr 1fr; gap:7px; margin:0 0 16px; }
       button.bgBtn{
@@ -718,6 +721,7 @@
         <span id="lvLabel">LV 1</span>
         <div id="xpBarOuter"><div id="xpBar"></div></div>
         <span id="xpText">0 / 5 XP</span>
+        <span id="hudThreat" title="Level Ancaman: naik tiap 45 detik bertahan & tiap 2 Level Pilot — musuh makin kuat dan drop makin langka">🔥 ANCAMAN 1</span>
         <span id="hudRank" title="Rank kamu berdasarkan skor tertinggi">🏅 Bronze</span>
         <span id="hudDia" class="diaPill" title="Diamond kamu — dari misi, login & drop langka">💎 0</span>
         <div id="skillChips"></div>
@@ -986,10 +990,11 @@
               <div class="row"><div class="ic">📅</div><p>Tantangan harian<small>Setiap hari ada satu susunan musuh yang sama untuk semua pemain. Mainkan lewat tombol Tantangan Harian di menu utama, lalu catat skormu di tab Harian pada Leaderboard untuk dibandingkan dengan teman yang main di perangkat ini.</small></p></div>
               <div class="row"><div class="ic">🪙</div><p>Koin, pesawat &amp; upgrade<small>Setiap musuh yang hancur memberi koin (elite &amp; boss memberi jauh lebih banyak), ditambah bonus dari skor akhir. Tukarkan di Hanggar: buka pesawat Viper (cepat), Titan (damage besar + nyawa), Spectre (peluru tembus), atau yang paling mahal — Aetherion, jet putih-perak bermesin ganda api biru dengan tembakan plasma biru dan spesial NOVA BEAM: sinar energi biru raksasa yang menyembur otomatis tiap 6 detik membakar semua musuh di jalurnya plus cincin shockwave biru di setiap kill-nya — dan beli upgrade permanen: damage, kecepatan, laju tembak, nyawa awal. Setiap pesawat punya model, warna &amp; bentuk peluru sendiri — baut energi biru Falcon, tracer hijau Viper, peluru meriam oranye Titan, pecahan kristal ungu Spectre, plasma biru menyala Aetherion — lengkap dengan kilat moncong, jejak cahaya, dan kilatan kena sewarna pelurunya.</small></p></div>
               <div class="row"><div class="ic">🎚️</div><p>Level kesulitan<small>Pilih di menu utama sebelum main: <b>Easy</b> (musuh lambat &amp; rapuh, 4 nyawa), <b>Normal</b> (seimbang), <b>Hard</b> (lebih cepat &amp; tebal), <b>Extreme</b> (gerombolan padat, boss sangat tebal), sampai <b>Impossible</b> (serba maksimal, cuma 2 nyawa). Mode makin sulit = pengali skor makin besar: Easy ×1 · Normal ×1,5 · Hard ×2 · Extreme ×3 · Impossible ×5.</small></p></div>
+              <div class="row"><div class="ic">🔥</div><p>Level Ancaman — tangga kesulitan<small>Di atas level kesulitan pilihanmu, setiap permainan punya <b>Level Ancaman</b> yang NAIK TERUS selama kamu bermain (lihat pil 🔥 ANCAMAN di bar XP): naik tiap 45 detik bertahan dan tiap 2 Level Pilot. Tiap anak tangga: HP &amp; kecepatan musuh naik, peluru musuh makin melesat, ditembakkan makin sering, dan DAMAGE-nya ikut naik — sebagian peluru berubah jadi <b style="color:#ff7a3d">PELURU BERAT</b> (lebih besar, inti oranye menyala) yang lukanya DOBEL 2 nyawa bila kena tanpa perisai; peluangnya naik sampai 30% di ancaman puncak. Musuh datang makin rapat, ELITE muncul makin sering (di ancaman tinggi sebaran tembakannya melebar jadi 5 arah), boss makin alot dengan pola tembakan makin padat — sementara drop power-up dan terutama NYAWA makin langka, jadi tidak ada lagi bertahan selamanya cuma dari drop. Tenang, semua kenaikannya dibatasi supaya tetap adil: ancaman mengimbangi skill &amp; upgrade yang kamu kumpulkan — pilot yang main bagus tetap bisa menang, yang asal main bakal kewalahan. Di Kampanye, ancaman mulai lebih tinggi di tiap level berikutnya; di Boss Rush mulai +3.</small></p></div>
               <div class="row"><div class="ic">🏆</div><p>Leaderboard<small>Setiap game over, skormu terkirim OTOMATIS ke papan 🌐 Global — 10 skor tertinggi dari semua pemain di semua perangkat, jadi siapa pun bisa melihat peringkatmu. Kalau skormu juga masuk 10 besar di perangkat ini, tulis namamu dan skormu tercatat di papan per-HP — lengkap dengan mode, waktu bertahan, jumlah musuh yang dihancurkan, dan tanggalnya. Buka Leaderboard dari menu utama untuk melihat semua peringkat: tab Global, per level kesulitan, atau tab Harian. Lagi offline? Papan per-HP tetap tampil seperti biasa.</small></p></div>
               <div class="row"><div class="ic">🌆</div><p>4 latar permainan<small>Pilih di Lobi sebelum main: <b>Space Galaxy</b> (nebula &amp; planet), <b>Cyber City</b> (terbang di atas kota futuristik lampu neon), <b>Asteroid Field</b> (batu asteroid beterbangan jadi rintangan — tabrakan melukaimu, tapi batu bisa dihancurkan untuk skor!), dan <b>Alien Planet</b> (planet bercincin raksasa &amp; daratan misterius).</small></p></div>
               <div class="row"><div class="ic">👾</div><p>Musuh &amp; boss baru<small>Selain drone biasa, dart, penembak &amp; elite: <b>ALIEN FIGHTER</b> oranye yang bergelombang sambil menembak (muncul setelah 75 detik), dan <b>KAMIKAZE</b> merah yang menukik memburumu (setelah 100 detik). Boss kini berputar lewat 7 kelas — termasuk <b>MEGA BATTLESHIP</b> (kapal induk super lebar) dan <b>ALIEN OVERLORD</b> (siluet hitam berduri yang memanggil pasukan dart &amp; bergantian menembak spiral dan memburu).</small></p></div>
-              <div class="row"><div class="ic">🎖️</div><p>Mode Kampanye<small>5 level cerita berurutan dari tombol Mode Kampanye / ikon Event di Lobi. Setiap level: hancurkan jumlah musuh yang diminta, lalu kalahkan boss penjaganya (boss-nya beda tiap level — level terakhir ALIEN OVERLORD!). Menang memberi bonus koin dan membuka level berikutnya. Run kampanye tidak menimpa simpanan Lanjutkan mode endless.</small></p></div>
+              <div class="row"><div class="ic">🎖️</div><p>Mode Kampanye<small>5 level cerita berurutan dari tombol Mode Kampanye / ikon Event di Lobi. Setiap level: hancurkan jumlah musuh yang diminta (25 → 40 → 55 → 75 → 100), lalu kalahkan boss penjaganya (boss-nya beda tiap level — level terakhir ALIEN OVERLORD!). Tiap level berikutnya jelas lebih berat: target musuh lebih banyak, Level Ancaman mulai lebih tinggi (+2 per level), boss penjaga dapat pengali HP ekstra, dan drop nyawa makin langka. Menang memberi bonus koin dan membuka level berikutnya. Run kampanye tidak menimpa simpanan Lanjutkan mode endless.</small></p></div>
               <div class="row"><div class="ic">🏅</div><p>Sistem Rank<small>Skor tertinggimu menentukan rank: Bronze → Silver (5.000) → Gold (15.000) → Platinum (35.000) → Diamond (75.000) → Master (150.000) → Legendary (300.000). Progres menuju rank berikutnya tampil di bar profil Lobi, HUD saat main, dan layar Statistik.</small></p></div>
               <div class="row"><div class="ic">🎯</div><p>Misi, login &amp; diamond<small>Setiap hari ada 3 Misi Harian (hancurkan 100 musuh, bertahan 3 menit dalam satu permainan, kalahkan 1 boss) dan Hadiah Login 7 hari beruntun yang makin besar — hadiahnya koin + diamond 💎. Diamond juga bisa jatuh dari musuh saat main, tapi LANGKA BANGET: musuh biasa di bawah 1%, elite ±3%, boss ±30% — dan cuma 1 💎 per drop, tampil berkilau supaya gampang terlihat. Sumber utama diamond tetap misi &amp; login!</small></p></div>
               <div class="row"><div class="ic">🎰</div><p>Spin &amp; profil<small>Diamond dipakai di SPIN (10 💎/putaran) untuk skin pesawat langka, background &amp; banner profil eksklusif yang tidak dijual di mana pun. Ketuk bar profil di Lobi untuk membuka layar Profil: ganti nickname (maks 20 karakter), background &amp; banner profilmu di sana.</small></p></div>
@@ -1730,6 +1735,55 @@ const DIFF_ORDER = ["easy","normal","hard","extreme","impossible"];
 function diffOf(id){ return DIFFS[id] || DIFFS.normal; }
 /* Kesulitan yang sedang dipakai run ini (dikunci saat run mulai / dilanjutkan) */
 function curDiff(){ return diffOf(G.difficulty || store.data.difficulty); }
+
+/* ---------- TANGGA KESULITAN: LEVEL ANCAMAN ----------
+   Di ATAS 5 tingkat kesulitan dasar di atas, ada tangga "Level Ancaman" yang
+   NAIK TERUS selama satu permainan berjalan:
+   · +1 tiap 45 detik bertahan
+   · +1 tiap 2 Level Pilot (level dari XP & skill)
+   · Kampanye: level cerita ke-N mulai dari ancaman +(N-1)×2 (level 5 = +8)
+   · Boss Rush: mulai dari +3
+   Tiap anak tangga membuat musuh lebih tebal, lebih cepat, menembak lebih
+   cepat & pelurunya lebih melesat, spawn lebih rapat, elite lebih sering —
+   dan damage peluru ikut naik lewat PELURU BERAT (lihat pushEb) — sementara
+   drop power-up & nyawa makin langka. Semua pengali DIBATASI
+   (cap) supaya tetap adil: tangga ini mengimbangi kekuatan pemain yang
+   juga naik (skill, upgrade, pesawat), bukan membuatnya mustahil. */
+function threatTier(){
+  let t = 1 + Math.floor(G.runTime / 45) + Math.floor(Math.max(0, G.level - 1) / 2);
+  if(G.campaignMode) t += (G.campaignMode - 1) * 2;
+  if(G.bossRush) t += 3;
+  return Math.min(20, t);
+}
+function threatScale(){
+  const tier = threatTier(), k = tier - 1;
+  return {
+    tier,
+    hpMul:      Math.min(3.1,  1 + k * 0.17),   /* HP musuh */
+    spdMul:     Math.min(1.42, 1 + k * 0.042),  /* kecepatan gerak musuh */
+    ebulletMul: Math.min(1.5,  1 + k * 0.045),  /* kecepatan peluru musuh */
+    dmgMul:     Math.min(1.6,  1 + k * 0.032),  /* damage peluru musuh (rata-rata, via peluru berat) */
+    heavyCh:    Math.min(0.30, (Math.min(1.6, 1 + k * 0.032) - 1) / 2), /* peluang peluru jadi PELURU BERAT (damage dobel) */
+    fireMul:    Math.min(1.7,  1 + k * 0.065),  /* laju tembak musuh (pembagi jeda) */
+    spawnMul:   Math.min(1.9,  1 + k * 0.075),  /* kerapatan spawn (pembagi jeda) */
+    eliteAdd:   Math.min(0.16, k * 0.014),      /* tambahan peluang elite */
+    dropMul:    Math.max(0.32, 1 - k * 0.055),  /* peluang power-up jatuh */
+    lifeW:      Math.max(0.35, 1 - k * 0.06)    /* bobot nyawa di antara power-up */
+  };
+}
+function threatColor(tier){
+  return tier >= 9 ? "#ff4d7e" : tier >= 7 ? "#ff5252" : tier >= 5 ? "#ff7a3d" : tier >= 3 ? "#ffc53d" : "#3dff9a";
+}
+/* Peluru musuh masuk lewat sini: mengikuti tangga ancaman, sebagian peluru
+   menjadi PELURU BERAT — lebih besar, inti oranye menyala, dan lukanya DOBEL
+   (2 nyawa) bila menembus tanpa ditahan perisai. Peluangnya = heavyCh
+   (0% di Ancaman 1, naik sampai 30% di puncak; damage rata-rata per peluru
+   naik dari ×1,0 ke ×1,6 — itulah dmgMul). Pemain bisa melihat & menghindarinya,
+   jadi tetap adil. */
+function pushEb(x, y, vx, vy){
+  const heavy = R() < threatScale().heavyCh;
+  G.ebullets.push({ x, y, vx, vy, r: heavy ? 7 : 5, heavy });
+}
 function addScore(base){ G.score += Math.round(base * curDiff().scoreMul * prestigeMul()); }
 function fmtScoreMul(m){ return ("×" + m).replace(".", ","); }
 
@@ -2486,17 +2540,20 @@ cv.addEventListener("pointercancel", dragEnd);
 /* Tidak ada lagi gelombang/stage: musuh berdatangan terus dan makin sulit
    seiring waktu bertahan. Boss muncul berkala berdasarkan waktu. */
 function endlessComp(){
-  const t = G.runTime, d = curDiff();
+  const t = G.runTime, d = curDiff(), th = threatScale();
   return {
-    interval: Math.max(0.24, (1.05 - t * 0.0058) * d.intervalMul / Math.sqrt(d.countMul)),
-    hp: Math.max(1, Math.round((1 + Math.floor(t / 40)) * d.hpMul)),
-    speed: Math.min(250, 58 + t * 0.62) * d.speedMul,
-    shooters: Math.min(0.68, (0.10 + t * 0.0022) * d.shooterMul),
+    /* jeda spawn: menyusut seiring waktu DAN tangga ancaman (lantai 0,15 dtk) */
+    interval: Math.max(0.15, (1.05 - t * 0.0058) * d.intervalMul / Math.sqrt(d.countMul) / th.spawnMul),
+    /* HP musuh: naik tiap 40 detik, dikali tingkat kesulitan DAN tangga ancaman */
+    hp: Math.max(1, Math.round((1 + Math.floor(t / 40)) * d.hpMul * th.hpMul)),
+    speed: Math.min(250, 58 + t * 0.62) * th.spdMul * d.speedMul,
+    shooters: Math.min(0.72, (0.10 + t * 0.0022) * d.shooterMul * (1 + (th.tier - 1) * 0.02)),
     zig: t > 18 ? 0.28 : 0.12,
     dart: t > 30 ? 0.09 : 0,
-    elite: t > 50 ? Math.min(0.13, (t - 50) * 0.0012) : 0,
-    alien: t > 75 ? 0.07 : 0,
-    kami: t > 100 ? 0.06 : 0
+    /* elite: basis dari waktu + bonus tangga ancaman (muncul setelah 25 detik) */
+    elite: Math.min(0.30, (t > 50 ? Math.min(0.13, (t - 50) * 0.0012) : 0) + (t > 25 ? th.eliteAdd : 0)),
+    alien: t > 75 ? 0.07 + Math.min(0.05, (th.tier - 1) * 0.004) : 0,
+    kami: t > 100 ? 0.06 + Math.min(0.04, (th.tier - 1) * 0.003) : 0
   };
 }
 function spawnEnemy(){
@@ -2549,9 +2606,14 @@ function bossClassFor(n){ return BOSS_CLASSES[(Math.max(1, n) - 1) % BOSS_CLASSE
 function spawnBoss(){
   G.bossCount++;
   const cls = bossClassFor(G.bossCount);
-  /* HP boss: basis naik tiap kemunculan, dikali faktor lipat ×1,18^(n-1) dan bonus
-     waktu bertahan — boss ke-5 sudah ±2× lebih alot dari pola lama, ke-10 ±5×. */
-  const hp = Math.round(((190 + G.bossCount * 110) * Math.pow(1.18, G.bossCount - 1) + G.runTime * 1.2) * curDiff().bossMul);
+  /* HP boss: basis naik tiap kemunculan, dikali faktor lipat ×1,18^(n-1), faktor
+     curam tambahan ×(1 + 4% per kemunculan sebelumnya), dan bonus waktu bertahan —
+     kurva HP kini menanjak lebih curam dari pola lama di kemunculan-kemunculan
+     akhir. Di Kampanye ada pengali ekstra ×1,10^(level-1) di atas kelas boss
+     penjaga yang memang sudah naik tiap level, supaya boss level 5 terasa
+     jelas lebih alot dari boss level 1. */
+  const campBossMul = G.campaignMode ? Math.pow(1.10, G.campaignMode - 1) : 1;
+  const hp = Math.round(((190 + G.bossCount * 110) * Math.pow(1.18, G.bossCount - 1) * (1 + (G.bossCount - 1) * 0.04) + G.runTime * 1.2) * curDiff().bossMul * campBossMul);
   const rBig = Math.round(cls.r * (1 + Math.min(0.3, (G.bossCount - 1) * 0.035)));
   G.boss = { x:W/2, y:-70, r:rBig, hp, maxhp:hp, t:0, fireT:1.4, spiralA: rand(0, 6),
              type: cls.pat, cls, phase:0, phaseT:3, burst:0, flash:0, summonT:4,
@@ -2578,10 +2640,16 @@ const POWER_TYPES = [
   { kind:"ultimate", label:"💥", color:"#ff7a3d" }
 ];
 function dropPower(x, y){
-  /* Bobot acak: weapon 36% · shield 24% · life 18% (tetap paling langka di antara yang umum) ·
-     damage ×2 15% · ultimate 7% (paling langka) */
+  /* Bobot acak di ancaman rendah: weapon 36% · shield 24% · life 18% (paling langka
+     di antara yang umum) · damage ×2 15% · ultimate 7% (paling langka).
+     Seiring Level Ancaman naik, bobot NYAWA menyusut (sampai ±35%-nya) dan
+     selisihnya pindah ke weapon & shield — nyawa makin susah didapat di
+     ancaman tinggi, jadi pemain tak bisa bertahan selamanya dari drop. */
+  const lw = 0.18 * threatScale().lifeW;
+  const freed = 0.18 - lw;
+  const wW = 0.36 + freed * 0.6, wS = 0.24 + freed * 0.4;
   const roll = Math.random();
-  const t = roll < 0.36 ? POWER_TYPES[0] : roll < 0.60 ? POWER_TYPES[1] : roll < 0.78 ? POWER_TYPES[2] : roll < 0.93 ? POWER_TYPES[3] : POWER_TYPES[4];
+  const t = roll < wW ? POWER_TYPES[0] : roll < wW + wS ? POWER_TYPES[1] : roll < wW + wS + lw ? POWER_TYPES[2] : roll < wW + wS + lw + 0.15 ? POWER_TYPES[3] : POWER_TYPES[4];
   G.powers.push({ x, y, r:14, vy:95, kind:t.kind, label:t.label, color:t.color, t:0 });
 }
 function applyPower(p){
@@ -2782,6 +2850,7 @@ function startGame(fromSave, daily, campLv){
     G.lives = curDiff().lives + shipDef().lives + ((store.data.upgrades || {}).life || 0);
   }
   if(cdef0) G.nextBossAt = 1e9; /* di kampanye boss datang dari target musuh, bukan timer */
+  G.lastThreat = threatTier(); /* tangga ancaman mulai dari posisi awal run ini (kampanye mulai lebih tinggi) */
   applySkillStats(); updateXP();
   G.mode = "playing";
   showScreen(null); updateHUD();
@@ -2945,9 +3014,11 @@ function killEnemy(e, idx){
   else if(e.type==="dart"){ if(Math.random() < 0.6) dropGem(e.x, e.y, 2); }
   else if(e.type==="kamikaze"){ if(Math.random() < 0.45) dropGem(e.x, e.y, 1); }
   else if(Math.random() < 0.5) dropGem(e.x, e.y, 1);
-  /* Peluang power-up turun 13% → 7% per musuh (digabung bobot life 18% di dropPower,
-     nyawa kini muncul ~1,3% per kill — sebelumnya ~4,3%) */
-  if(Math.random() < 0.07) dropPower(e.x, e.y);
+  /* Peluang power-up 7% per musuh di ancaman rendah, lalu MENYUSUT mengikuti
+     tangga ancaman (pengali dropMul sampai ±0,32 di ancaman tertinggi) —
+     digabung bobot nyawa di dropPower yang ikut menyusut, drop makin langka
+     seiring permainan memanas. */
+  if(Math.random() < 0.07 * threatScale().dropMul) dropPower(e.x, e.y);
   store.save(); updateHUD(); checkAchievements();
 }
 function killBoss(){
@@ -3181,6 +3252,15 @@ function update(dt){
     floatText(W/2, H*0.3, "+" + bonus, "#3dff9a");
     updateHUD();
   }
+  /* tangga ancaman naik anak tangga → kabari pemain, tantangannya terasa naik */
+  const ttNow = threatTier();
+  if(G.lastThreat == null || ttNow < G.lastThreat) G.lastThreat = ttNow;
+  else if(ttNow > G.lastThreat){
+    G.lastThreat = ttNow;
+    showBanner("⚠ LEVEL ANCAMAN " + ttNow + " ⚠", "Musuh makin tebal, cepat & ramai — drop power-up & nyawa makin langka!");
+    AudioSys.bossWarn();
+    updateHUD();
+  }
   /* kombo: jendela 4 detik habis → kombo putus */
   if(G.comboT > 0){
     G.comboT -= dt;
@@ -3194,9 +3274,10 @@ function update(dt){
     if(b.flash > 0) b.flash -= dt;
     b.y += (86 - b.y) * Math.min(1, dt*1.4);
     b.x = W/2 + Math.sin(b.t * cls.swaySpd) * (W * cls.swayAmp);
-    /* makin banyak boss yang sudah datang: peluru makin cepat & laju tembak makin rapat */
-    const bsp = 215 * curDiff().ebulletMul * (1 + Math.min(0.45, (G.bossCount - 1) * 0.045));
-    const tempo = Math.max(0.55, 1 - (G.bossCount - 1) * 0.055);
+    /* makin banyak boss yang sudah datang & makin tinggi Level Ancaman:
+       peluru makin cepat & laju tembak makin rapat (kurva lebih curam dari pola lama) */
+    const bsp = 215 * curDiff().ebulletMul * (1 + Math.min(0.7, (G.bossCount - 1) * 0.07)) * (1 + (threatScale().ebulletMul - 1) * 0.6);
+    const tempo = Math.max(0.42, 1 - (G.bossCount - 1) * 0.075 - (threatTier() - 1) * 0.012);
     const rage = b.hp < b.maxhp * 0.35;
     if(b.y > 40){
       let pat = cls.pat;
@@ -3230,7 +3311,7 @@ function update(dt){
           b.spiralA += pat === "hydra" ? 0.38 : 0.46;
           for(let k=0;k<arms;k++){
             const a = b.spiralA + k * (Math.PI * 2 / arms);
-            G.ebullets.push({ x:b.x, y:b.y + 10, vx:Math.cos(a)*bsp*0.92, vy:Math.sin(a)*bsp*0.92, r:5 });
+            pushEb(b.x, b.y + 10, Math.cos(a)*bsp*0.92, Math.sin(a)*bsp*0.92);
           }
           if(Math.random() < 0.25) AudioSys.enemyShoot();
         }
@@ -3238,10 +3319,10 @@ function update(dt){
         b.fireT -= dt;
         if(b.fireT <= 0){
           b.fireT = Math.max(0.45, 1.2 - G.bossCount * 0.05) * tempo * (rage ? 0.72 : 1);
-          const n = 3 + (b.hp < b.maxhp/2 ? 2 : 0) + (curDiff().id === "impossible" ? 1 : 0);
+          const n = 3 + (b.hp < b.maxhp/2 ? 2 : 0) + (curDiff().id === "impossible" ? 1 : 0) + (G.bossCount >= 5 ? 1 : 0) + (threatTier() >= 8 ? 1 : 0);
           for(let i=0;i<n;i++){
             const a = Math.PI/2 + (i - (n-1)/2) * 0.32;
-            G.ebullets.push({ x:b.x, y:b.y + b.r - 6, vx:Math.cos(a)*bsp, vy:Math.sin(a)*bsp, r:5 });
+            pushEb(b.x, b.y + b.r - 6, Math.cos(a)*bsp, Math.sin(a)*bsp);
           }
           AudioSys.enemyShoot();
         }
@@ -3249,18 +3330,20 @@ function update(dt){
         b.fireT -= dt;
         if(b.fireT <= 0){
           const a = Math.atan2(pl.y - b.y, pl.x - b.x);
-          [-0.14, 0, 0.14].forEach(off => G.ebullets.push({ x:b.x, y:b.y + b.r - 8, vx:Math.cos(a+off)*bsp*1.12, vy:Math.sin(a+off)*bsp*1.12, r:5 }));
+          [-0.14, 0, 0.14].forEach(off => pushEb(b.x, b.y + b.r - 8, Math.cos(a+off)*bsp*1.12, Math.sin(a+off)*bsp*1.12));
           AudioSys.enemyShoot();
           b.burst++;
           if(b.burst >= 3){
             b.burst = 0;
             b.fireT = (rage ? 0.7 : 1.05) * tempo;
-            /* di bawah 60% HP: sesekali lepaskan cincin peluru ke segala arah */
+            /* di bawah 60% HP: sesekali lepaskan cincin peluru ke segala arah —
+               cincinnya makin rapat (14 → 18 peluru) mulai boss ke-4 */
             if(b.hp < b.maxhp * 0.6 && Math.random() < 0.6){
               const off0 = rand(0, Math.PI * 2);
-              for(let k=0;k<14;k++){
-                const aa = off0 + k * (Math.PI * 2 / 14);
-                G.ebullets.push({ x:b.x, y:b.y, vx:Math.cos(aa)*bsp*0.8, vy:Math.sin(aa)*bsp*0.8, r:5 });
+              const ringN = 14 + (G.bossCount >= 4 ? 4 : 0);
+              for(let k=0;k<ringN;k++){
+                const aa = off0 + k * (Math.PI * 2 / ringN);
+                pushEb(b.x, b.y, Math.cos(aa)*bsp*0.8, Math.sin(aa)*bsp*0.8);
               }
             }
           } else b.fireT = 0.14;
@@ -3283,14 +3366,18 @@ function update(dt){
     if(e.type === "shooter" || e.type === "elite" || e.type === "alien"){
       e.fireT -= dt;
       if(e.fireT <= 0 && e.y > 10 && e.y < H*0.6){
-        e.fireT = rand(1.6, 2.8) * (2 - Math.min(1.6, curDiff().speedMul)) ;
-        if(e.fireT < 0.7) e.fireT = 0.7;
+        /* jeda tembak menyusut mengikuti tangga ancaman (fireMul) */
+        e.fireT = rand(1.6, 2.8) * (2 - Math.min(1.6, curDiff().speedMul)) / threatScale().fireMul;
+        if(e.fireT < 0.55) e.fireT = 0.55;
         const a = Math.atan2(pl.y - e.y, pl.x - e.x);
-        const esp = (e.type === "elite" ? 250 : 230) * curDiff().ebulletMul;
+        /* kecepatan peluru musuh ikut naik mengikuti tangga ancaman */
+        const esp = (e.type === "elite" ? 250 : 230) * curDiff().ebulletMul * threatScale().ebulletMul;
         if(e.type === "elite"){
-          [-0.3, 0, 0.3].forEach(off => G.ebullets.push({ x:e.x, y:e.y + e.r, vx:Math.cos(a + off)*esp, vy:Math.sin(a + off)*esp, r:5 }));
+          /* elite: sebaran 3 arah — melebar jadi 5 arah mulai Ancaman 6 */
+          const offs = threatTier() >= 6 ? [-0.48, -0.24, 0, 0.24, 0.48] : [-0.3, 0, 0.3];
+          offs.forEach(off => pushEb(e.x, e.y + e.r, Math.cos(a + off)*esp, Math.sin(a + off)*esp));
         } else {
-          G.ebullets.push({ x:e.x, y:e.y + e.r, vx:Math.cos(a)*esp, vy:Math.sin(a)*esp, r:5 });
+          pushEb(e.x, e.y + e.r, Math.cos(a)*esp, Math.sin(a)*esp);
         }
         AudioSys.enemyShoot();
       }
@@ -3356,7 +3443,21 @@ function update(dt){
   for(let i=G.ebullets.length-1;i>=0;i--){
     const b = G.ebullets[i]; b.x += b.vx*dt; b.y += b.vy*dt;
     if(b.y > H+12 || b.y < -12 || b.x < -12 || b.x > W+12){ G.ebullets.splice(i,1); continue; }
-    if(Math.hypot(b.x-pl.x, b.y-pl.y) < pl.r + b.r - 2){ G.ebullets.splice(i,1); hitPlayer(); if(G.mode!=="playing") return; }
+    if(Math.hypot(b.x-pl.x, b.y-pl.y) < pl.r + b.r - 2){
+      G.ebullets.splice(i,1);
+      const livesBefore = G.lives;
+      hitPlayer();
+      if(G.mode!=="playing") return;
+      /* PELURU BERAT: bila hit-nya benar-benar mengurangi nyawa (tidak ditahan
+         perisai / masa kebal), lukanya dobel — kurangi 1 nyawa lagi */
+      if(b.heavy && G.lives < livesBefore){
+        G.lives--;
+        floatText(pl.x, pl.y - 54, "💥 PELURU BERAT!", "#ff7a3d");
+        G.shake = Math.max(G.shake, 12);
+        updateHUD();
+        if(G.lives <= 0){ gameOver(); return; }
+      }
+    }
   }
 
   /* power-up */
@@ -3970,7 +4071,17 @@ function draw(){
     ctx.restore();
   }
   ctx.fillStyle = "#ff6b81";
-  for(const b of G.ebullets){ ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI*2); ctx.fill(); }
+  for(const b of G.ebullets){ if(b.heavy) continue; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI*2); ctx.fill(); }
+  /* PELURU BERAT: lingkaran oranye lebih besar + inti kuning menyala — lukanya dobel, hindari! */
+  for(const b of G.ebullets){
+    if(!b.heavy) continue;
+    ctx.fillStyle = "rgba(255,122,61,.35)";
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 1.7, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = "#ff7a3d";
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = "#fff3b0";
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.45, 0, Math.PI*2); ctx.fill();
+  }
   /* misil pendamping */
   for(const m of G.missiles){
     ctx.save(); ctx.translate(m.x, m.y); ctx.rotate(Math.atan2(m.vy, m.vx) + Math.PI/2);
@@ -4100,6 +4211,16 @@ function setText(id, txt){
   const el = $(id); if(el) el.textContent = txt;
 }
 function comboText(){ return "×" + comboMul() + (G.combo > 0 ? " · " + G.combo : ""); }
+/* Indikator Level Ancaman di HUD: angka & warna naik mengikuti tangga ancaman */
+function updateThreatPill(){
+  const el = $("hudThreat"); if(!el) return;
+  const inRun = G.mode === "playing" || G.mode === "paused" || G.mode === "levelup";
+  const tier = inRun ? threatTier() : 1;
+  const txt = "🔥 ANCAMAN " + tier;
+  if(el.textContent !== txt) el.textContent = txt;
+  const col = threatColor(tier);
+  if(el.style.color !== col) el.style.color = col;
+}
 function updateHUD(){
   setText("hudScore", G.score.toLocaleString("id-ID"));
   setText("hudTime", fmtTime(G.runTime));
@@ -4111,6 +4232,7 @@ function updateHUD(){
   setText("hudCoins", ((store.data.coins || 0) + G.runCoins).toLocaleString("id-ID"));
   const hr = $("hudRank");
   if(hr){ const rk2 = rankOf(Math.max(store.data.hi || 0, G.score)); const t2 = "🏅 " + rk2.cur.name; if(hr.textContent !== t2) hr.textContent = t2; hr.style.color = rk2.cur.color; }
+  updateThreatPill();
   updateXP();
 }
 /* Waktu & kombo di HUD diperbarui tiap frame (hanya menulis bila berubah) */
@@ -4118,6 +4240,7 @@ function tickHUD(){
   if(G.mode !== "playing" && G.mode !== "paused" && G.mode !== "levelup") return;
   setText("hudTime", fmtTime(G.runTime));
   setText("hudCombo", comboText());
+  updateThreatPill();
   const ce = $("hudCombo"); if(ce) ce.classList.toggle("hot", comboMul() >= 3);
 }
 function updateMenuMeta(){
@@ -4671,6 +4794,7 @@ function awardSpin(p){
 function startRush(){
   startGame(false);
   G.bossRush = true;
+  G.lastThreat = threatTier(); /* Boss Rush mulai dari Ancaman +3 — jangan picu banner ancaman di awal */
   G.nextBossAt = 0;
   showBanner("👑 BOSS RUSH", "Boss datang terus-menerus — tanpa musuh kecil!");
 }
