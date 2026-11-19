@@ -698,12 +698,93 @@ function fmtTime(sec){ sec = Math.max(0, Math.floor(sec || 0)); return Math.floo
 function R(){ return (typeof G !== "undefined" && G.dailyMode && G.rng) ? G.rng() : Math.random(); }
 function rrange(a,b){ return a + R()*(b-a); }
 
-/* ---------- Penyimpanan (perangkat ini) ---------- */
+/* ---------- Penyimpanan permanen (perangkat ini) ----------
+   Skor & progres disimpan di DUA cermin pada HP yang sama — localStorage dan
+   IndexedDB — lalu digabungkan setiap game dibuka (diambil yang paling lengkap).
+   Jadi skor tetap ada walau sudah keluar dari link lalu dibuka lagi nanti,
+   selama memakai HP & browser yang sama. */
 const LS_KEY = "arcadeTembak2d.v1";
+const IDB_NAME = "arcadeTembak2d", IDB_STORE = "kv", IDB_KEY = "data.v1";
+let idbDB = null;
+function idbOpen(){
+  return new Promise(res=>{
+    try{
+      if(!("indexedDB" in window)) return res(null);
+      const rq = indexedDB.open(IDB_NAME, 1);
+      rq.onupgradeneeded = ()=>{ try{ rq.result.createObjectStore(IDB_STORE); }catch(e){} };
+      rq.onsuccess = ()=> res(rq.result);
+      rq.onerror = ()=> res(null);
+      rq.onblocked = ()=> res(null);
+    }catch(e){ res(null); }
+  });
+}
+function idbGet(){
+  return new Promise(res=>{
+    if(!idbDB) return res(null);
+    try{
+      const rq = idbDB.transaction(IDB_STORE, "readonly").objectStore(IDB_STORE).get(IDB_KEY);
+      rq.onsuccess = ()=> res(typeof rq.result === "string" ? rq.result : null);
+      rq.onerror = ()=> res(null);
+    }catch(e){ res(null); }
+  });
+}
+function idbPut(str){
+  try{
+    if(!idbDB) return;
+    idbDB.transaction(IDB_STORE, "readwrite").objectStore(IDB_STORE).put(str, IDB_KEY);
+  }catch(e){}
+}
+/* Gabung dua salinan data tanpa menghilangkan rekor: skor tertinggi & koin diambil
+   yang terbesar, entri leaderboard & pencapaian digabung, statistik diambil yang terbesar */
+function mergeSavedData(base, other){
+  if(!other || typeof other !== "object") return base;
+  const out = Object.assign({}, base, other);
+  out.settings = base.settings || other.settings;
+  out.hi = Math.max(base.hi || 0, other.hi || 0);
+  out.coins = Math.max(base.coins || 0, other.coins || 0);
+  const seen = {}, lb = [];
+  (base.leaderboard || []).concat(other.leaderboard || []).forEach(e=>{
+    if(!e || typeof e.score !== "number") return;
+    const k = e.ts + "|" + e.score + "|" + (e.name || "");
+    if(seen[k]) return; seen[k] = 1; lb.push(e);
+  });
+  lb.sort((a,b)=> b.score - a.score || a.ts - b.ts);
+  out.leaderboard = lb.slice(0, 10);
+  out.ach = Object.assign({}, base.ach || {}, other.ach || {});
+  const bs = base.stats || {}, os = other.stats || {}, st = Object.assign({}, bs, os);
+  ["kills","bosses","powerups","playTime","games","shots","hits","bestCombo","coinsEarned"].forEach(k=>{ st[k] = Math.max(bs[k] || 0, os[k] || 0); });
+  out.stats = st;
+  const owned = (base.shipsOwned || []).slice();
+  (other.shipsOwned || []).forEach(s=>{ if(owned.indexOf(s) < 0) owned.push(s); });
+  out.shipsOwned = owned.length ? owned : ["falcon"];
+  out.upgrades = Object.assign({}, base.upgrades || {}, other.upgrades || {});
+  Object.keys(base.upgrades || {}).forEach(k=>{ out.upgrades[k] = Math.max(base.upgrades[k] || 0, (other.upgrades || {})[k] || 0); });
+  /* Simpanan "Lanjutkan": pakai yang skornya lebih besar (run yang lebih jauh) */
+  const bSave = base.save, oSave = other.save;
+  out.save = (bSave && oSave) ? (((oSave.score || 0) > (bSave.score || 0)) ? oSave : bSave) : (oSave || bSave || null);
+  /* Tantangan harian hanya digabung kalau tanggalnya sama */
+  if(other.daily && base.daily && other.daily.date === base.daily.date){
+    const dseen = {}, de = [];
+    (base.daily.entries || []).concat(other.daily.entries || []).forEach(e=>{
+      if(!e || typeof e.score !== "number") return;
+      const k = e.ts + "|" + e.score + "|" + (e.name || "");
+      if(dseen[k]) return; dseen[k] = 1; de.push(e);
+    });
+    de.sort((a,b)=> b.score - a.score || a.ts - b.ts);
+    out.daily = { date: base.daily.date, entries: de.slice(0, 10) };
+  }
+  return out;
+}
 const store = {
   data: { hi:0, settings:{quality:"high", music:50, sfx:80}, ach:{}, stats:{kills:0, bosses:0, powerups:0}, save:null, difficulty:"normal", leaderboard:[], playerName:"" },
   load(){ try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const d = JSON.parse(raw); if(d && typeof d==="object") this.data = Object.assign(this.data, d); } }catch(e){} },
-  save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(this.data)); }catch(e){} }
+  save(){
+    let str = null;
+    try{ str = JSON.stringify(this.data); }catch(e){}
+    if(!str) return;
+    try{ localStorage.setItem(LS_KEY, str); }catch(e){}
+    idbPut(str);
+  }
 };
 store.load();
 const S = store.data.settings;
@@ -724,6 +805,22 @@ if(!store.data.daily || typeof store.data.daily !== "object" || !Array.isArray(s
   if(typeof st.coinsEarned !== "number") st.coinsEarned = 0;
   if(!st.bestTime || typeof st.bestTime !== "object") st.bestTime = {};
 })();
+/* Pemulihan dari cermin IndexedDB: gabungkan salinan yang tersimpan di sana,
+   lalu tulis hasil gabungan ke kedua cermin supaya keduanya selalu sinkron */
+idbOpen().then(async db=>{
+  idbDB = db;
+  if(!db) return;
+  try{
+    const raw = await idbGet();
+    if(raw){
+      const d = JSON.parse(raw);
+      if(d && typeof d === "object") store.data = mergeSavedData(store.data, d);
+    }
+  }catch(e){}
+  store.save();
+  if(typeof updateMenuMeta === "function") updateMenuMeta();
+  if(typeof renderLeaderboard === "function") renderLeaderboard();
+});
 
 /* ---------- Level kesulitan (5) ---------- */
 /* hpMul/speedMul/countMul: musuh · intervalMul: jeda spawn (kecil = lebih rapat)
@@ -1366,23 +1463,50 @@ function gameOver(){
   $("newRecord").style.display = isRec && G.score>0 ? "block" : "none";
   $("ovDaily").style.display = G.dailyMode ? "block" : "none";
   if(G.dailyMode) $("ovDailyDate").textContent = fmtDateID(todayStr());
-  /* Leaderboard: tawarkan pencatatan nama kalau skor masuk 10 besar (harian → papan harian) */
+  /* Leaderboard: kalau skor masuk 10 besar, catat OTOMATIS sekarang juga (dengan
+     nama terakhir / "Pemain") supaya skor permanen tersimpan walau layar ini
+     langsung ditutup; formulir nama di bawah hanya untuk mengganti namanya */
   const qualifies = !G.lbSavedRun && currentLbQualifies();
+  if(qualifies){
+    const autoEntry = { name:(store.data.playerName || "").trim() || "Pemain", score:G.score, time:Math.round(G.runTime), kills:G.runKills, level:G.level, difficulty:G.difficulty || store.data.difficulty, ts:Date.now() };
+    const autoRank = G.dailyMode ? dailyAdd(autoEntry) : lbAdd(autoEntry);
+    G.autoLbEntry = autoEntry; G.lbSavedRun = true;
+    lbHighlightTs = autoEntry.ts; lbFilter = G.dailyMode ? "daily" : "all";
+    $("lbSavedRank").textContent = "#" + autoRank;
+  }
   $("lbEntry").classList.toggle("show", qualifies);
-  $("lbSaved").classList.remove("show");
+  $("lbSaved").classList.toggle("show", qualifies);
   if(qualifies){
     $("lbEntryTitle").innerHTML = G.dailyMode ? "📅 Skormu masuk <b>10 Besar Harian!</b>" : "🏆 Skormu masuk <b>10 Besar!</b>";
     $("lbEntryNote").textContent = G.dailyMode
-      ? "Catat namamu di papan Harian hari ini — susunan musuhnya sama untuk semua pemain, jadi skornya adil dibandingkan."
-      : "Catat namamu di leaderboard supaya skor tertinggi ini tersimpan dengan namamu.";
+      ? "Skormu sudah tercatat otomatis di papan Harian hari ini dan tersimpan permanen di HP ini — isi nama di bawah kalau mau mengganti nama tampilannya."
+      : "Skormu sudah tercatat otomatis di leaderboard dan tersimpan permanen di HP ini — isi nama di bawah kalau mau mengganti nama tampilannya.";
     $("lbName").value = store.data.playerName || "";
+    $("btnSaveScore").textContent = "Simpan Nama";
     $("btnSaveScore").disabled = false;
   }
   updateMenuMeta(); showScreen("scrOver");
 }
 function saveScoreToLeaderboard(){
-  if(G.lbSavedRun || !currentLbQualifies()) return;
   const name = ($("lbName").value || "").trim().slice(0, 16) || "Pemain";
+  if(G.autoLbEntry){
+    /* Skor run ini sudah tercatat otomatis saat game over — tombol ini hanya
+       memperbarui nama pada entri tersebut */
+    store.data.playerName = name;
+    G.autoLbEntry.name = name;
+    const list = G.dailyMode ? dailyStore().entries : (store.data.leaderboard || []);
+    const r = list.indexOf(G.autoLbEntry) + 1;
+    store.save();
+    lbHighlightTs = G.autoLbEntry.ts;
+    $("lbEntry").classList.remove("show");
+    if(r > 0) $("lbSavedRank").textContent = "#" + r;
+    $("lbSaved").classList.add("show");
+    $("btnSaveScore").disabled = true;
+    AudioSys.ach();
+    updateMenuMeta();
+    return;
+  }
+  if(G.lbSavedRun || !currentLbQualifies()) return;
   store.data.playerName = name;
   const entry = { name, score:G.score, time:Math.round(G.runTime), kills:G.runKills, level:G.level, difficulty:G.difficulty || store.data.difficulty, ts:Date.now() };
   const rank = G.dailyMode ? dailyAdd(entry) : lbAdd(entry);
@@ -1856,6 +1980,7 @@ function draw(){
 
 /* ---------- Loop ---------- */
 let lastT = performance.now();
+let _hiSaveT = 0;
 function loop(now){
   const dt = Math.min(0.033, (now - lastT)/1000 || 0.016);
   lastT = now;
@@ -1863,6 +1988,13 @@ function loop(now){
   let scale = 1;
   if(G.slowT > 0){ G.slowT -= dt; scale = 0.3; }
   update(dt * scale); draw();
+  /* Komit skor tertinggi secara berkala saat bermain: rekor langsung tersimpan
+     permanen begitu tercapai — tidak menunggu game over, jadi tidak hilang
+     walau game ditutup mendadak di tengah permainan */
+  if(G.mode === "playing" && G.score > (store.data.hi || 0)){
+    store.data.hi = G.score;
+    if(now - _hiSaveT > 1500){ _hiSaveT = now; store.save(); }
+  }
   tickHUD();
   requestAnimationFrame(loop);
 }
@@ -2056,7 +2188,7 @@ try{
 
 /* ---------- Tombol bantuan pemulihan ---------- */
 $("bootReload").addEventListener("click", ()=> location.reload());
-$("bootReset").addEventListener("click", ()=>{ try{ localStorage.removeItem(LS_KEY); }catch(e){} location.reload(); });
+$("bootReset").addEventListener("click", ()=>{ try{ localStorage.removeItem(LS_KEY); }catch(e){} try{ indexedDB.deleteDatabase(IDB_NAME); }catch(e){} location.reload(); });
 
 /* ---------- Mulai ---------- */
 window.addEventListener("resize", resize);
