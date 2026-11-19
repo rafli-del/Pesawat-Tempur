@@ -7,16 +7,16 @@
     <meta name="theme-color" content="#070b16" />
     <link rel="icon" href="data:," />
     <title>Arcade Tembak-tembakan 2D</title>
-    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis di latar galaksi dengan berbagai planet, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Mode endless, 5 level kesulitan: Easy, Normal, Hard, Extreme, Impossible." />
+    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Lobby hangar baru, pesawat Aetherion termahal, mode campaign 5 level dan Boss Rush, rank Bronze sampai Legendary, misi harian dan hadiah login berhadiah diamond, spin berlian untuk skin langka, galeri musuh, 4 latar, dan 5 level kesulitan." />
     <meta name="keywords" content="game tembak-tembakan, arcade 2d, game pesawat, space shooter, game gratis, game browser, game HP, tembak-tembakan 2D" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="rfyjntan" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:title" content="Arcade Tembak-tembakan 2D — Game Pesawat Gratis" />
-    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: latar galaksi dengan planet, auto-fire, XP dan skill acak, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, dan 5 level kesulitan. Main langsung, tanpa install." />
+    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: lobby hangar, auto-fire, XP dan skill acak, senjata laser dan plasma, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, mode campaign dan Boss Rush, misi harian, spin berlian, dan 5 level kesulitan. Main langsung, tanpa install." />
     <meta property="og:url" content="https://rafli-del.github.io/Pesawat-Tempur/" />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: latar galaksi dengan berbagai planet, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless dengan 5 level kesulitan."}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: lobby hangar, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless, campaign, dan Boss Rush dengan 5 level kesulitan."}</script>
     <style>
       /* Font lokal — tanpa permintaan jaringan, halaman selalu bisa dibuka */
       @font-face{
@@ -286,6 +286,26 @@
       button.diffBtn.sel{ border-color:var(--dc); background:linear-gradient(180deg, rgba(255,255,255,.05), transparent), var(--panel2); box-shadow:inset 0 0 0 1px var(--dc); }
       button.diffBtn.sel .dd{ color:var(--ink); }
       #hudDiff{ font-size:13px !important; white-space:nowrap; }
+      #hudRank{ font-family:"Orbitron",sans-serif; font-size:11px; font-weight:700; color:#d08a4e; white-space:nowrap; }
+      /* ---------- Pemilih latar & rank & kampanye ---------- */
+      .bgGrid{ display:grid; grid-template-columns:1fr 1fr; gap:7px; margin:0 0 16px; }
+      button.bgBtn{
+        display:flex; align-items:center; gap:9px; text-align:left;
+        background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+        padding:9px 11px; color:var(--ink); font-family:inherit;
+      }
+      button.bgBtn:active{ transform:scale(.985); }
+      button.bgBtn .ic{ font-size:19px; line-height:1; flex:0 0 auto; }
+      button.bgBtn .bn{ font-family:"Orbitron",sans-serif; font-size:12.5px; font-weight:700; display:block; }
+      button.bgBtn .bd{ font-size:11.5px; color:var(--muted); font-weight:600; display:block; line-height:1.25; }
+      button.bgBtn.sel{ border-color:var(--cyan); box-shadow:inset 0 0 0 1px var(--cyan); }
+      .rankLine{
+        display:flex; align-items:center; gap:9px; margin:0 0 16px;
+        background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:9px 14px;
+        font-weight:700; font-size:15px;
+      }
+      .rankLine b{ font-family:"Orbitron",sans-serif; font-size:16px; }
+      .rankLine span{ margin-left:auto; font-size:12.5px; color:var(--muted); font-weight:600; text-align:right; }
 
       /* ---------- Leaderboard ---------- */
       .lbNote{ color:var(--muted); font-weight:600; font-size:14.5px; margin:0 0 14px; line-height:1.4; }
@@ -321,11 +341,11 @@
       #lbEntry p b{ color:var(--amber); font-family:"Orbitron",sans-serif; }
       #lbEntry small{ color:var(--muted); font-weight:600; display:block; margin:0 0 10px; line-height:1.35; }
       #lbEntry .rowIn{ display:flex; gap:8px; }
-      #lbName{
+      #lbNameInput{
         flex:1; min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:10px;
         color:var(--ink); font-family:inherit; font-weight:700; font-size:16px; padding:11px 12px; min-height:48px;
       }
-      #lbName:focus{ outline:2px solid var(--cyan); outline-offset:0; border-color:var(--cyan); }
+      #lbNameInput:focus{ outline:2px solid var(--cyan); outline-offset:0; border-color:var(--cyan); }
       #btnSaveScore{
         flex:0 0 auto; background:var(--amber); border:1px solid var(--amber); color:#2b1c04;
         border-radius:10px; font-weight:800; font-size:15px; padding:11px 14px;
@@ -362,6 +382,204 @@
       .btRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:9px 13px; margin:0 0 7px; font-weight:700; font-size:15px; }
       .btRow b{ font-family:"Orbitron",sans-serif; font-size:15px; }
       .btRow .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:8px; }
+
+      /* ---------- LOBBY (menu utama ala foto referensi) ---------- */
+      .card.lobbyCard{ max-width:520px; padding:18px 16px 12px; }
+      .lbTop{ display:flex; gap:10px; align-items:stretch; margin:0 0 12px; }
+      .lbProfile{
+        flex:1; min-width:0; display:flex; gap:10px; align-items:center;
+        background:linear-gradient(135deg, rgba(49,230,255,.13), rgba(49,230,255,.03)), var(--panel2);
+        border:1px solid var(--cyan); border-radius:14px; padding:8px 11px;
+      }
+      #lbAvatar{ flex:0 0 auto; width:52px; height:52px; border-radius:10px; background:rgba(4,10,22,.6); border:1px solid var(--line); }
+      .lbPinfo{ flex:1; min-width:0; }
+      .lbPinfo b{ display:block; font-family:"Orbitron",sans-serif; font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .lbPinfo small{ display:block; color:var(--muted); font-weight:600; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .lbPinfo small span{ color:var(--ink); font-weight:700; }
+      .lbXpBar{ height:7px; background:#12203c; border:1px solid var(--line); border-radius:99px; overflow:hidden; margin:4px 0 3px; }
+      #lbXpFill{ height:100%; width:0%; background:var(--cyan); transition:width .3s; }
+      .lbWallet{ display:flex; flex-direction:column; gap:7px; align-items:flex-end; }
+      .lbCur{
+        background:var(--panel2); border:1px solid var(--amber); border-radius:99px;
+        padding:6px 12px; font-weight:700; font-size:14.5px; white-space:nowrap;
+      }
+      .lbCur b{ font-family:"Orbitron",sans-serif; color:var(--amber); }
+      .lbCur.gem{ border-color:#b45cff; }
+      .lbCur.gem b{ color:#e879f9; }
+      .lbWallet .rowBtns2{ display:flex; gap:7px; }
+      .lbIconBtn{
+        position:relative; width:40px; height:40px; border-radius:12px; font-size:18px;
+        background:var(--panel2); border:1px solid var(--line); color:var(--ink);
+        display:flex; align-items:center; justify-content:center; padding:0;
+      }
+      .lbIconBtn:active{ transform:scale(.94); }
+      .dot{
+        position:absolute; top:-4px; right:-4px; width:11px; height:11px; border-radius:50%;
+        background:#ff3b30; border:2px solid var(--panel); display:block;
+      }
+      .lbIcons{ display:grid; grid-template-columns:repeat(5, 1fr); gap:7px; margin:0 0 12px; }
+      .lbIco{
+        position:relative; display:flex; flex-direction:column; align-items:center; gap:3px;
+        background:linear-gradient(180deg, rgba(49,230,255,.10), rgba(49,230,255,.02)), var(--panel2);
+        border:1px solid var(--line); border-radius:14px; padding:9px 2px 7px;
+        color:var(--ink); font-weight:700; font-size:11px; line-height:1.15; text-align:center;
+      }
+      .lbIco .ic{ font-size:21px; line-height:1.1; }
+      .lbIco:active{ transform:scale(.95); }
+      .lbIco .dot{ top:-4px; right:-4px; }
+      .lbBanners{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0 0 12px; }
+      .lbBanner{
+        text-align:left; border-radius:14px; padding:11px 12px; color:var(--ink); font-family:inherit;
+        display:flex; flex-direction:column; gap:2px; min-height:64px; justify-content:center;
+      }
+      .lbBanner b{ font-family:"Orbitron",sans-serif; font-size:14.5px; }
+      .lbBanner small{ color:var(--muted); font-weight:600; font-size:12px; line-height:1.3; }
+      .lbBanner:active{ transform:scale(.98); }
+      .lbBanner.ev{ background:linear-gradient(135deg, rgba(56,182,255,.28), rgba(56,182,255,.05)), var(--panel2); border:1px solid #38b6ff; }
+      .lbBanner.ev b{ color:#7dd3fc; }
+      .lbBanner.fr{ background:linear-gradient(135deg, rgba(255,197,61,.25), rgba(255,197,61,.04)), var(--panel2); border:1px solid var(--amber); }
+      .lbBanner.fr b{ color:var(--amber); }
+      .lbStage{
+        position:relative; border:1px solid var(--line); border-radius:18px; overflow:hidden;
+        background:
+          radial-gradient(ellipse 240px 130px at 82% -10%, rgba(125,211,252,.5), rgba(125,211,252,.12) 55%, transparent 72%),
+          radial-gradient(ellipse 300px 120px at 50% 118%, rgba(49,230,255,.20), transparent 70%),
+          linear-gradient(180deg, #050a1e 0%, #081233 58%, #0a1a3d 100%);
+        min-height:238px; margin:0 0 12px;
+      }
+      #lbStageShip{ position:absolute; left:50%; top:8px; transform:translateX(-50%); animation:lbFloat 3.2s ease-in-out infinite; }
+      @keyframes lbFloat{ 0%,100%{ transform:translateX(-50%) translateY(0); } 50%{ transform:translateX(-50%) translateY(-7px); } }
+      .lbPlatform{
+        position:absolute; left:50%; bottom:34px; transform:translateX(-50%);
+        width:230px; height:52px; border-radius:50%;
+        border:2px solid rgba(49,230,255,.75);
+        box-shadow:0 0 22px rgba(49,230,255,.5), inset 0 0 26px rgba(49,230,255,.35);
+      }
+      .lbPlatform::after{
+        content:""; position:absolute; inset:9px; border-radius:50%;
+        border:1.5px solid rgba(49,230,255,.45);
+      }
+      .lbShipMeta{ position:absolute; left:0; right:0; bottom:6px; text-align:center; }
+      .lbShipMeta b{ font-family:"Orbitron",sans-serif; font-size:17px; display:block; text-shadow:0 2px 10px rgba(0,0,0,.7); }
+      .lbShipMeta small{ color:#b9cdf2; font-weight:600; font-size:12px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:0 10px; }
+      .lbSeason{
+        position:absolute; top:10px; right:10px; text-align:right;
+        background:rgba(8,12,28,.78); border:1px solid var(--amber); border-radius:11px;
+        padding:6px 10px; font-family:"Orbitron",sans-serif; font-size:12.5px; color:var(--amber);
+      }
+      .lbSeason span{ display:block; font-family:"Rajdhani",sans-serif; font-weight:700; font-size:11.5px; color:var(--muted); margin-top:1px; }
+      .lbAchChip{
+        position:absolute; top:10px; left:10px;
+        background:rgba(8,12,28,.78); border:1px solid var(--line); border-radius:11px;
+        padding:6px 10px; font-weight:700; font-size:12.5px;
+      }
+      .lbAchChip b{ font-family:"Orbitron",sans-serif; color:var(--amber); }
+      .lbModeRow{ margin:0 0 12px; }
+      .lbModeCard{
+        width:100%; text-align:left; color:var(--ink); font-family:inherit;
+        background:linear-gradient(135deg, rgba(255,77,126,.16), rgba(255,77,126,.03)), var(--panel2);
+        border:1px solid var(--pink); border-radius:14px; padding:10px 14px;
+        display:flex; align-items:center; gap:12px;
+      }
+      .lbModeCard small{ display:block; font-size:10px; letter-spacing:.14em; color:var(--muted); font-weight:700; }
+      .lbModeCard b{ font-family:"Orbitron",sans-serif; font-size:16px; }
+      .lbModeCard span{ margin-left:auto; text-align:right; font-size:12.5px; color:var(--muted); font-weight:600; }
+      .lbModeCard .arr{ color:var(--pink); font-weight:700; font-size:12.5px; }
+      .lbModeCard:active{ transform:scale(.99); }
+      #scrMenu #btnPlay{
+        background:linear-gradient(180deg, #ffd76a, var(--amber)); border-color:#ffe9a8; color:#2b1c04;
+        font-family:"Orbitron",sans-serif; font-size:21px; letter-spacing:.04em;
+        box-shadow:0 8px 26px rgba(255,197,61,.35); justify-content:center;
+      }
+      #scrMenu #btnPlay .sub{ color:#6b4d05; font-family:"Rajdhani",sans-serif; letter-spacing:0; }
+      .featGrid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+      .featGrid .mbtn{ font-size:14.5px; padding:11px 11px; gap:8px; border-radius:11px; }
+      .featGrid .mbtn .sub{ display:block; margin-left:0; font-size:11.5px; }
+      .featGrid .mbtn{ flex-wrap:wrap; row-gap:1px; }
+      .lbNav{
+        position:sticky; bottom:0; z-index:3;
+        display:grid; grid-template-columns:repeat(5, 1fr); gap:6px;
+        background:rgba(10,16,32,.92); backdrop-filter:blur(6px);
+        border:1px solid var(--cyan); border-radius:15px; padding:7px; margin:14px 0 2px;
+      }
+      .lbNavBtn{
+        display:flex; flex-direction:column; align-items:center; gap:2px;
+        background:transparent; border:1px solid transparent; border-radius:11px;
+        color:var(--ink); font-weight:700; font-size:11.5px; padding:7px 2px 5px; min-height:52px;
+      }
+      .lbNavBtn .ic{ font-size:20px; line-height:1.1; }
+      .lbNavBtn:active{ transform:scale(.95); background:rgba(49,230,255,.10); }
+      @media (prefers-reduced-motion: reduce){ #lbStageShip{ animation:none; } }
+
+      /* ---------- Misi, Login, Galeri, Profil, Spin, Tutorial (fitur baru) ---------- */
+      .diaPill{ font-family:"Orbitron",sans-serif; font-size:12px; font-weight:700; color:#7dd3fc; white-space:nowrap; }
+      .misRow{ background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin:0 0 9px; }
+      .misRow .top{ display:flex; gap:10px; align-items:center; }
+      .misRow .ic{ font-size:24px; flex:0 0 auto; }
+      .misRow b{ display:block; font-size:16px; }
+      .misRow small{ color:var(--muted); font-weight:600; font-size:13px; display:block; line-height:1.35; }
+      .misRow .reward{ margin-left:auto; text-align:right; font-family:"Orbitron",sans-serif; font-size:12.5px; color:var(--amber); white-space:nowrap; }
+      .misBarOuter{ height:8px; background:#12203c; border:1px solid var(--line); border-radius:99px; overflow:hidden; margin-top:9px; }
+      .misBar{ height:100%; background:var(--cyan); transition:width .3s; }
+      .misRow.done{ border-color:var(--amber); }
+      .misRow.claimed{ opacity:.62; }
+      .loginGrid{ display:grid; grid-template-columns:repeat(4,1fr); gap:7px; margin:0 0 10px; }
+      .loginCell{ background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:8px 4px; text-align:center; font-weight:700; font-size:12px; }
+      .loginCell b{ display:block; font-family:"Orbitron",sans-serif; font-size:13px; color:var(--amber); }
+      .loginCell small{ color:var(--muted); font-size:11px; display:block; }
+      .loginCell.today{ border-color:var(--amber); box-shadow:inset 0 0 0 1px var(--amber); }
+      .loginCell.got{ opacity:.55; border-color:var(--green); }
+      .galRow{ display:flex; gap:12px; align-items:center; background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin:0 0 9px; }
+      .galRow canvas{ flex:0 0 auto; width:58px; height:58px; background:rgba(4,10,22,.55); border:1px solid var(--line); border-radius:10px; }
+      .galRow.locked{ opacity:.55; }
+      .galRow b{ display:block; font-size:16px; }
+      .galRow small{ color:var(--muted); font-weight:600; font-size:13px; display:block; line-height:1.4; }
+      .galRow .hp{ color:var(--pink); font-weight:700; }
+      #tutBar{
+        position:absolute; top:58px; left:50%; transform:translateX(-50%); z-index:8;
+        width:min(92%, 430px); background:rgba(13,21,38,.94); border:1px solid var(--amber);
+        border-radius:14px; padding:12px 14px; display:none; box-shadow:0 14px 34px rgba(0,0,0,.5);
+      }
+      #tutBar.show{ display:block; }
+      #tutBar .tutTop{ display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+      #tutStepLbl{ font-family:"Orbitron",sans-serif; font-size:11.5px; letter-spacing:.12em; color:var(--amber); }
+      #tutSkip{ background:transparent; border:1px solid var(--line); color:var(--muted); border-radius:8px; font-weight:700; font-size:12.5px; padding:5px 10px; min-height:32px; }
+      #tutBar b{ font-size:17.5px; display:block; }
+      #tutBar p{ margin:3px 0 8px; color:var(--muted); font-weight:600; font-size:14px; line-height:1.4; }
+      #tutDots{ font-size:12px; letter-spacing:5px; color:var(--amber); }
+      .profHead{ border-radius:14px; border:1px solid var(--line); padding:14px; margin:0 0 14px; color:#fff; }
+      .profBannerLine{
+        display:flex; align-items:center; gap:8px; border-radius:10px; padding:8px 12px;
+        font-family:"Orbitron",sans-serif; font-weight:700; font-size:14.5px; margin:0 0 12px;
+        border:1px solid rgba(255,255,255,.35); color:#fff;
+      }
+      .pickGrid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0 0 6px; }
+      .pickBtn{
+        border-radius:12px; border:1px solid var(--line); padding:10px; text-align:left; color:#fff;
+        font-family:inherit; font-weight:700; font-size:13.5px; min-height:56px;
+        display:flex; flex-direction:column; gap:2px; justify-content:center;
+      }
+      .pickBtn small{ font-weight:600; font-size:11.5px; opacity:.88; }
+      .pickBtn.sel{ border-color:#fff; box-shadow:inset 0 0 0 2px #fff; }
+      .pickBtn.locked{ opacity:.55; }
+      .nickRow{ display:flex; gap:8px; margin:0 0 6px; }
+      #nickInput{
+        flex:1; min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:10px;
+        color:var(--ink); font-family:inherit; font-weight:700; font-size:16px; padding:11px 12px; min-height:48px;
+      }
+      #nickInput:focus{ outline:2px solid var(--cyan); border-color:var(--cyan); }
+      #spinWheelWrap{ position:relative; width:min(76vw, 300px); height:min(76vw, 300px); margin:6px auto 12px; }
+      #spinWheel{ position:absolute; inset:0; border-radius:50%; border:3px solid var(--amber); box-shadow:0 0 30px rgba(255,197,61,.25); }
+      .spinPtr{ position:absolute; top:-10px; left:50%; transform:translateX(-50%); font-size:26px; z-index:3; filter:drop-shadow(0 2px 3px rgba(0,0,0,.6)); }
+      .segLbl{ position:absolute; font-size:19px; pointer-events:none; }
+      .spinCenter{
+        position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+        width:64px; height:64px; border-radius:50%; background:var(--panel); border:2px solid var(--amber);
+        display:flex; align-items:center; justify-content:center; font-size:26px; z-index:2;
+      }
+      #spinResult{ text-align:center; font-weight:700; font-size:16.5px; min-height:24px; margin:0 0 10px; line-height:1.35; }
+      .lbProfile{ cursor:pointer; }
+      @media (prefers-reduced-motion: reduce){ .misBar{ transition:none; } }
 
       /* bantuan pemulihan kalau mesin game gagal jalan di perangkat */
       #bootHelp{
@@ -401,6 +619,7 @@
         <div class="stat"><small>SKOR</small><b class="cy" id="hudScore">0</b></div>
         <div class="stat"><small>WAKTU</small><b id="hudTime">0:00</b></div>
         <div class="stat"><small>KOMBO</small><b id="hudCombo">×1</b></div>
+        <div class="stat"><small>KOIN 🪙</small><b id="hudCoins" style="color:var(--amber);">0</b></div>
         <div class="stat"><small>MODE</small><b id="hudDiff">Normal</b></div>
         <div class="spacer"></div>
         <div class="stat"><small>NYAWA</small><span id="livesDisplay">♥♥♥</span></div>
@@ -410,6 +629,8 @@
         <span id="lvLabel">LV 1</span>
         <div id="xpBarOuter"><div id="xpBar"></div></div>
         <span id="xpText">0 / 5 XP</span>
+        <span id="hudRank" title="Rank kamu berdasarkan skor tertinggi">🏅 Bronze</span>
+        <span id="hudDia" class="diaPill" title="Diamond kamu — dari misi, login & drop langka">💎 0</span>
         <div id="skillChips"></div>
       </div>
 
@@ -427,32 +648,112 @@
 
         <div id="dragHint">👆 Geser layar untuk bergerak — pesawat menembak otomatis</div>
 
+        <div id="tutBar">
+          <div class="tutTop"><span id="tutStepLbl">TUTORIAL</span><button id="tutSkip">Lewati ✕</button></div>
+          <b id="tutTitle">Geser untuk Bergerak</b>
+          <p id="tutDesc"></p>
+          <div id="tutDots">●○○○</div>
+        </div>
+
         <div id="toasts"></div>
 
         <!-- ===== MAIN MENU ===== -->
         <section class="screen open" id="scrMenu">
-          <div class="card">
-            <h1><span class="a">ARCADE</span><br /><span class="b">TEMBAK-TEMBAKAN</span> 2D</h1>
-            <p class="tagline">Mode endless di tengah galaksi: bertahanlah selama mungkin di antara nebula &amp; planet-planet! Musuh makin ganas seiring waktu dan boss datang berkala — HP boss naik berlipat di setiap kemunculan. Jaga kombo, kumpulkan XP &amp; koin, buka pesawat baru!</p>
-            <div class="hiLine">
-              <div><small>SKOR TERTINGGI</small><b id="menuHi">0</b></div>
-              <div><small>KOIN</small><b id="menuCoins" style="color:var(--amber);">0</b></div>
-              <div class="r"><small>PENCAPAIAN</small><b id="menuAch">0 / 10</b></div>
+          <div class="card lobbyCard">
+            <!-- ===== LOBBY: bar atas profil ===== -->
+            <div class="lbTop">
+              <div class="lbProfile">
+                <canvas id="lbAvatar" width="52" height="52" aria-hidden="true"></canvas>
+                <div class="lbPinfo">
+                  <b><span id="lbName">Pemain</span> <span style="font-size:12px; color:var(--muted); font-weight:400;">✏️</span></b>
+                  <small>Lv. <span id="lbPilotLv">1</span> Pilot · Rank <span id="lbRankName">Bronze</span> · Terbaik <span id="menuHi">0</span></small>
+                  <div class="lbXpBar"><div id="lbXpFill"></div></div>
+                  <small id="lbXpText">Kumpulkan permata XP untuk naik level pilot…</small>
+                </div>
+              </div>
+              <div class="lbWallet">
+                <span class="lbCur gem" title="Total permata XP yang pernah kamu kumpulkan">💎 <b id="menuGems">0</b></span>
+                <span class="lbCur">🪙 <b id="menuCoins">0</b></span>
+                <div class="rowBtns2">
+                  <button class="lbIconBtn" id="lbBtnNoticeTop" aria-label="Pengumuman">🔔<span class="dot" id="dotNoticeTop"></span></button>
+                  <button class="lbIconBtn" id="lbBtnSettings" aria-label="Pengaturan">⚙️</button>
+                </div>
+              </div>
             </div>
+            <!-- ===== LOBBY: baris ikon fitur ===== -->
+            <div class="lbIcons">
+              <button class="lbIco" id="lbIcoEvent"><span class="ic">🎁</span>Event<span class="dot" id="dotEvent"></span></button>
+              <button class="lbIco" id="lbIcoDaily"><span class="ic">📅</span>Daily Mission<span class="dot" id="dotDaily"></span></button>
+              <button class="lbIco" id="lbIcoRank"><span class="ic">🏆</span>Ranking</button>
+              <button class="lbIco" id="lbIcoAch"><span class="ic">🎖️</span>Achievement</button>
+              <button class="lbIco" id="lbIcoNotice"><span class="ic">📣</span>Notice<span class="dot" id="dotNotice"></span></button>
+            </div>
+            <!-- ===== LOBBY: banner ===== -->
+            <div class="lbBanners">
+              <button class="lbBanner ev" id="lbBannerEvent"><b>⭐ AETHERION</b><small>LIMITED — jet terkuat, kini di Hanggar!</small></button>
+              <button class="lbBanner fr" id="lbBannerFree"><b>🎁 Free Rewards</b><small>Login &amp; misi harian = koin + diamond 💎 — klaim di sini!</small></button>
+            </div>
+            <!-- ===== LOBBY: panggung hangar ===== -->
+            <div class="lbStage">
+              <canvas id="lbStageShip" width="240" height="170" aria-hidden="true"></canvas>
+              <div class="lbPlatform"></div>
+              <div class="lbShipMeta"><b id="lbShipName">Falcon</b><small id="lbShipDesc">Pesawat terpilih</small></div>
+              <div class="lbSeason">🏆 Season 1<span id="lbSeasonCd">—</span></div>
+              <div class="lbAchChip">🏅 Pencapaian <b id="menuAch">0 / 10</b></div>
+            </div>
+            <!-- ===== LOBBY: kartu mode + PLAY ===== -->
+            <div class="lbModeRow">
+              <button class="lbModeCard" id="lbModeCard"><small>MODE</small><b>Endless</b><span id="lbModeInfo">Normal · Space Galaxy</span><span class="arr">Atur ▾</span></button>
+            </div>
+            <div id="missionSettings">
             <div class="diffHead"><label>LEVEL KESULITAN</label><span>Pilih sebelum main</span></div>
             <div class="diffGrid" id="diffGrid" role="radiogroup" aria-label="Level kesulitan"></div>
+            <div class="diffHead"><label>LATAR PERMAINAN</label><span>Arena tempurmu</span></div>
+            <div class="bgGrid" id="bgGrid" role="radiogroup" aria-label="Latar permainan"></div>
+            </div>
             <div class="menuBtns">
               <button class="mbtn primary" id="btnPlay">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3.8v16.4c0 .9 1 1.5 1.8 1L21 13a1.2 1.2 0 0 0 0-2L7.8 2.9C7 2.4 6 3 6 3.8Z"/></svg>
-                Main <span class="sub">Mulai baru</span>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3.8v16.4c0 .9 1 1.5 1.8 1L21 13a1.2 1.2 0 0 0 0-2L7.8 2.9C7 2.4 6 3 6 3.8Z"/></svg>
+                PLAY <span class="sub">Mulai — Mode Endless</span>
               </button>
               <button class="mbtn" id="btnContinue">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round"/></svg>
                 Lanjutkan <span class="sub" id="continueInfo">Tidak ada simpanan</span>
               </button>
+            </div>
+            <p class="secLbl" style="margin:18px 0 9px;">SEMUA FITUR</p>
+            <div class="featGrid">
               <button class="mbtn" id="btnDaily">
                 <span style="font-size:19px; line-height:1;">📅</span>
                 Tantangan Harian <span class="sub" id="dailyInfo">Susunan musuh hari ini</span>
+              </button>
+              <button class="mbtn" id="btnCampaign">
+                <span style="font-size:19px; line-height:1;">🎖️</span>
+                Mode Kampanye <span class="sub" id="campaignInfo">5 level cerita</span>
+              </button>
+              <button class="mbtn" id="btnMissions">
+                <span style="font-size:19px; line-height:1;">🎯</span>
+                Misi Harian <span class="sub" id="misInfo">3 misi + login harian berhadiah</span>
+              </button>
+              <button class="mbtn" id="btnRush">
+                <span style="font-size:19px; line-height:1;">👑</span>
+                Boss Rush <span class="sub" id="rushInfo">Boss nonstop, tanpa musuh kecil</span>
+              </button>
+              <button class="mbtn" id="btnGallery">
+                <span style="font-size:19px; line-height:1;">👾</span>
+                Galeri Musuh <span class="sub">Musuh &amp; boss yang sudah dikalahkan</span>
+              </button>
+              <button class="mbtn" id="btnProfile">
+                <span style="font-size:19px; line-height:1;">🪪</span>
+                Profil <span class="sub" id="profInfo">Nickname, background &amp; banner</span>
+              </button>
+              <button class="mbtn" id="btnSpin">
+                <span style="font-size:19px; line-height:1;">🎰</span>
+                Spin Berlian <span class="sub" id="spinInfo">Skin langka · 10 💎 / putaran</span>
+              </button>
+              <button class="mbtn" id="btnTutorial">
+                <span style="font-size:19px; line-height:1;">🎓</span>
+                Tutorial <span class="sub" id="tutInfo">Panduan 30 detik + bonus 50 🪙</span>
               </button>
               <button class="mbtn" id="btnLeaderboard">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" stroke-linecap="round"/></svg>
@@ -487,6 +788,14 @@
                 Pasang sebagai Aplikasi
               </button>
             </div>
+            <!-- ===== LOBBY: navigasi bawah ===== -->
+            <nav class="lbNav" aria-label="Navigasi lobi">
+              <button class="lbNavBtn" id="lbNavShop"><span class="ic">🛒</span>Shop</button>
+              <button class="lbNavBtn" id="lbNavUpgrade"><span class="ic">⬆️</span>Upgrade</button>
+              <button class="lbNavBtn" id="lbNavSkin"><span class="ic">🎨</span>Skin</button>
+              <button class="lbNavBtn" id="lbNavDrone"><span class="ic">🤖</span>Drone</button>
+              <button class="lbNavBtn" id="lbNavInv"><span class="ic">🎒</span>Inventory</button>
+            </nav>
             <div class="menuFooter">
               <p class="lbl">DIBUAT OLEH</p>
               <a class="igLink" href="https://www.instagram.com/rfyjntan" target="_blank" rel="noopener">
@@ -514,6 +823,21 @@
               <input type="range" id="rngMusic" min="0" max="100" step="1" />
             </div>
             <div class="setRow">
+              <label>Musik Latar (Menu &amp; Permainan)</label>
+              <div class="seg" id="segMusicOn">
+                <button data-m="on">🎵 Nyala</button>
+                <button data-m="off">🔇 Mati</button>
+              </div>
+            </div>
+            <div class="setRow">
+              <label>Mode Hemat — untuk HP Spek Rendah</label>
+              <div class="seg" id="segEco">
+                <button data-e="off">Mati</button>
+                <button data-e="on">⚡ Nyala</button>
+              </div>
+              <p style="color:var(--muted); font-weight:600; font-size:13.5px; margin:8px 0 0; line-height:1.4;">Mode hemat: grafik paling ringan, resolusi rendah, efek &amp; partikel minimal, musik mati — game tetap lancar tanpa freeze di HP kentang.</p>
+            </div>
+            <div class="setRow">
               <label>Volume Efek Suara — <span class="val" id="sfxVal">80%</span></label>
               <input type="range" id="rngSfx" min="0" max="100" step="1" />
             </div>
@@ -528,14 +852,21 @@
             <div class="howList growScroll">
               <div class="row"><div class="ic">👆</div><p>Geser untuk bergerak<small>Sentuh &amp; geser layar ke mana saja — pesawat mengikuti gerakan jarimu untuk menghindari tembakan musuh. Di PC: seret mouse, atau tombol <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / panah.</small></p></div>
               <div class="row"><div class="ic">🔫</div><p>Tembakan otomatis<small>Pesawat menembak sendiri tanpa henti — tidak ada tombol tembak. Tugasmu cuma menghindar dan tetap berada di posisi aman.</small></p></div>
-              <div class="row"><div class="ic">⭐</div><p>XP &amp; pilih skill<small>Musuh yang hancur menjatuhkan permata XP — terbang melewatinya untuk mengambil. Setiap naik level, permainan berhenti sejenak dan kamu memilih sendiri 1 dari 3 skill acak yang ditawarkan (tembakan cepat, peluru berat, misil pendamping, magnet XP, dan lainnya). Skill menumpuk sepanjang permainan!</small></p></div>
+              <div class="row"><div class="ic">⭐</div><p>XP &amp; pilih skill<small>Musuh yang hancur kadang menjatuhkan permata XP — tidak selalu, drop-nya cukup langka — terbang melewatinya untuk mengambil. XP yang dibutuhkan untuk naik level makin besar seiring levelmu naik (Level 2 butuh 10 XP, Level 5 butuh 37, Level 10 butuh 114), jadi level tinggi jauh lebih lama dicapai. Setiap naik level, permainan berhenti sejenak dan kamu memilih sendiri 1 dari 3 skill acak yang ditawarkan: tembakan cepat, peluru berat, misil pendamping, magnet XP, LASER BIRU (sinar lurus menembus dari ujung sayap), PLASMA CANNON (bola plasma raksasa berkala), DRONE PENDAMPING (mengorbit &amp; ikut menembak musuh terdekat), dan lainnya. Skill menumpuk sepanjang permainan!</small></p></div>
               <div class="row"><div class="ic">♾️</div><p>Mode endless &amp; boss<small>Tidak ada lagi gelombang atau stage — permainan berjalan terus selama kamu bertahan, melintasi latar galaksi penuh nebula berwarna dan planet-planet yang melayang lewat (raksasa gas, planet bercincin, planet lava, es, dan lainnya). Semakin lama, musuh makin banyak, makin cepat, dan makin tebal, termasuk musuh ELITE bermahkota yang alot dan menembak menyebar. Boss besar datang berkala berdasarkan waktu bertahan (bar HP merah di atas layar) — dan setiap boss BERBEDA model, warna &amp; pola serangnya, berputar lewat 5 kelas: VORTEX (spiral kembar), TALON (kipas lebar), AEGIS (tembakan memburu + cincin peluru), HYDRA (spiral tiga lengan), dan DREADNOUGHT (raksasa campuran spiral + kipas). HP boss naik BERLIPAT di setiap kemunculan — boss ke-5 sudah sekitar dua kali lebih alot, boss ke-10 sekitar lima kali — badannya ikut membesar, pelurunya makin cepat, dan tembakannya makin rapat. Dan di bawah 35% HP boss mengamuk, menembak lebih cepat lagi! Setiap menit bertahan ada bonus skor!</small></p></div>
-              <div class="row"><div class="ic">⚡</div><p>Ambil power-up<small><b style="color:var(--cyan)">W</b> = senjata ganda/triple, <b style="color:var(--green)">S</b> = perisai pelindung, <b style="color:var(--pink)">♥</b> = nyawa ekstra.</small></p></div>
+              <div class="row"><div class="ic">⚡</div><p>Ambil power-up<small><b style="color:var(--cyan)">W</b> = senjata ganda/triple, <b style="color:var(--green)">S</b> = perisai pelindung, <b style="color:var(--pink)">♥</b> = nyawa ekstra (paling langka di antara yang umum), <b style="color:var(--amber)">×2</b> = DOUBLE DAMAGE — semua damage dua kali lipat selama 12 detik, <b style="color:#ff7a3d">💥</b> = ULTIMATE NOVA — ledakan energi menghantam semua musuh di layar sekaligus (paling langka!).</small></p></div>
               <div class="row"><div class="ic">🔥</div><p>Kombo skor<small>Hancurkan musuh beruntun tanpa terkena tembakan untuk menaikkan pengali kombo: 8 kill beruntun = ×2, 15 = ×3, 25 = ×4, 40 = ×5. Kombo punya batas waktu 4 detik sejak kill terakhir — dan sekali kena hit, kombo langsung putus dan pengali kembali ×1. Jangan rakus!</small></p></div>
               <div class="row"><div class="ic">📅</div><p>Tantangan harian<small>Setiap hari ada satu susunan musuh yang sama untuk semua pemain. Mainkan lewat tombol Tantangan Harian di menu utama, lalu catat skormu di tab Harian pada Leaderboard untuk dibandingkan dengan teman yang main di perangkat ini.</small></p></div>
-              <div class="row"><div class="ic">🪙</div><p>Koin, pesawat &amp; upgrade<small>Setiap musuh yang hancur memberi koin (elite &amp; boss memberi jauh lebih banyak), ditambah bonus dari skor akhir. Tukarkan di Hanggar: buka pesawat Viper (cepat), Titan (damage besar + nyawa), atau Spectre (peluru tembus), dan beli upgrade permanen — damage, kecepatan, laju tembak, nyawa awal. Setiap pesawat punya model, warna &amp; bentuk peluru sendiri — baut energi biru Falcon, tracer hijau Viper, peluru meriam oranye Titan, pecahan kristal ungu Spectre — lengkap dengan kilat moncong, jejak cahaya, dan kilatan kena sewarna pelurunya.</small></p></div>
+              <div class="row"><div class="ic">🪙</div><p>Koin, pesawat &amp; upgrade<small>Setiap musuh yang hancur memberi koin (elite &amp; boss memberi jauh lebih banyak), ditambah bonus dari skor akhir. Tukarkan di Hanggar: buka pesawat Viper (cepat), Titan (damage besar + nyawa), Spectre (peluru tembus), atau yang paling mahal — Aetherion, jet putih-perak bermesin ganda api biru dengan tembakan plasma biru dan spesial NOVA BEAM: sinar energi biru raksasa yang menyembur otomatis tiap 6 detik membakar semua musuh di jalurnya plus cincin shockwave biru di setiap kill-nya — dan beli upgrade permanen: damage, kecepatan, laju tembak, nyawa awal. Setiap pesawat punya model, warna &amp; bentuk peluru sendiri — baut energi biru Falcon, tracer hijau Viper, peluru meriam oranye Titan, pecahan kristal ungu Spectre, plasma biru menyala Aetherion — lengkap dengan kilat moncong, jejak cahaya, dan kilatan kena sewarna pelurunya.</small></p></div>
               <div class="row"><div class="ic">🎚️</div><p>Level kesulitan<small>Pilih di menu utama sebelum main: <b>Easy</b> (musuh lambat &amp; rapuh, 4 nyawa), <b>Normal</b> (seimbang), <b>Hard</b> (lebih cepat &amp; tebal), <b>Extreme</b> (gerombolan padat, boss sangat tebal), sampai <b>Impossible</b> (serba maksimal, cuma 2 nyawa). Mode makin sulit = pengali skor makin besar: Easy ×1 · Normal ×1,5 · Hard ×2 · Extreme ×3 · Impossible ×5.</small></p></div>
               <div class="row"><div class="ic">🏆</div><p>Leaderboard<small>Setiap game over, skormu terkirim OTOMATIS ke papan 🌐 Global — 10 skor tertinggi dari semua pemain di semua perangkat, jadi siapa pun bisa melihat peringkatmu. Kalau skormu juga masuk 10 besar di perangkat ini, tulis namamu dan skormu tercatat di papan per-HP — lengkap dengan mode, waktu bertahan, jumlah musuh yang dihancurkan, dan tanggalnya. Buka Leaderboard dari menu utama untuk melihat semua peringkat: tab Global, per level kesulitan, atau tab Harian. Lagi offline? Papan per-HP tetap tampil seperti biasa.</small></p></div>
+              <div class="row"><div class="ic">🌆</div><p>4 latar permainan<small>Pilih di Lobi sebelum main: <b>Space Galaxy</b> (nebula &amp; planet), <b>Cyber City</b> (terbang di atas kota futuristik lampu neon), <b>Asteroid Field</b> (batu asteroid beterbangan jadi rintangan — tabrakan melukaimu, tapi batu bisa dihancurkan untuk skor!), dan <b>Alien Planet</b> (planet bercincin raksasa &amp; daratan misterius).</small></p></div>
+              <div class="row"><div class="ic">👾</div><p>Musuh &amp; boss baru<small>Selain drone biasa, dart, penembak &amp; elite: <b>ALIEN FIGHTER</b> oranye yang bergelombang sambil menembak (muncul setelah 75 detik), dan <b>KAMIKAZE</b> merah yang menukik memburumu (setelah 100 detik). Boss kini berputar lewat 7 kelas — termasuk <b>MEGA BATTLESHIP</b> (kapal induk super lebar) dan <b>ALIEN OVERLORD</b> (siluet hitam berduri yang memanggil pasukan dart &amp; bergantian menembak spiral dan memburu).</small></p></div>
+              <div class="row"><div class="ic">🎖️</div><p>Mode Kampanye<small>5 level cerita berurutan dari tombol Mode Kampanye / ikon Event di Lobi. Setiap level: hancurkan jumlah musuh yang diminta, lalu kalahkan boss penjaganya (boss-nya beda tiap level — level terakhir ALIEN OVERLORD!). Menang memberi bonus koin dan membuka level berikutnya. Run kampanye tidak menimpa simpanan Lanjutkan mode endless.</small></p></div>
+              <div class="row"><div class="ic">🏅</div><p>Sistem Rank<small>Skor tertinggimu menentukan rank: Bronze → Silver (5.000) → Gold (15.000) → Platinum (35.000) → Diamond (75.000) → Master (150.000) → Legendary (300.000). Progres menuju rank berikutnya tampil di bar profil Lobi, HUD saat main, dan layar Statistik.</small></p></div>
+              <div class="row"><div class="ic">🎯</div><p>Misi, login &amp; diamond<small>Setiap hari ada 3 Misi Harian (hancurkan 100 musuh, bertahan 3 menit dalam satu permainan, kalahkan 1 boss) dan Hadiah Login 7 hari beruntun yang makin besar — hadiahnya koin + diamond 💎. Diamond juga bisa jatuh dari musuh saat main, tapi LANGKA BANGET: musuh biasa di bawah 1%, elite ±3%, boss ±30% — dan cuma 1 💎 per drop, tampil berkilau supaya gampang terlihat. Sumber utama diamond tetap misi &amp; login!</small></p></div>
+              <div class="row"><div class="ic">🎰</div><p>Spin &amp; profil<small>Diamond dipakai di SPIN (10 💎/putaran) untuk skin pesawat langka, background &amp; banner profil eksklusif yang tidak dijual di mana pun. Ketuk bar profil di Lobi untuk membuka layar Profil: ganti nickname (maks 20 karakter), background &amp; banner profilmu di sana.</small></p></div>
+              <div class="row"><div class="ic">👑</div><p>Boss Rush &amp; Galeri<small>Boss Rush: lawan boss terus-menerus tanpa musuh kecil — skor khusus, dan rekor skor + jumlah boss-mu tercatat di Statistik. Galeri Musuh (tombol di menu) mencatat tiap musuh &amp; boss yang pernah kamu kalahkan beserta HP &amp; pola serangannya. Pemain baru? Coba Tutorial interaktif 30 detik dari menu — ada bonus 50 🪙!</small></p></div>
               <div class="row"><div class="ic">⏸️</div><p>Jeda &amp; simpan<small>Tombol ❚❚ atau <kbd>P</kbd> untuk jeda. Progres tersimpan <b>otomatis</b> setiap kali jeda atau keluar ke menu — lanjutkan kapan saja lewat tombol Lanjutkan di menu utama.</small></p></div>
             </div>
             <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
@@ -570,7 +901,7 @@
             <div class="growScroll">
               <p class="secLbl" style="margin-top:4px;">PESAWAT</p>
               <div id="shipList"></div>
-              <p class="secLbl">UPGRADE PERMANEN</p>
+              <p class="secLbl" id="upAnchor">UPGRADE PERMANEN</p>
               <div id="upList"></div>
               <p style="color:var(--muted); font-weight:600; font-size:14px; line-height:1.45;">Koin didapat dari setiap musuh yang hancur — elite memberi 5, boss memberi 30 — ditambah bonus 1 koin tiap 2.000 skor di akhir permainan. Pesawat &amp; upgrade yang dibeli berlaku permanen untuk semua permainan berikutnya, di semua mode.</p>
             </div>
@@ -626,6 +957,7 @@
             <h2 style="color:var(--pink);">GAME OVER</h2>
             <p id="newRecord">🏆 Rekor baru!</p>
             <p id="ovDaily" style="display:none; color:var(--cyan); font-weight:700; margin:0 0 12px; font-size:15px;">📅 Tantangan Harian — <span id="ovDailyDate"></span></p>
+            <p id="ovRush" style="display:none; color:var(--amber); font-weight:700; margin:0 0 12px; font-size:15px;">👑 Boss Rush — <span id="ovRushInfo"></span></p>
             <div id="gameOverStats">
               <div class="cell"><small>SKOR AKHIR</small><b id="ovScore">0</b></div>
               <div class="cell"><small>SKOR TERTINGGI</small><b id="ovHi">0</b></div>
@@ -637,12 +969,14 @@
               <div class="cell"><small>KOIN DIDAPAT</small><b id="ovCoins" style="color:var(--amber);">+0</b></div>
               <div class="cell"><small>SKILL DIDAPAT</small><b id="ovSkills">0</b></div>
               <div class="cell"><small>LEVEL KESULITAN</small><b id="ovDiff">Normal</b></div>
+              <div class="cell"><small>RANK</small><b id="ovRank">Bronze</b></div>
+              <div class="cell"><small>LATAR</small><b id="ovBg">Space Galaxy</b></div>
             </div>
             <div id="lbEntry">
               <p id="lbEntryTitle">🏆 Skormu masuk <b>10 Besar!</b></p>
               <small id="lbEntryNote">Catat namamu di leaderboard supaya skor tertinggi ini tersimpan dengan namamu.</small>
               <div class="rowIn">
-                <input id="lbName" type="text" maxlength="16" placeholder="Nama pemain" autocomplete="off" enterkeyhint="done" />
+                <input id="lbNameInput" type="text" maxlength="20" placeholder="Nama pemain" autocomplete="off" enterkeyhint="done" />
                 <button id="btnSaveScore">Simpan Skor</button>
               </div>
             </div>
@@ -662,6 +996,160 @@
             <p class="tagline" style="margin-bottom:14px; text-align:center;">Kamu mencapai <b id="lvNow" style="color:var(--ink);">Level 2</b> — ketuk untuk memilih <b style="color:var(--amber);">1 dari 3 skill acak</b> ini:</p>
             <div class="skillChoices" id="skillChoices"></div>
             <p style="color:var(--muted); font-weight:600; font-size:14px; text-align:center; margin:10px 0 0;">Skill yang dipilih langsung aktif dan menumpuk dengan skill yang sudah kamu punya.</p>
+          </div>
+        </section>
+
+        <!-- ===== MODE KAMPANYE: PILIH LEVEL CERITA ===== -->
+        <section class="screen" id="scrCampaign">
+          <div class="card cardFlex">
+            <h2>🎖️ Mode Kampanye</h2>
+            <p class="lbNote">Lima level cerita berurutan. Di setiap level: hancurkan jumlah musuh yang diminta, lalu kalahkan boss penjaganya. Menang membuka level berikutnya — dan memberi bonus koin!</p>
+            <div class="growScroll" id="campaignList"></div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== KAMPANYE: LEVEL SELESAI ===== -->
+        <section class="screen" id="scrCampWin">
+          <div class="card">
+            <h2 style="color:var(--green); text-align:center;">🎉 LEVEL SELESAI!</h2>
+            <p class="tagline" style="text-align:center;" id="campWinInfo">Kamu menuntaskan level ini.</p>
+            <div id="gameOverStats" style="grid-template-columns:1fr 1fr;">
+              <div class="cell"><small>SKOR</small><b id="cwScore">0</b></div>
+              <div class="cell"><small>BONUS KOIN</small><b id="cwBonus" style="color:var(--amber);">+0 🪙</b></div>
+            </div>
+            <div class="menuBtns">
+              <button class="mbtn primary" id="btnCampNext">Level Berikutnya ▶</button>
+              <button class="mbtn" id="btnCampReplay">Ulangi Level Ini</button>
+              <button class="mbtn" id="btnCampMenu">Ke Menu Utama</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== NOTICE: PENGUMUMAN ===== -->
+        <section class="screen" id="scrNotice">
+          <div class="card">
+            <h2>📣 Pengumuman</h2>
+            <div class="howList">
+              <div class="row"><div class="ic">💠</div><p>Pesawat baru: AETHERION<small>Jet putih-perak bermesin ganda api biru dari foto referensi — pesawat termahal di Hanggar (2.500 koin) dengan spesial NOVA BEAM dan tembakan plasma biru.</small></p></div>
+              <div class="row"><div class="ic">🎖️</div><p>Mode Kampanye hadir<small>5 level cerita berurutan dengan boss penjaga berbeda — tuntaskan untuk bonus koin dan membuka level berikutnya.</small></p></div>
+              <div class="row"><div class="ic">🌆</div><p>4 latar permainan<small>Space Galaxy, Cyber City, Asteroid Field (ada rintangan batu beterbangan!), dan Alien Planet — pilih di Lobi sebelum main.</small></p></div>
+              <div class="row"><div class="ic">🏅</div><p>Sistem Rank Bronze → Legendary<small>Rank naik mengikuti skor tertinggimu. Cek progresnya di bar profil Lobi dan layar Statistik.</small></p></div>
+              <div class="row"><div class="ic">⚖️</div><p>Penyeimbangan drop<small>Drop nyawa &amp; permata XP kini lebih langka, dan XP yang dibutuhkan per level naik makin curam — level tinggi terasa lebih berharga.</small></p></div>
+              <div class="row"><div class="ic">🎯</div><p>Misi &amp; Login Harian berhadiah<small>3 misi baru tiap hari + hadiah login 7 hari beruntun yang makin besar — hadiahnya koin DAN diamond 💎. Klaim dari tombol Misi Harian di menu atau banner Free Rewards.</small></p></div>
+              <div class="row"><div class="ic">🎰</div><p>Spin Berlian &amp; Profil ala FF<small>Diamond dipakai untuk SPIN: skin pesawat langka, background &amp; banner profil eksklusif yang TIDAK dijual di Hanggar. Atur nickname, background &amp; banner di layar Profil — ketuk bar profil di Lobi!</small></p></div>
+              <div class="row"><div class="ic">👑</div><p>Boss Rush, Galeri Musuh &amp; Tutorial<small>Mode Boss Rush: boss datang terus tanpa musuh kecil, ada rekor khususnya. Galeri Musuh mencatat semua musuh &amp; boss yang sudah dikalahkan lengkap dengan HP &amp; pola serangan. Pemain baru bisa belajar dari Tutorial 30 detik.</small></p></div>
+              <div class="row"><div class="ic">⚡</div><p>Mode Hemat untuk HP kentang<small>Game kini otomatis meringankan grafik saat FPS turun, dan ada Mode Hemat di Pengaturan — efek minimal, resolusi rendah, musik mati — biar tetap lancar tanpa freeze di HP spek rendah.</small></p></div>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== DRONE PENDAMPING ===== -->
+        <section class="screen" id="scrDrone">
+          <div class="card">
+            <h2>🤖 Drone Pendamping</h2>
+            <div class="howList">
+              <div class="row"><div class="ic">🛸</div><p>Apa itu drone pendamping?<small>Bot tempur kecil yang mengorbit pesawatmu dan otomatis menembaki musuh terdekat (termasuk boss) setiap setengah detik — damage-nya mengikuti damage pesawatmu, termasuk saat Double Damage aktif.</small></p></div>
+              <div class="row"><div class="ic">⭐</div><p>Cara mendapatkannya<small>Drone adalah pilihan SKILL saat naik level: kumpulkan XP, naik level, lalu pilih kartu "🤖 Drone Pendamping" dari 3 skill acak yang ditawarkan. Ambil lagi di level berikutnya untuk menambah jumlah drone (maksimal tampil mengorbit bersamaan).</small></p></div>
+              <div class="row"><div class="ic">💡</div><p>Tips<small>Kombinasikan dengan Laser Biru &amp; Plasma Cannon untuk daya hancur maksimal. Drone tetap menembak walau kamu sibuk menghindar — cocok untuk mode Hard ke atas dan boss Alien Overlord yang memanggil pasukan.</small></p></div>
+            </div>
+            <div class="menuBtns" style="margin-top:16px;">
+              <button class="mbtn primary" id="btnDronePlay">Main Sekarang — Buru Skill Drone!</button>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== MISI & LOGIN HARIAN ===== -->
+        <section class="screen" id="scrMissions">
+          <div class="card cardFlex">
+            <h2>🎯 Misi &amp; Hadiah Harian</h2>
+            <div class="growScroll">
+              <p class="secLbl" style="margin-top:2px;">🎁 LOGIN HARIAN — <span id="loginStreakLbl">—</span></p>
+              <div class="loginGrid" id="loginGrid"></div>
+              <button class="mbtn primary" id="btnClaimLogin" style="justify-content:center; margin:0 0 6px;">🎁 Klaim Hadiah Hari Ini</button>
+              <p class="secLbl">📅 MISI HARIAN — <span id="misDateLbl">—</span></p>
+              <div id="missionList"></div>
+              <p style="color:var(--muted); font-weight:600; font-size:14px; line-height:1.45;">Misi &amp; login direset tiap tengah malam. Diamond 💎 dari misi &amp; login bisa dipakai untuk SPIN skin langka — kumpulkan terus!</p>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== GALERI MUSUH ===== -->
+        <section class="screen" id="scrGallery">
+          <div class="card cardFlex">
+            <h2>👾 Galeri Musuh</h2>
+            <p class="lbNote">Semua musuh &amp; boss yang pernah kamu kalahkan tercatat di sini, lengkap dengan HP dan pola serangannya. Yang masih gelap = belum pernah dikalahkan.</p>
+            <div class="growScroll" id="galleryList"></div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== PROFIL PILOT ===== -->
+        <section class="screen" id="scrProfile">
+          <div class="card cardFlex">
+            <h2>🪪 Profil Pilot</h2>
+            <div class="growScroll">
+              <div class="profHead" id="profHead">
+                <div class="profBannerLine" id="profBannerLine">⭐ Pilot Andalan</div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <canvas id="profAvatar" width="72" height="72" style="flex:0 0 auto; background:rgba(4,10,22,.55); border:1px solid rgba(255,255,255,.35); border-radius:12px;" aria-hidden="true"></canvas>
+                  <div style="min-width:0;">
+                    <b id="profName" style="font-family:'Orbitron',sans-serif; font-size:19px; display:block;">Pemain</b>
+                    <small id="profMeta" style="font-weight:600; opacity:.88;">Lv. 1 Pilot · Rank Bronze</small>
+                  </div>
+                </div>
+              </div>
+              <p class="secLbl" style="margin-top:2px;">✏️ GANTI NICKNAME (MAKS 20 KARAKTER)</p>
+              <div class="nickRow">
+                <input id="nickInput" type="text" maxlength="20" placeholder="Nickname kamu" autocomplete="off" enterkeyhint="done" />
+                <button class="gBtn use" id="btnSaveNick" style="border-radius:10px;">Simpan</button>
+              </div>
+              <p style="color:var(--muted); font-weight:600; font-size:13.5px; margin:0 0 4px; line-height:1.4;">Nickname tampil di profil &amp; jadi nama default di leaderboard lokal + global — tidak perlu ketik ulang tiap game over, tapi tetap bisa diganti di layar game over.</p>
+              <p class="secLbl">STATISTIK SINGKAT</p>
+              <div class="statGrid" id="profStats"></div>
+              <p class="secLbl">🖼️ BACKGROUND PROFIL</p>
+              <div class="pickGrid" id="profBgGrid"></div>
+              <p class="secLbl">🎌 BANNER PROFIL</p>
+              <div class="pickGrid" id="profBannerGrid"></div>
+              <button class="mbtn" id="btnProfileSpin" style="margin-top:8px;">🎰 Spin Skin Langka <span class="sub">Background &amp; banner langka ada di roda spin!</span></button>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== SPIN BERLIAN ===== -->
+        <section class="screen" id="scrSpin">
+          <div class="card cardFlex">
+            <h2>🎰 Spin Berlian</h2>
+            <div class="coinLine">💎 Diamond kamu <b id="spinDiaBal" style="color:#7dd3fc;">0</b></div>
+            <div class="growScroll">
+              <div id="spinWheelWrap">
+                <div id="spinWheel"></div>
+                <div class="spinPtr">🔻</div>
+                <div class="spinCenter">🎰</div>
+              </div>
+              <p id="spinResult">Putar rodanya — skin langka cuma bisa didapat di sini!</p>
+              <button class="mbtn primary" id="btnSpinGo" style="justify-content:center;">🎰 SPIN — 10 💎</button>
+              <p class="secLbl">HADIAH DI RODA INI</p>
+              <div id="spinPrizes"></div>
+              <p style="color:var(--muted); font-weight:600; font-size:14px; line-height:1.45;">Diamond didapat dari Misi Harian, Login Harian, dan — kalau beruntung — drop super langka dari musuh &amp; boss saat main. Hadiah duplikat (skin / background / banner yang sudah kamu punya) otomatis berubah jadi +8 💎.</p>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== TUTORIAL SELESAI ===== -->
+        <section class="screen" id="scrTutDone">
+          <div class="card" style="text-align:center;">
+            <h2 style="color:var(--green);">🎓 TUTORIAL SELESAI!</h2>
+            <p class="tagline" id="tutDoneInfo">Kamu sudah menguasai dasar-dasarnya. Selamat bertempur, Pilot!</p>
+            <div class="menuBtns">
+              <button class="mbtn primary" id="btnTutPlay" style="justify-content:center;">▶ Main Sekarang</button>
+              <button class="mbtn" id="btnTutMenu" style="justify-content:center;">Ke Menu Utama</button>
+            </div>
           </div>
         </section>
 
@@ -743,6 +1231,16 @@ function mergeSavedData(base, other){
   out.settings = base.settings || other.settings;
   out.hi = Math.max(base.hi || 0, other.hi || 0);
   out.coins = Math.max(base.coins || 0, other.coins || 0);
+  out.diamonds = Math.max(base.diamonds || 0, other.diamonds || 0);
+  out.rushBest = Math.max(base.rushBest || 0, other.rushBest || 0);
+  out.rushBosses = Math.max(base.rushBosses || 0, other.rushBosses || 0);
+  out.gallery = Object.assign({}, base.gallery || {}, other.gallery || {});
+  out.profile = other.profile || base.profile || { bg:"nebula", banner:"pilot" };
+  const loot = (base.spinLoot || []).slice();
+  (other.spinLoot || []).forEach(s=>{ if(loot.indexOf(s) < 0) loot.push(s); });
+  out.spinLoot = loot;
+  out.campaign = Math.max(base.campaign || 0, other.campaign || 0);
+  out.bg = other.bg || base.bg || "galaxy";
   const seen = {}, lb = [];
   (base.leaderboard || []).concat(other.leaderboard || []).forEach(e=>{
     if(!e || typeof e.score !== "number") return;
@@ -753,7 +1251,7 @@ function mergeSavedData(base, other){
   out.leaderboard = lb.slice(0, 10);
   out.ach = Object.assign({}, base.ach || {}, other.ach || {});
   const bs = base.stats || {}, os = other.stats || {}, st = Object.assign({}, bs, os);
-  ["kills","bosses","powerups","playTime","games","shots","hits","bestCombo","coinsEarned"].forEach(k=>{ st[k] = Math.max(bs[k] || 0, os[k] || 0); });
+  ["kills","bosses","powerups","playTime","games","shots","hits","bestCombo","coinsEarned","gems"].forEach(k=>{ st[k] = Math.max(bs[k] || 0, os[k] || 0); });
   out.stats = st;
   const owned = (base.shipsOwned || []).slice();
   (other.shipsOwned || []).forEach(s=>{ if(owned.indexOf(s) < 0) owned.push(s); });
@@ -791,6 +1289,20 @@ store.load();
 const S = store.data.settings;
 if(!Array.isArray(store.data.leaderboard)) store.data.leaderboard = [];
 if(!store.data.difficulty) store.data.difficulty = "normal";
+if(!store.data.bg) store.data.bg = "galaxy";
+if(typeof store.data.campaign !== "number") store.data.campaign = 0;
+/* Migrasi fitur baru: diamond, misi harian, login harian, galeri, profil, spin, boss rush, tutorial */
+if(typeof store.data.diamonds !== "number") store.data.diamonds = 0;
+if(!store.data.missions || typeof store.data.missions !== "object") store.data.missions = null;
+if(!store.data.login || typeof store.data.login !== "object") store.data.login = { last:"", streak:0 };
+if(!store.data.gallery || typeof store.data.gallery !== "object") store.data.gallery = {};
+if(!store.data.profile || typeof store.data.profile !== "object") store.data.profile = { bg:"nebula", banner:"pilot" };
+if(!Array.isArray(store.data.spinLoot)) store.data.spinLoot = [];
+if(typeof store.data.rushBest !== "number") store.data.rushBest = 0;
+if(typeof store.data.rushBosses !== "number") store.data.rushBosses = 0;
+if(typeof store.data.tutDone !== "boolean") store.data.tutDone = false;
+if(S.musicOn === undefined) S.musicOn = true;
+if(S.eco === undefined) S.eco = false;
 /* Migrasi & nilai bawaan fitur baru: endless, kombo, koin, hanggar, statistik, tantangan harian */
 if(typeof store.data.coins !== "number") store.data.coins = 0;
 if(!Array.isArray(store.data.shipsOwned) || !store.data.shipsOwned.length) store.data.shipsOwned = ["falcon"];
@@ -804,6 +1316,7 @@ if(!store.data.daily || typeof store.data.daily !== "object" || !Array.isArray(s
   if(typeof st.hits !== "number") st.hits = 0;
   if(typeof st.bestCombo !== "number") st.bestCombo = 0;
   if(typeof st.coinsEarned !== "number") st.coinsEarned = 0;
+  if(typeof st.gems !== "number") st.gems = 0;
   if(!st.bestTime || typeof st.bestTime !== "object") st.bestTime = {};
 })();
 /* Pemulihan dari cermin IndexedDB: gabungkan salinan yang tersimpan di sana,
@@ -989,17 +1502,24 @@ function renderLeaderboard(){
       list.innerHTML = '<div class="lbEmpty">Belum ada skor global.<br>Jadilah yang pertama — selesaikan satu permainan dan skormu langsung tampil di sini untuk semua pemain!</div>';
       return;
     }
-    list.innerHTML = grows.map((e, i)=>{
+    /* Baris global dibangun dengan DOM API + textContent (bukan innerHTML):
+       nama/mode berasal dari database publik yang bisa ditulis siapa pun,
+       jadi tidak boleh pernah masuk sebagai markup. */
+    list.innerHTML = "";
+    grows.forEach((e, i)=>{
       const rank = i + 1;
       const d = diffOf(e.mode);
       const modeLabel = DIFFS[e.mode] ? d.label : String(e.mode || "Normal");
       const when = typeof e.time === "number" ? "⏱ " + fmtTime(e.time) : "";
       const meta = [modeLabel, when, e.ts ? lbDateStr(e.ts) : ""].filter(Boolean).join(" · ");
-      return '<div class="lbRow' + (rank <= 3 ? " top" + rank : "") + (e.ts === lbHighlightTs ? " mine" : "") + '">'
-        + '<div class="lbRank">' + (medals[rank - 1] || rank) + "</div>"
-        + '<div class="lbMain"><b>' + escapeHtml(e.name || "Pemain") + '</b><small>' + escapeHtml(meta) + "</small></div>"
-        + '<div class="lbScore"><b>' + Math.round(e.score).toLocaleString("id-ID") + '</b><small>PERINGKAT #' + rank + "</small></div></div>";
-    }).join("") + (fbGlobalError ? '<div class="lbEmpty" style="margin-top:7px;">📡 Koneksi ke server sempat gagal — ini papan global terakhir yang berhasil dimuat.</div>' : "");
+      list.appendChild(lbRowEl(rank, String(e.name || "Pemain"), meta, Math.round(e.score).toLocaleString("id-ID"), e.ts === lbHighlightTs));
+    });
+    if(fbGlobalError){
+      const warn = document.createElement("div");
+      warn.className = "lbEmpty"; warn.style.marginTop = "7px";
+      warn.textContent = "📡 Koneksi ke server sempat gagal — ini papan global terakhir yang berhasil dimuat.";
+      list.appendChild(warn);
+    }
     return;
   }
   const all = isDaily ? dailyStore().entries : (store.data.leaderboard || []);
@@ -1012,15 +1532,40 @@ function renderLeaderboard(){
         : "Belum ada skor tercatat.<br>Selesaikan satu permainan — kalau skormu masuk 10 besar, kamu bisa mencatat namamu di sini!") + "</div>";
     return;
   }
-  list.innerHTML = rows.map((e)=>{
+  list.innerHTML = "";
+  rows.forEach((e)=>{
     const rankAll = all.indexOf(e) + 1;
     const d = diffOf(e.difficulty);
     const when = e.time != null ? "⏱ " + fmtTime(e.time) : "Stage " + (e.stage || 1);
-    return '<div class="lbRow' + (rankAll <= 3 ? " top" + rankAll : "") + (e.ts === lbHighlightTs ? " mine" : "") + '">'
-      + '<div class="lbRank">' + (medals[rankAll - 1] || rankAll) + "</div>"
-      + '<div class="lbMain"><b>' + escapeHtml(e.name || "Pemain") + '</b><small>' + d.label + " · " + when + " · " + (e.kills || 0) + " musuh · " + lbDateStr(e.ts) + "</small></div>"
-      + '<div class="lbScore"><b>' + (e.score || 0).toLocaleString("id-ID") + '</b><small>PERINGKAT #' + rankAll + "</small></div></div>";
-  }).join("");
+    const meta = d.label + " · " + when + " · " + (e.kills || 0) + " musuh · " + lbDateStr(e.ts);
+    list.appendChild(lbRowEl(rankAll, String(e.name || "Pemain"), meta, (e.score || 0).toLocaleString("id-ID"), e.ts === lbHighlightTs));
+  });
+}
+/* Bangun satu baris leaderboard sebagai elemen DOM — semua teks lewat textContent,
+   jadi nama pemain (termasuk dari papan global) selalu tampil sebagai teks polos. */
+function lbRowEl(rank, name, meta, scoreText, isMine){
+  const medals = ["🥇","🥈","🥉"];
+  const row = document.createElement("div");
+  row.className = "lbRow" + (rank <= 3 ? " top" + rank : "") + (isMine ? " mine" : "");
+  const rankEl = document.createElement("div");
+  rankEl.className = "lbRank";
+  rankEl.textContent = medals[rank - 1] || String(rank);
+  const main = document.createElement("div");
+  main.className = "lbMain";
+  const b = document.createElement("b");
+  b.textContent = name;
+  const small = document.createElement("small");
+  small.textContent = meta;
+  main.appendChild(b); main.appendChild(small);
+  const sc = document.createElement("div");
+  sc.className = "lbScore";
+  const sb = document.createElement("b");
+  sb.textContent = scoreText;
+  const ss = document.createElement("small");
+  ss.textContent = "PERINGKAT #" + rank;
+  sc.appendChild(sb); sc.appendChild(ss);
+  row.appendChild(rankEl); row.appendChild(main); row.appendChild(sc);
+  return row;
 }
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
@@ -1059,7 +1604,15 @@ const SHIPS = [
   { id:"falcon",  icon:"🛩️", name:"Falcon",  cost:0,   desc:"Seimbang untuk semua pilot. Pilihan bawaan. Tembakan: baut energi biru.", speedMul:1,    dmg:0, fireMul:1,    lives:0, pierce:0, r:15, c1:"#bfefff", c2:"#38b6f6", c3:"#155e9e", c4:"#0a2c4d", wing:"#1c6ea8", glow:"#7df3ff", wide:1,    sweep:1,    bCol:"#4fd8ff", bCore:"#ffffff", bShape:"bolt" },
   { id:"viper",   icon:"🐍", name:"Viper",   cost:150, desc:"Sangat cepat, tembakan 15% lebih rapat. Buat pilot lincah pengejar kombo. Tembakan: tracer hijau ramping berjejak panjang.", speedMul:1.28, dmg:0, fireMul:0.85, lives:0, pierce:0, r:14, c1:"#e6ffb3", c2:"#7ee82e", c3:"#2f7a10", c4:"#122e06", wing:"#3f8f1d", glow:"#c9ff5e", wide:0.82, sweep:1.32, bCol:"#a6ff4d", bCore:"#f4ffd6", bShape:"tracer" },
   { id:"titan",   icon:"🛡️", name:"Titan",   cost:400, desc:"Lambat tapi alot: damage +1 dan +1 nyawa awal. Badan lebih besar. Tembakan: peluru meriam oranye besar.", speedMul:0.85, dmg:1, fireMul:1.08, lives:1, pierce:0, r:18, c1:"#fff0b3", c2:"#ffb02e", c3:"#b45f06", c4:"#4a2a05", wing:"#8f5a1d", glow:"#ffd23d", wide:1.32, sweep:0.92, bCol:"#ffb02e", bCore:"#fff3b0", bShape:"shell" },
-  { id:"spectre", icon:"👻", name:"Spectre", cost:900, desc:"Cepat, peluru menembus 1 musuh, tembakan 22% lebih rapat. Tembakan: pecahan kristal ungu.", speedMul:1.15, dmg:0, fireMul:0.78, lives:0, pierce:1, r:14, c1:"#f3d9ff", c2:"#b45cff", c3:"#5b21a8", c4:"#1d0b38", wing:"#5b21a8", glow:"#e879f9", wide:0.9,  sweep:1.12, bCol:"#e879f9", bCore:"#fdf4ff", bShape:"shard" }
+  { id:"spectre", icon:"👻", name:"Spectre", cost:900, desc:"Cepat, peluru menembus 1 musuh, tembakan 22% lebih rapat. Tembakan: pecahan kristal ungu.", speedMul:1.15, dmg:0, fireMul:0.78, lives:0, pierce:1, r:14, c1:"#f3d9ff", c2:"#b45cff", c3:"#5b21a8", c4:"#1d0b38", wing:"#5b21a8", glow:"#e879f9", wide:0.9,  sweep:1.12, bCol:"#e879f9", bCore:"#fdf4ff", bShape:"shard" },
+  /* AETHERION — dari foto referensi pemain: jet putih/perak bergaris aksen biru menyala,
+     kokpit biru, MESIN GANDA api biru (twin), peluru plasma biru, dan spesial NOVA BEAM (beam).
+     Sengaja jadi pesawat PALING MAHAL (2.500 koin, jauh di atas Spectre 900). */
+  { id:"aether",  icon:"💠", name:"Aetherion", cost:2500, desc:"👑 TERMAHAL & TERKUAT — jet putih-perak bermesin ganda api biru, damage +1, peluru tembus, tembakan rapat. Tembakan: pecahan plasma biru menyala. SPESIAL: NOVA BEAM — sinar energi biru raksasa menyembur otomatis tiap 6 detik membakar musuh & boss di jalurnya, dan setiap kill memicu cincin shockwave biru!", speedMul:1.22, dmg:1, fireMul:0.88, lives:0, pierce:1, r:16, c1:"#ffffff", c2:"#dbe7fa", c3:"#8ea6c9", c4:"#22344f", wing:"#54687f", glow:"#3fa9ff", wide:1.08, sweep:1.18, bCol:"#38b6ff", bCore:"#eaf7ff", bShape:"plasma", twin:true, beam:true },
+  /* SKIN EKSKLUSIF SPIN — hanya bisa didapat dari roda Spin Berlian, TIDAK dijual di Hanggar */
+  { id:"wraith", icon:"🌌", name:"Nebula Wraith", cost:0, spinOnly:true, desc:"🎰 EKSKLUSIF SPIN — siluet ungu nebula, peluru tembus & tembakan rapat. Tembakan: pecahan kristal ungu menyala.", speedMul:1.18, dmg:1, fireMul:0.8, lives:0, pierce:1, r:15, c1:"#f5d0fe", c2:"#c026d3", c3:"#701a75", c4:"#2a0a2e", wing:"#86198f", glow:"#f0abfc", wide:0.95, sweep:1.2, bCol:"#e879f9", bCore:"#fdf4ff", bShape:"shard" },
+  { id:"flare",  icon:"☀️", name:"Solar Flare",  cost:0, spinOnly:true, desc:"🎰 EKSKLUSIF SPIN — jet emas membara, damage +1 & +1 nyawa awal. Tembakan: peluru meriam emas besar.", speedMul:1.02, dmg:1, fireMul:0.95, lives:1, pierce:0, r:16, c1:"#fef9c3", c2:"#facc15", c3:"#b45309", c4:"#451a03", wing:"#d97706", glow:"#fde047", wide:1.15, sweep:1.05, bCol:"#fbbf24", bCore:"#fefce8", bShape:"shell" },
+  { id:"reaper", icon:"☠️", name:"Void Reaper",  cost:0, spinOnly:true, desc:"🎰 EKSKLUSIF SPIN — siluet hitam-merah sangar, damage +1, peluru tembus 2 & tembakan sangat rapat. Tembakan: plasma merah gelap.", speedMul:1.2, dmg:1, fireMul:0.82, lives:0, pierce:2, r:15, c1:"#d6d3d1", c2:"#57534e", c3:"#1c1917", c4:"#0c0a09", wing:"#292524", glow:"#ef4444", wide:1.0, sweep:1.25, bCol:"#f87171", bCore:"#fef2f2", bShape:"plasma" }
 ];
 const UPGRADES = [
   { id:"dmg",  icon:"💢", name:"Damage Permanen",  desc:"+1 damage semua peluru per level.",        max:3, costs:[120, 250, 450] },
@@ -1084,6 +1637,9 @@ function renderGarage(){
     else if(owned){
       btn.textContent = "Pakai";
       btn.addEventListener("click", ()=>{ store.data.ship = sh.id; store.save(); AudioSys.powerup(); renderGarage(); updateMenuMeta(); });
+    } else if(sh.spinOnly){
+      btn.textContent = "🎰 Dari SPIN";
+      btn.addEventListener("click", ()=>{ openSpin(); });
     } else {
       btn.textContent = "Beli · " + sh.cost + " 🪙";
       btn.disabled = (store.data.coins || 0) < sh.cost;
@@ -1134,6 +1690,11 @@ function renderStats(){
     ["PERMAINAN SELESAI", (st.games || 0).toLocaleString("id-ID")],
     ["AKURASI TEMBAKAN", acc + "%"],
     ["KOMBO TERBAIK", (st.bestCombo || 0) + " kill beruntun"],
+    ["RANK SAAT INI", rankOf(store.data.hi || 0).cur.name],
+    ["LEVEL PILOT", "Lv. " + pilotProgress(st.gems || 0).lvl + " · " + (st.gems || 0).toLocaleString("id-ID") + " permata"],
+    ["PESAWAT DIMILIKI", (store.data.shipsOwned || ["falcon"]).length + " / " + SHIPS.length],
+    ["PENCAPAIAN TERBUKA", Object.keys(store.data.ach || {}).length + " / " + ACH_DEFS.length],
+    ["LEVEL KAMPANYE SELESAI", (store.data.campaign || 0) + " / " + CAMPAIGN.length],
     ["POWER-UP DIAMBIL", (st.powerups || 0).toLocaleString("id-ID")],
     ["KOIN TERKUMPUL", (st.coinsEarned || 0).toLocaleString("id-ID")]
   ];
@@ -1193,6 +1754,7 @@ const AudioSys = {
   /* Musik: loop bass + arpeggio sederhana */
   startMusic(){
     this.ensure(); if(!this.ctx || this.musicTimer) return;
+    if(S.musicOn === false || S.eco) return; /* musik mati di Pengaturan / Mode Hemat */
     const bass = [110,110,130.8,110, 98,98,110,146.8];
     const arp  = [440,523,659,523, 392,494,587,494];
     this.step = 0;
@@ -1250,7 +1812,8 @@ const cv = $("game"), ctx = cv.getContext("2d");
 let W = 480, H = 720, DPR = 1;
 function resize(){
   const r = $("stage").getBoundingClientRect();
-  const cap = S.quality==="high" ? 2 : 1;
+  /* Resolusi kanvas dibatasi demi HP lemah: maks 1,5 (bukan 2), mode hemat = 1 */
+  const cap = S.eco ? 1 : S.quality==="high" ? 1.5 : S.quality==="med" ? 1.25 : 1;
   DPR = Math.min(window.devicePixelRatio||1, cap);
   W = Math.max(300, r.width); H = Math.max(380, r.height);
   cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
@@ -1408,6 +1971,81 @@ function newPlanet(anywhere){
   return { img:planetSprites[idx], r, x:rand(r + 6, Math.max(r + 7, W - r - 6)), y:anywhere ? rand(-40, Math.max(0, H - 60)) : -r*2.4 - rand(0, 160), v:rand(3.5, 8.5) };
 }
 
+/* ---------- Latar permainan (dari dokumen konsep pemain) ---------- */
+const BGS = [
+  { id:"galaxy",   name:"Space Galaxy",   icon:"🌌", desc:"Galaksi, bintang & nebula" },
+  { id:"cyber",    name:"Cyber City",     icon:"🌆", desc:"Kota futuristik lampu neon" },
+  { id:"asteroid", name:"Asteroid Field", icon:"☄️", desc:"Batu asteroid beterbangan — hindari & hancurkan!" },
+  { id:"alien",    name:"Alien Planet",   icon:"🪐", desc:"Planet asing, atmosfer misterius" }
+];
+function bgDef(id){ return BGS.find(b => b.id === id) || BGS[0]; }
+function bgOf(){ return G.campaignBg || store.data.bg || "galaxy"; }
+function renderBgGrid(){
+  const grid = $("bgGrid"); if(!grid) return;
+  grid.innerHTML = "";
+  BGS.forEach(b=>{
+    const btn = document.createElement("button");
+    btn.className = "bgBtn" + (store.data.bg === b.id ? " sel" : "");
+    btn.setAttribute("role", "radio");
+    btn.setAttribute("aria-checked", store.data.bg === b.id ? "true" : "false");
+    btn.setAttribute("aria-label", "Latar " + b.name);
+    btn.innerHTML = '<span class="ic">' + b.icon + '</span><span><span class="bn">' + b.name + '</span><span class="bd">' + b.desc + "</span></span>";
+    btn.addEventListener("click", ()=>{ store.data.bg = b.id; store.save(); renderBgGrid(); AudioSys.ensure(); AudioSys.powerup(); });
+    grid.appendChild(btn);
+  });
+}
+
+/* ---------- Rank Bronze → Legendary (dari skor tertinggi seumur main) ---------- */
+const RANKS = [
+  { name:"Bronze",    min:0,      color:"#d08a4e" },
+  { name:"Silver",    min:5000,   color:"#c7d2e8" },
+  { name:"Gold",      min:15000,  color:"#ffc53d" },
+  { name:"Platinum",  min:35000,  color:"#7df3ff" },
+  { name:"Diamond",   min:75000,  color:"#8fd8ff" },
+  { name:"Master",    min:150000, color:"#e879f9" },
+  { name:"Legendary", min:300000, color:"#ff7a3d" }
+];
+function rankOf(score){
+  let cur = RANKS[0], next = null;
+  for(let i=0;i<RANKS.length;i++){ if(score >= RANKS[i].min){ cur = RANKS[i]; next = RANKS[i+1] || null; } }
+  return { cur, next };
+}
+/* Level Pilot permanen: naik dari TOTAL permata XP yang pernah dikumpulkan seumur main.
+   Kebutuhan per level: Lv1→2 = 25 permata, Lv2→3 = 50, Lv3→4 = 75, dst. (25 × level). */
+function pilotProgress(total){
+  let lvl = 1, rem = Math.max(0, total || 0);
+  while(rem >= lvl * 25){ rem -= lvl * 25; lvl++; }
+  return { lvl, cur: rem, need: lvl * 25 };
+}
+
+/* ---------- Mode Kampanye: 5 level cerita berurutan ---------- */
+const CAMPAIGN = [
+  { lv:1, name:"Patroli Perbatasan",  bg:"galaxy",   kills:25,  bossIdx:0, story:"Armada drone musuh terpantau di perbatasan galaksi. Hancurkan 25 musuh, lalu kalahkan boss penjaganya!" },
+  { lv:2, name:"Kekacauan Cyber City", bg:"cyber",   kills:40,  bossIdx:1, story:"Kota neon diserang dari udara! Bersihkan langit Cyber City dari 40 musuh dan boss-nya." },
+  { lv:3, name:"Sabuk Asteroid",       bg:"asteroid", kills:55, bossIdx:2, story:"Kejar armada musuh menembus sabuk asteroid. Hancurkan 55 musuh — hati-hati batu yang beterbangan!" },
+  { lv:4, name:"Dunia Alien",          bg:"alien",   kills:75,  bossIdx:5, story:"Sarang musuh ada di planet asing ini. Hancurkan 75 musuh dan robohkan Mega Battleship penjaganya!" },
+  { lv:5, name:"Tahta Overlord",       bg:"galaxy",  kills:100, bossIdx:6, story:"Pertempuran terakhir! Hancurkan 100 musuh, lalu hadapi ALIEN OVERLORD — penguasa kegelapan itu sendiri." }
+];
+function campDef(lv){ return CAMPAIGN.find(c => c.lv === lv) || null; }
+function renderCampaign(){
+  const box = $("campaignList"); if(!box) return;
+  box.innerHTML = "";
+  CAMPAIGN.forEach(c=>{
+    const cleared = c.lv <= (store.data.campaign || 0);
+    const unlocked = c.lv <= (store.data.campaign || 0) + 1;
+    const card = document.createElement("div");
+    card.className = "gCard" + (cleared ? " sel" : "");
+    card.innerHTML = '<div class="ic">' + bgDef(c.bg).icon + '</div><div class="tx"><b>Level ' + c.lv + " — " + c.name + '</b><small>' + c.story + '</small><span class="pips">TARGET: ' + c.kills + " MUSUH + BOSS · LATAR: " + bgDef(c.bg).name.toUpperCase() + "</span></div>";
+    const btn = document.createElement("button");
+    btn.className = "gBtn" + (unlocked && !cleared ? " use" : "");
+    if(cleared){ btn.textContent = "Main Lagi ↻"; }
+    else if(unlocked){ btn.textContent = "Main ▶"; }
+    else { btn.textContent = "🔒 Terkunci"; btn.disabled = true; }
+    if(unlocked) btn.addEventListener("click", ()=> startGame(false, false, c.lv));
+    card.appendChild(btn); box.appendChild(card);
+  });
+}
+
 /* ---------- Status game ---------- */
 const G = {
   mode:"menu",            // menu | playing | paused | levelup | over
@@ -1419,7 +2057,10 @@ const G = {
   level:1, xp:0, skills:{},
   player:null, bullets:[], ebullets:[], enemies:[], parts:[], powers:[], texts:[], gems:[], missiles:[], rings:[], muzzles:[], impacts:[],
   boss:null, bossCount:0, nextBossAt:75, bossPending:false, bossTimer:0, spawnTimer:0,
-  shake:0, flash:0, slowT:0, fireCd:0, missileT:0, shieldRegenT:0,
+  shake:0, flash:0, slowT:0, fireCd:0, missileT:0, shieldRegenT:0, beamCd:3, beamT:0,
+  dmgMulT:0, plasmaT:0, droneT:0, droneA:0, cityY:0,
+  rocks:[], rockT:1.5,
+  campaignMode:0, campaignBg:null, campDone:false,
   time:0
 };
 function newPlayer(){ return { x:W/2, y:H-90, r:15, speed:330, weapon:1, shield:0, invuln:0, tilt:0, dmg:1, fireMul:1, magnetR:95, pierce:0 }; }
@@ -1474,7 +2115,9 @@ function endlessComp(){
     shooters: Math.min(0.68, (0.10 + t * 0.0022) * d.shooterMul),
     zig: t > 18 ? 0.28 : 0.12,
     dart: t > 30 ? 0.09 : 0,
-    elite: t > 50 ? Math.min(0.13, (t - 50) * 0.0012) : 0
+    elite: t > 50 ? Math.min(0.13, (t - 50) * 0.0012) : 0,
+    alien: t > 75 ? 0.07 : 0,
+    kami: t > 100 ? 0.06 : 0
   };
 }
 function spawnEnemy(){
@@ -1483,13 +2126,15 @@ function spawnEnemy(){
   let type = "basic";
   if(roll < c.elite) type = "elite";
   else if(roll < c.elite + c.shooters) type = "shooter";
-  else if(roll < c.elite + c.shooters + c.zig) type = "zig";
+  else if(roll < c.elite + c.shooters + c.alien) type = "alien";
+  else if(roll < c.elite + c.shooters + c.alien + c.zig) type = "zig";
   else if(roll > 1 - c.dart) type = "dart";
-  const hpBase = type === "elite" ? c.hp * 6 + 4 : type === "shooter" ? c.hp * 2 + 1 : c.hp;
+  else if(roll > 1 - c.dart - c.kami) type = "kamikaze";
+  const hpBase = type === "elite" ? c.hp * 6 + 4 : type === "shooter" ? c.hp * 2 + 1 : type === "alien" ? c.hp * 3 + 2 : c.hp;
   G.enemies.push({
-    x: rrange(30, W-30), y: -34, r: type === "elite" ? 25 : type === "shooter" ? 19 : 15,
+    x: rrange(30, W-30), y: -34, r: type === "elite" ? 25 : type === "shooter" ? 19 : type === "alien" ? 20 : type === "kamikaze" ? 14 : 15,
     type, hp: hpBase, maxhp: hpBase,
-    vy: c.speed * (type === "dart" ? 2.1 : type === "zig" ? 0.9 : type === "elite" ? 0.62 : 1) * rrange(0.85, 1.15),
+    vy: c.speed * (type === "dart" ? 2.1 : type === "zig" ? 0.9 : type === "elite" ? 0.62 : type === "alien" ? 0.85 : type === "kamikaze" ? 1.45 : 1) * rrange(0.85, 1.15),
     t: rrange(0, Math.PI*2), fireT: rrange(1.2, 2.6), flash:0
   });
 }
@@ -1513,7 +2158,13 @@ const BOSS_CLASSES = [
     swaySpd:0.5,  swayAmp:0.22, r:54 },
   { id:"dread",  name:"DREADNOUGHT", pat:"dread",  tag:"Spiral + Kipas Bergantian",
     hull:"#fbbf24", hull2:"#92400e", dark:"#331b04", trim:"#fef3c7", core:"#ef4444", coreHot:"#fef2f2",
-    swaySpd:0.6,  swayAmp:0.24, r:60 }
+    swaySpd:0.6,  swayAmp:0.24, r:60 },
+  { id:"battleship", name:"MEGA BATTLESHIP", pat:"spread", tag:"Kapal Induk Raksasa Bersenjata Penuh",
+    hull:"#fda4af", hull2:"#881337", dark:"#2a0a12", trim:"#a5f3fc", core:"#22d3ee", coreHot:"#ecfeff",
+    swaySpd:0.35, swayAmp:0.12, r:66 },
+  { id:"overlord", name:"ALIEN OVERLORD", pat:"overlord", tag:"Penguasa Alien — Memanggil Pasukan",
+    hull:"#7c3aed", hull2:"#2e1065", dark:"#0d0518", trim:"#f43f5e", core:"#ef4444", coreHot:"#fee2e2",
+    swaySpd:0.5,  swayAmp:0.2, r:62 }
 ];
 function bossClassFor(n){ return BOSS_CLASSES[(Math.max(1, n) - 1) % BOSS_CLASSES.length]; }
 function spawnBoss(){
@@ -1524,7 +2175,7 @@ function spawnBoss(){
   const hp = Math.round(((190 + G.bossCount * 110) * Math.pow(1.18, G.bossCount - 1) + G.runTime * 1.2) * curDiff().bossMul);
   const rBig = Math.round(cls.r * (1 + Math.min(0.3, (G.bossCount - 1) * 0.035)));
   G.boss = { x:W/2, y:-70, r:rBig, hp, maxhp:hp, t:0, fireT:1.4, spiralA: rand(0, 6),
-             type: cls.pat, cls, phase:0, phaseT:3, burst:0, flash:0,
+             type: cls.pat, cls, phase:0, phaseT:3, burst:0, flash:0, summonT:4,
              name: "BOSS " + cls.name };
   $("bossName").textContent = G.boss.name + " #" + G.bossCount;
   $("bossBarWrap").style.display = "flex";
@@ -1543,10 +2194,15 @@ function updateBossBar(){
 const POWER_TYPES = [
   { kind:"weapon", label:"W", color:"#31e6ff" },
   { kind:"shield", label:"S", color:"#3dff9a" },
-  { kind:"life",   label:"♥", color:"#ff4d7e" }
+  { kind:"life",   label:"♥", color:"#ff4d7e" },
+  { kind:"damage", label:"×2", color:"#ffc53d" },
+  { kind:"ultimate", label:"💥", color:"#ff7a3d" }
 ];
 function dropPower(x, y){
-  const t = POWER_TYPES[(Math.random()*POWER_TYPES.length)|0];
+  /* Bobot acak: weapon 36% · shield 24% · life 18% (tetap paling langka di antara yang umum) ·
+     damage ×2 15% · ultimate 7% (paling langka) */
+  const roll = Math.random();
+  const t = roll < 0.36 ? POWER_TYPES[0] : roll < 0.60 ? POWER_TYPES[1] : roll < 0.78 ? POWER_TYPES[2] : roll < 0.93 ? POWER_TYPES[3] : POWER_TYPES[4];
   G.powers.push({ x, y, r:14, vy:95, kind:t.kind, label:t.label, color:t.color, t:0 });
 }
 function applyPower(p){
@@ -1554,8 +2210,30 @@ function applyPower(p){
   if(p.kind==="weapon"){ pl.weapon = Math.min(3, pl.weapon+1); floatText(pl.x, pl.y-30, pl.weapon>=3 ? "SENJATA MAKS!" : "SENJATA NAIK!", "#31e6ff"); }
   if(p.kind==="shield"){ pl.shield = 6; floatText(pl.x, pl.y-30, "PERISAI AKTIF!", "#3dff9a"); }
   if(p.kind==="life"){ G.lives = Math.min(6, G.lives+1); floatText(pl.x, pl.y-30, "+1 NYAWA!", "#ff4d7e"); }
+  if(p.kind==="damage"){ G.dmgMulT = 12; floatText(pl.x, pl.y-30, "DOUBLE DAMAGE ×2!", "#ffc53d"); }
+  if(p.kind==="ultimate"){ ultimateAttack(); }
   store.data.stats.powerups++; store.save();
   AudioSys.powerup(); updateHUD(); checkAchievements();
+}
+/* ULTIMATE ATTACK (power-up 💥): nova energi menghantam SEMUA musuh di layar + boss */
+function ultimateAttack(){
+  const pl = G.player;
+  floatText(pl.x, pl.y-46, "ULTIMATE NOVA!", "#ff7a3d");
+  G.rings.push({ x:pl.x, y:pl.y, r:14, t:0, color:"#ff7a3d" });
+  G.rings.push({ x:pl.x, y:pl.y, r:6, t:0, color:"#38b6ff" });
+  G.shake = Math.max(G.shake, 13);
+  explode(pl.x, pl.y, "#ff7a3d", 34, true); explode(pl.x, pl.y, "#38b6ff", 22, true);
+  for(let i=G.enemies.length-1;i>=0;i--){
+    const e = G.enemies[i];
+    e.hp -= 8; e.flash = 0.09;
+    if(e.hp <= 0) killEnemy(e, i);
+  }
+  if(G.boss){
+    G.boss.hp -= 30; G.boss.flash = 0.07;
+    explode(G.boss.x, G.boss.y, "#ff7a3d", 18, true);
+    if(G.boss.hp <= 0) killBoss(); else updateBossBar();
+  }
+  AudioSys.explosion(true);
 }
 function floatText(x, y, txt, color){ G.texts.push({ x, y, txt, color, t:0 }); }
 /* Efek kena peluru pemain: percikan + cincin kejut sewarna peluru skin yang dipakai */
@@ -1575,9 +2253,14 @@ const SKILL_DEFS = [
   { id:"missile", icon:"🎯", name:"Misil Pendamping", desc:"Misil pencari target meluncur otomatis tiap 2,2 detik." },
   { id:"regen",   icon:"🛡️", name:"Perisai Nano",     desc:"Perisai terisi ulang sendiri tiap 14 detik." },
   { id:"xpboost", icon:"⭐", name:"Penguat XP",       desc:"Semua XP yang didapat naik 25%." },
-  { id:"vitality",icon:"❤️", name:"Nyawa Ekstra",     desc:"Langsung dapat +1 nyawa." }
+  { id:"vitality",icon:"❤️", name:"Nyawa Ekstra",     desc:"Langsung dapat +1 nyawa." },
+  { id:"laser",   icon:"🔷", name:"Laser Biru",       desc:"Dua sinar laser lurus dari ujung sayap — menembus semua musuh di jalurnya." },
+  { id:"plasma",  icon:"🔮", name:"Plasma Cannon",    desc:"Bola plasma raksasa meluncur berkala: damage besar dan menembus musuh." },
+  { id:"drone",   icon:"🤖", name:"Drone Pendamping", desc:"Drone mengorbit pesawatmu dan ikut menembaki musuh terdekat." }
 ];
-function xpNeed(){ return 5 + (G.level - 1) * 4; }
+/* XP yang dibutuhkan naik makin curam tiap level (kuadratik, bukan lagi linear):
+   Lv 1 = 5 · Lv 2 = 10 · Lv 3 = 18 · Lv 5 = 37 · Lv 10 = 114 · Lv 15 = 231 · Lv 20 = 388 */
+function xpNeed(){ const d = G.level - 1; return 5 + d * 5 + Math.floor(d * d * 0.8); }
 function skillDef(id){ return SKILL_DEFS.find(s => s.id === id); }
 function applySkillStats(){
   const pl = G.player, sk = G.skills, sh = shipDef(), up = store.data.upgrades || {};
@@ -1663,25 +2346,42 @@ function renderPauseSkills(){
 }
 
 /* ---------- Partikel ---------- */
+/* Object pooling partikel: objek partikel dipakai ulang dari kolam, bukan dibuat
+   baru tiap ledakan — garbage collector tidak bekerja keras → tidak ada freeze
+   mendadak di HP lemah. Jumlah partikel aktif juga dibatasi per kualitas. */
+const partPool = [];
+function partCap(){ return S.eco ? 40 : S.quality==="low" ? 70 : S.quality==="med" ? 150 : 260; }
 function explode(x, y, color, n, big){
-  if(S.quality==="low") n = Math.ceil(n/3);
+  if(S.quality==="low" || S.eco) n = Math.ceil(n/3);
+  const cap = partCap();
   for(let i=0;i<n;i++){
+    if(G.parts.length >= cap) return;
     const a = Math.random()*Math.PI*2, sp = rand(40, big?300:190);
-    G.parts.push({ x, y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, life:rand(0.3, big?0.9:0.6), t:0, color, s:rand(1.5, big?4:3) });
+    const p = partPool.pop() || {};
+    p.x = x; p.y = y; p.vx = Math.cos(a)*sp; p.vy = Math.sin(a)*sp;
+    p.life = rand(0.3, big?0.9:0.6); p.t = 0; p.color = color; p.s = rand(1.5, big?4:3);
+    G.parts.push(p);
   }
 }
 
 /* ---------- Logika permainan ---------- */
-function startGame(fromSave, daily){
+function startGame(fromSave, daily, campLv){
   AudioSys.ensure(); AudioSys.startMusic();
   G.bullets = []; G.ebullets = []; G.enemies = []; G.parts = []; G.powers = []; G.texts = []; G.gems = []; G.missiles = []; G.rings = [];
   G.boss = null; $("bossBarWrap").style.display = "none";
   G.player = newPlayer(); G.shake = 0; G.flash = 0; G.slowT = 0; G.time = 0;
+  /* mode kampanye: level cerita dengan latar & boss khusus; progres kampanye tidak disimpan sebagai simpanan Lanjutkan */
+  G.campaignMode = campLv || 0;
+  const cdef0 = campLv ? campDef(campLv) : null;
+  G.campaignBg = cdef0 ? cdef0.bg : null;
+  G.campDone = false;
+  G.dmgMulT = 0; G.plasmaT = 0; G.droneT = 0; G.droneA = 0; G.rocks = []; G.rockT = 1.5;
   G.lbSavedRun = false; G.fbSubmittedRun = false; G.statsFlushed = false;
   G.runTime = 0; G.lastMinute = 0; G.noHitTime = 0;
   G.combo = 0; G.comboT = 0; G.bestCombo = 0;
   G.runCoins = 0; G.runShots = 0; G.runHits = 0;
   G.bossCount = 0; G.nextBossAt = 75; G.bossPending = false; G.bossTimer = 0; G.spawnTimer = 0.6;
+  G.beamCd = 3; G.beamT = 0;
   G.dailyMode = !!daily;
   G.rng = G.dailyMode ? mulberry32(dateSeed(todayStr())) : null;
   if(fromSave && store.data.save){
@@ -1702,10 +2402,12 @@ function startGame(fromSave, daily){
     G.level = 1; G.xp = 0; G.skills = {};
     G.lives = curDiff().lives + shipDef().lives + ((store.data.upgrades || {}).life || 0);
   }
+  if(cdef0) G.nextBossAt = 1e9; /* di kampanye boss datang dari target musuh, bukan timer */
   applySkillStats(); updateXP();
   G.mode = "playing";
   showScreen(null); updateHUD();
-  if(G.dailyMode) showBanner("TANTANGAN HARIAN", fmtDateID(todayStr()) + " — susunan musuh sama untuk semua!");
+  if(cdef0) showBanner("KAMPANYE LEVEL " + cdef0.lv, cdef0.name + " — hancurkan " + cdef0.kills + " musuh, lalu kalahkan boss!");
+  else if(G.dailyMode) showBanner("TANTANGAN HARIAN", fmtDateID(todayStr()) + " — susunan musuh sama untuk semua!");
   else showBanner("MODE ENDLESS", "Bertahanlah selama mungkin — musuh makin ganas!");
   const hint = $("dragHint");
   hint.classList.remove("show"); void hint.offsetWidth; hint.classList.add("show");
@@ -1750,6 +2452,10 @@ function gameOver(){
   $("ovSkills").textContent = Object.values(G.skills).reduce((a,b)=>a+b, 0);
   $("ovDiff").textContent = curDiff().label + " (" + fmtScoreMul(curDiff().scoreMul) + ")";
   $("ovDiff").style.color = curDiff().color;
+  const rkO = rankOf(store.data.hi || 0);
+  $("ovRank").textContent = rkO.cur.name;
+  $("ovRank").style.color = rkO.cur.color;
+  $("ovBg").textContent = bgDef(bgOf()).name;
   $("newRecord").style.display = isRec && G.score>0 ? "block" : "none";
   $("ovDaily").style.display = G.dailyMode ? "block" : "none";
   if(G.dailyMode) $("ovDailyDate").textContent = fmtDateID(todayStr());
@@ -1779,14 +2485,14 @@ function gameOver(){
     $("lbEntryNote").textContent = G.dailyMode
       ? "Skormu sudah tercatat otomatis di papan Harian hari ini dan tersimpan permanen di HP ini — isi nama di bawah kalau mau mengganti nama tampilannya."
       : "Skormu sudah tercatat otomatis di leaderboard dan tersimpan permanen di HP ini — isi nama di bawah kalau mau mengganti nama tampilannya.";
-    $("lbName").value = store.data.playerName || "";
+    $("lbNameInput").value = store.data.playerName || "";
     $("btnSaveScore").textContent = "Simpan Nama";
     $("btnSaveScore").disabled = false;
   }
   updateMenuMeta(); showScreen("scrOver");
 }
 function saveScoreToLeaderboard(){
-  const name = ($("lbName").value || "").trim().slice(0, 16) || "Pemain";
+  const name = cleanNick($("lbNameInput").value) || "Pemain";
   if(G.autoLbEntry){
     /* Skor run ini sudah tercatat otomatis saat game over — tombol ini hanya
        memperbarui nama pada entri tersebut */
@@ -1843,17 +2549,26 @@ function registerKill(){
 function killEnemy(e, idx){
   G.enemies.splice(idx,1);
   registerKill();
-  const base = e.type==="elite" ? 400 : e.type==="shooter" ? 150 : e.type==="dart" ? 120 : 100;
+  const base = e.type==="elite" ? 400 : e.type==="alien" ? 220 : e.type==="shooter" ? 150 : e.type==="kamikaze" ? 130 : e.type==="dart" ? 120 : 100;
   const pts = Math.round(base * curDiff().scoreMul * comboMul());
   G.score += pts; G.runKills++; store.data.stats.kills++;
-  G.runCoins += e.type==="elite" ? 5 : e.type==="shooter" ? 2 : 1;
-  explode(e.x, e.y, e.type==="elite" ? "#ff3860" : e.type==="shooter" ? "#ffc53d" : "#ff7a4d", e.type==="elite" ? 30 : e.type==="shooter" ? 20 : 13, e.type==="elite");
+  G.runCoins += e.type==="elite" ? 5 : e.type==="alien" ? 3 : e.type==="shooter" ? 2 : 1;
+  explode(e.x, e.y, e.type==="elite" ? "#ff3860" : e.type==="alien" ? "#fb923c" : e.type==="shooter" ? "#ffc53d" : "#ff7a4d", e.type==="elite" ? 30 : e.type==="shooter" || e.type==="alien" ? 20 : 13, e.type==="elite");
   if(e.type==="elite"){ G.rings.push({ x:e.x, y:e.y, r:8, t:0, color:"#ffc53d" }); G.shake = Math.max(G.shake, 6); }
   AudioSys.explosion(false);
   floatText(e.x, e.y, "+"+pts, "#ffc53d");
-  dropGem(e.x, e.y, e.type==="elite" ? 5 : e.type==="shooter" ? 3 : e.type==="dart" ? 2 : 1);
-  if(e.type==="elite") dropGem(e.x + 16, e.y, 5);
-  if(Math.random() < 0.13) dropPower(e.x, e.y);
+  /* Drop XP dikurangi: permata tidak lagi selalu jatuh dari setiap musuh —
+     biasa 50% (1 XP), dart 60% (2 XP), shooter 70% (2 XP), alien 65% (3 XP), kamikaze 45% (1 XP);
+     elite tetap menjatuhkan 4 XP + peluang 50% bonus 3 XP (sebelumnya selalu 10 XP) */
+  if(e.type==="elite"){ dropGem(e.x, e.y, 4); if(Math.random() < 0.5) dropGem(e.x + 16, e.y, 3); }
+  else if(e.type==="alien"){ if(Math.random() < 0.65) dropGem(e.x, e.y, 3); }
+  else if(e.type==="shooter"){ if(Math.random() < 0.7) dropGem(e.x, e.y, 2); }
+  else if(e.type==="dart"){ if(Math.random() < 0.6) dropGem(e.x, e.y, 2); }
+  else if(e.type==="kamikaze"){ if(Math.random() < 0.45) dropGem(e.x, e.y, 1); }
+  else if(Math.random() < 0.5) dropGem(e.x, e.y, 1);
+  /* Peluang power-up turun 13% → 7% per musuh (digabung bobot life 18% di dropPower,
+     nyawa kini muncul ~1,3% per kill — sebelumnya ~4,3%) */
+  if(Math.random() < 0.07) dropPower(e.x, e.y);
   store.save(); updateHUD(); checkAchievements();
 }
 function killBoss(){
@@ -1871,20 +2586,44 @@ function killBoss(){
   AudioSys.explosion(true); G.shake = 18;
   floatText(b.x, b.y, "BOSS HANCUR! +"+bossPts, "#ffc53d");
   floatText(b.x, b.y + 26, "+30 🪙", "#ffc53d");
-  for(let i=0;i<6;i++) dropGem(b.x + rand(-40,40), b.y + rand(-20,20), 5);
-  dropPower(b.x - 24, b.y); dropPower(b.x + 24, b.y);
+  /* Boss juga diperketat: XP turun 30 → 16 (4 permata × 4) dan power-up cuma 1 (sebelumnya 2) */
+  for(let i=0;i<4;i++) dropGem(b.x + rand(-40,40), b.y + rand(-20,20), 4);
+  dropPower(b.x, b.y);
   store.save(); updateHUD(); checkAchievements();
+  /* kampanye: boss terakhir kalah = level tuntas */
+  if(G.campaignMode && !G.campDone){
+    G.campDone = true;
+    setTimeout(()=>{ if(G.mode === "playing" && G.campaignMode) campaignVictory(); }, 1000);
+  }
+}
+/* Kemenangan kampanye: bank-kan koin run + bonus level, buka level berikutnya */
+function campaignVictory(){
+  const cdef = campDef(G.campaignMode); if(!cdef) return;
+  G.mode = "campwin";
+  AudioSys.stopMusic(); AudioSys.levelup();
+  flushRunStats();
+  const bonus = 100 + cdef.lv * 50;
+  store.data.coins = (store.data.coins || 0) + bonus;
+  if(G.campaignMode > (store.data.campaign || 0)) store.data.campaign = G.campaignMode;
+  store.save();
+  $("campWinInfo").textContent = "Level " + cdef.lv + " — " + cdef.name + " tuntas! " + (cdef.lv < 5 ? "Level " + (cdef.lv + 1) + " kini terbuka." : "KAMU MENAMATKAN SELURUH KAMPANYE! 👑");
+  $("cwScore").textContent = G.score.toLocaleString("id-ID");
+  $("cwBonus").textContent = "+" + bonus + " 🪙";
+  $("btnCampNext").style.display = cdef.lv < 5 ? "" : "none";
+  updateMenuMeta();
+  showScreen("scrCampWin");
 }
 
 function update(dt){
   G.time += dt;
+  G.cityY += dt * 34;
   /* bintang */
   for(const s of stars){ s.y += s.v*dt; if(s.y > H){ s.y = -2; s.x = Math.random()*W; } }
   /* nebula & planet: melayang jauh lebih lambat (parallax galaksi) */
   for(const nb of nebulae){ nb.y += nb.v*dt; if(nb.y - nb.s*0.35 > H){ nb.y = -nb.s*0.6; nb.x = rand(-60, Math.max(60, W-160)); nb.img = makeNebulaSprite(); } }
   for(let i=0;i<planets.length;i++){ const p = planets[i]; p.y += p.v*dt; if(p.y - p.r*2.4 > H) planets[i] = newPlanet(false); }
   /* partikel & teks selalu jalan (juga saat menu) */
-  for(let i=G.parts.length-1;i>=0;i--){ const p=G.parts[i]; p.t+=dt; p.x+=p.vx*dt; p.y+=p.vy*dt; p.vx*=0.96; p.vy*=0.96; if(p.t>p.life) G.parts.splice(i,1); }
+  for(let i=G.parts.length-1;i>=0;i--){ const p=G.parts[i]; p.t+=dt; p.x+=p.vx*dt; p.y+=p.vy*dt; p.vx*=0.96; p.vy*=0.96; if(p.t>p.life){ G.parts.splice(i,1); if(partPool.length < 300) partPool.push(p); } }
   for(let i=G.texts.length-1;i>=0;i--){ const t=G.texts[i]; t.t+=dt; t.y-=34*dt; if(t.t>1.1) G.texts.splice(i,1); }
   for(let i=G.rings.length-1;i>=0;i--){ const rg=G.rings[i]; rg.t+=dt; rg.r += 300*dt; if(rg.t>0.5) G.rings.splice(i,1); }
   for(let i=G.muzzles.length-1;i>=0;i--){ const mz=G.muzzles[i]; mz.t+=dt; if(mz.t>0.07) G.muzzles.splice(i,1); }
@@ -1915,11 +2654,47 @@ function update(dt){
   if(G.fireCd <= 0){
     G.fireCd = 0.16 * pl.fireMul;
     const y = pl.y - pl.r - 4;
-    const mk = (x, yy, vx, vy)=>{ G.runShots++; const sd = shipDef(); G.muzzles.push({ x, y:yy - 3, t:0, col:sd.bCol, core:sd.bCore }); return { x, y:yy, vx, vy, r:4, dmg:pl.dmg, pierce:pl.pierce, hitSet:[], hitBoss:false }; };
+    const dmgNow = pl.dmg * (G.dmgMulT > 0 ? 2 : 1);
+    const mk = (x, yy, vx, vy)=>{ G.runShots++; const sd = shipDef(); G.muzzles.push({ x, y:yy - 3, t:0, col:sd.bCol, core:sd.bCore }); return { x, y:yy, vx, vy, r:4, dmg:dmgNow, pierce:pl.pierce, hitSet:[], hitBoss:false }; };
     if(pl.weapon === 1){ G.bullets.push(mk(pl.x, y, 0, -560)); }
     else if(pl.weapon === 2){ G.bullets.push(mk(pl.x-9, y, 0, -560), mk(pl.x+9, y, 0, -560)); }
     else { G.bullets.push(mk(pl.x, y, 0, -580), mk(pl.x-11, y+4, -70, -540), mk(pl.x+11, y+4, 70, -540)); }
+    /* skill Laser Biru: dua sinar lurus menembus dari ujung sayap, ikut setiap tembakan */
+    if(G.skills.laser){
+      [-1, 1].forEach(s=>{
+        G.bullets.push({ x:pl.x + s * (pl.r + 7), y, vx:0, vy:-820, r:3, dmg:dmgNow, pierce:99, hitSet:[], hitBoss:false, laser:true });
+      });
+    }
     AudioSys.shoot();
+  }
+  if(G.dmgMulT > 0) G.dmgMulT -= dt;
+
+  /* skill Plasma Cannon: bola plasma raksasa berkala, damage besar & menembus */
+  if(G.skills.plasma){
+    G.plasmaT -= dt;
+    if(G.plasmaT <= 0){
+      G.plasmaT = 2.8;
+      G.bullets.push({ x:pl.x, y:pl.y - pl.r - 8, vx:0, vy:-330, r:9, dmg:(5 + pl.dmg) * (G.dmgMulT > 0 ? 2 : 1), pierce:99, hitSet:[], hitBoss:false, plasma:true });
+      explode(pl.x, pl.y - pl.r - 6, "#38b6ff", 5);
+    }
+  }
+  /* skill Drone Pendamping: drone mengorbit & menembak musuh terdekat */
+  if(G.skills.drone){
+    G.droneA += dt * 2.2;
+    G.droneT -= dt;
+    if(G.droneT <= 0){
+      G.droneT = 0.55;
+      const nd = G.skills.drone;
+      for(let k=0;k<nd;k++){
+        const a0 = G.droneA + k * (Math.PI * 2 / nd);
+        const dx = pl.x + Math.cos(a0) * 36, dy = pl.y + Math.sin(a0) * 27;
+        let tgt = null, bd = 430;
+        for(const e of G.enemies){ const dd = Math.hypot(e.x - dx, e.y - dy); if(dd < bd){ bd = dd; tgt = e; } }
+        if(G.boss && Math.hypot(G.boss.x - dx, G.boss.y - dy) < bd) tgt = G.boss;
+        const ta = tgt ? Math.atan2(tgt.y - dy, tgt.x - dx) : -Math.PI / 2;
+        G.bullets.push({ x:dx, y:dy, vx:Math.cos(ta) * 540, vy:Math.sin(ta) * 540, r:3, dmg:pl.dmg * (G.dmgMulT > 0 ? 2 : 1), pierce:0, hitSet:[], hitBoss:false });
+      }
+    }
   }
 
   /* skill: misil pendamping */
@@ -1938,11 +2713,76 @@ function update(dt){
     if(G.shieldRegenT <= 0){ G.shieldRegenT = 14; if(pl.shield <= 0){ pl.shield = 3; floatText(pl.x, pl.y-30, "PERISAI TERISI!", "#3dff9a"); } }
   }
 
+  /* SPESIAL Aetherion: NOVA BEAM — sinar energi biru raksasa menyembur otomatis
+     tiap 6 detik selama 0,45 detik; membakar semua musuh & boss di kolom jalurnya.
+     Setiap musuh yang hancur oleh beam memicu cincin shockwave biru. */
+  if(shipDef().beam){
+    if(G.beamT > 0){
+      G.beamT -= dt;
+      const bw = 30;
+      for(let i=G.enemies.length-1;i>=0;i--){
+        const e = G.enemies[i];
+        if(e.y < pl.y - pl.r && Math.abs(e.x - pl.x) < bw + e.r * 0.4){
+          e.hp -= 11 * (G.dmgMulT > 0 ? 2 : 1) * dt; e.flash = 0.09;
+          if(Math.random() < 0.35) explode(e.x + rand(-8, 8), e.y + rand(-8, 8), "#38b6ff", 1);
+          if(e.hp <= 0){ G.rings.push({ x:e.x, y:e.y, r:8, t:0, color:"#38b6ff" }); killEnemy(e, i); }
+        }
+      }
+      if(G.boss && G.boss.y < pl.y && Math.abs(G.boss.x - pl.x) < bw + G.boss.r * 0.4){
+        G.boss.hp -= 11 * (G.dmgMulT > 0 ? 2 : 1) * dt; G.boss.flash = 0.07;
+        if(Math.random() < 0.4) explode(G.boss.x + rand(-20, 20), G.boss.y + rand(-10, 10), "#38b6ff", 1);
+        if(G.boss.hp <= 0) killBoss(); else updateBossBar();
+      }
+    } else {
+      G.beamCd -= dt;
+      if(G.beamCd <= 0){
+        G.beamT = 0.45; G.beamCd = 6;
+        G.rings.push({ x:pl.x, y:pl.y - pl.r, r:10, t:0, color:"#38b6ff" });
+        floatText(pl.x, pl.y - 46, "NOVA BEAM!", "#38b6ff");
+        AudioSys.levelup();
+      }
+    }
+  }
+
+  /* Asteroid Field: batu asteroid beterbangan jadi rintangan — tabrakan melukai pemain,
+     tapi bisa dihancurkan dengan tembakan untuk skor */
+  if(bgOf() === "asteroid"){
+    G.rockT -= dt;
+    if(G.rockT <= 0 && G.rocks.length < 7){
+      G.rockT = rand(1.5, 2.6);
+      const verts = [];
+      for(let k=0;k<9;k++) verts.push(rand(0.76, 1.14));
+      G.rocks.push({ x:rrange(34, W-34), y:-46, r:rand(17, 32), vy:rand(55, 98), vx:rand(-16, 16), rot:rand(0, 6), vr:rand(-0.7, 0.7), hp:3, verts });
+    }
+  }
+  for(let i=G.rocks.length-1;i>=0;i--){
+    const rk = G.rocks[i];
+    rk.y += rk.vy * dt; rk.x += rk.vx * dt; rk.rot += rk.vr * dt;
+    if(rk.y > H + 50 || rk.x < -50 || rk.x > W + 50){ G.rocks.splice(i, 1); continue; }
+    if(Math.hypot(rk.x - pl.x, rk.y - pl.y) < rk.r * 0.82 + pl.r - 3){
+      explode(rk.x, rk.y, "#9c8468", 16);
+      G.rocks.splice(i, 1);
+      hitPlayer();
+      if(G.mode !== "playing") return;
+    }
+  }
+
   /* spawn endless: musuh berdatangan terus, makin rapat & kuat seiring waktu */
   G.spawnTimer -= dt;
   if(G.spawnTimer <= 0 && G.enemies.length < 42){
     spawnEnemy();
     G.spawnTimer = endlessComp().interval * (G.boss ? 1.5 : 1) * rrange(0.7, 1.25);
+  }
+  /* kampanye: boss penjaga muncul begitu target musuh tercapai */
+  if(G.campaignMode && !G.campDone && !G.boss && !G.bossPending){
+    const cdef2 = campDef(G.campaignMode);
+    if(cdef2 && G.runKills >= cdef2.kills){
+      G.bossCount = cdef2.bossIdx;
+      G.bossPending = true; G.bossTimer = 1.6;
+      const bc = bossClassFor(G.bossCount + 1);
+      showBanner("⚠ BOSS " + bc.name + " MENDEKATI ⚠", "Kalahkan dia untuk menuntaskan level ini!");
+      AudioSys.bossWarn();
+    }
   }
   /* boss berkala berdasarkan waktu bertahan: pertama 75 detik, lalu tiap 90 detik setelah boss kalah */
   if(!G.boss && !G.bossPending && G.runTime >= G.nextBossAt){
@@ -1985,6 +2825,23 @@ function update(dt){
         b.phaseT -= dt;
         if(b.phaseT <= 0){ b.phase = 1 - b.phase; b.phaseT = 3; b.fireT = Math.min(b.fireT, 0.3); }
         pat = b.phase === 0 ? "spiral" : "spread";
+      }
+      if(pat === "overlord"){
+        /* ALIEN OVERLORD: bergantian spiral & tembakan memburu, plus memanggil 2 dart berkala */
+        b.phaseT -= dt;
+        if(b.phaseT <= 0){ b.phase = 1 - b.phase; b.phaseT = 3.2; b.fireT = Math.min(b.fireT, 0.3); }
+        b.summonT -= dt;
+        if(b.summonT <= 0){
+          b.summonT = 5;
+          for(let k=0;k<2;k++){
+            if(G.enemies.length < 30){
+              const cc = endlessComp();
+              G.enemies.push({ x:b.x + (k ? 36 : -36), y:b.y + 22, r:15, type:"dart", hp:Math.max(1, cc.hp), maxhp:Math.max(1, cc.hp), vy:cc.speed * 1.6, t:rand(0, 6), fireT:99, flash:0 });
+            }
+          }
+          floatText(b.x, b.y + b.r + 16, "OVERLORD MEMANGGIL PASUKAN!", "#f43f5e");
+        }
+        pat = b.phase === 0 ? "spiral" : "aimed";
       }
       if(pat === "spiral" || pat === "hydra"){
         b.fireT -= dt;
@@ -2039,7 +2896,12 @@ function update(dt){
     if(e.flash > 0) e.flash -= dt;
     e.y += e.vy*dt;
     if(e.type === "zig") e.x += Math.sin(e.t*4) * 90 * dt;
-    if(e.type === "shooter" || e.type === "elite"){
+    if(e.type === "alien") e.x += Math.sin(e.t*2.6) * 120 * dt;
+    if(e.type === "kamikaze"){ /* menukik memburu pemain, makin lama makin cepat */
+      e.x += clamp(pl.x - e.x, -1, 1) * 78 * dt;
+      e.vy = Math.min(e.vy + 34 * dt, 330);
+    }
+    if(e.type === "shooter" || e.type === "elite" || e.type === "alien"){
       e.fireT -= dt;
       if(e.fireT <= 0 && e.y > 10 && e.y < H*0.6){
         e.fireT = rand(1.6, 2.8) * (2 - Math.min(1.6, curDiff().speedMul)) ;
@@ -2073,6 +2935,26 @@ function update(dt){
         else if(b.pierce > 0){ b.pierce--; b.hitBoss = true; }
         else used = true;
         updateBossBar();
+      }
+    }
+    if(!used){
+      for(let j=G.rocks.length-1;j>=0;j--){
+        const rk = G.rocks[j];
+        if(b.hitSet.includes(rk)) continue;
+        if(Math.hypot(b.x-rk.x, b.y-rk.y) < rk.r * 0.9 + b.r){
+          rk.hp -= b.dmg; G.runHits++;
+          if(rk.hp <= 0){
+            const rpts = Math.round(25 * curDiff().scoreMul * comboMul());
+            G.score += rpts;
+            floatText(rk.x, rk.y, "+" + rpts, "#d8cfc2");
+            explode(rk.x, rk.y, "#9c8468", 15); explode(rk.x, rk.y, "#6b5a4a", 9);
+            AudioSys.explosion(false);
+            G.rocks.splice(j, 1);
+          } else impactFX(b.x, b.y);
+          if(b.pierce > 0){ b.pierce--; b.hitSet.push(rk); }
+          else used = true;
+          break;
+        }
       }
     }
     if(!used){
@@ -2122,6 +3004,7 @@ function update(dt){
     if(g.y > H + 24){ G.gems.splice(i,1); continue; }
     if(d < pl.r + 12){
       G.gems.splice(i,1);
+      store.data.stats.gems = (store.data.stats.gems || 0) + g.val; /* total permata seumur main → Level Pilot & chip 💎 di Lobi */
       gainXP(g.val);
       if(G.mode !== "playing") return;
     }
@@ -2187,16 +3070,36 @@ function drawShip(x, y, r, tilt, invuln, t, def, c){
   if(invuln > 0 && Math.floor(t*14) % 2 === 0) g.globalAlpha = 0.35;
   /* --- api mesin berlapis (berdenyut) --- */
   const fl = 9 + Math.sin(t*42)*3 + Math.sin(t*97)*1.6;
-  g.fillStyle = "rgba(255,110,26,.85)";
-  g.beginPath(); g.moveTo(-4.6, r-4); g.quadraticCurveTo(0, r + fl*0.6, 0, r + fl + 5); g.quadraticCurveTo(0, r + fl*0.6, 4.6, r-4); g.closePath(); g.fill();
-  g.fillStyle = "#ffb02e";
-  g.beginPath(); g.moveTo(-3, r-4); g.quadraticCurveTo(0, r + fl*0.45, 0, r + fl*0.72 + 3); g.quadraticCurveTo(0, r + fl*0.45, 3, r-4); g.closePath(); g.fill();
-  g.fillStyle = "#fff3b0";
-  g.beginPath(); g.moveTo(-1.6, r-4); g.lineTo(0, r + fl*0.4 + 2); g.lineTo(1.6, r-4); g.closePath(); g.fill();
-  /* --- nosel mesin gelap --- */
-  g.fillStyle = sh.c4;
-  g.beginPath(); g.moveTo(-5.2, r-6.5); g.lineTo(5.2, r-6.5); g.lineTo(4, r-1.5); g.lineTo(-4, r-1.5); g.closePath(); g.fill();
-  g.fillStyle = sh.glow; g.globalAlpha *= 0.85; g.fillRect(-3.4, r-4.4, 6.8, 1.5); g.globalAlpha /= 0.85;
+  if(sh.twin){
+    /* Aetherion: MESIN GANDA api biru — dua semburan plasma biru-putih seperti di foto referensi */
+    [-1, 1].forEach(s=>{
+      const fx = s * hw * 0.48, fl2 = fl * 1.3;
+      g.fillStyle = "rgba(46,123,255,.75)";
+      g.beginPath(); g.moveTo(fx-4.2, r-4); g.quadraticCurveTo(fx, r + fl2*0.6, fx, r + fl2 + 7); g.quadraticCurveTo(fx, r + fl2*0.6, fx+4.2, r-4); g.closePath(); g.fill();
+      g.fillStyle = "#38b6ff";
+      g.beginPath(); g.moveTo(fx-2.7, r-4); g.quadraticCurveTo(fx, r + fl2*0.45, fx, r + fl2*0.75 + 4); g.quadraticCurveTo(fx, r + fl2*0.45, fx+2.7, r-4); g.closePath(); g.fill();
+      g.fillStyle = "#eaf7ff";
+      g.beginPath(); g.moveTo(fx-1.4, r-4); g.lineTo(fx, r + fl2*0.42 + 2); g.lineTo(fx+1.4, r-4); g.closePath(); g.fill();
+    });
+    /* nosel ganda */
+    [-1, 1].forEach(s=>{
+      const fx = s * hw * 0.48;
+      g.fillStyle = sh.c4;
+      g.beginPath(); g.moveTo(fx-4.6, r-6.5); g.lineTo(fx+4.6, r-6.5); g.lineTo(fx+3.4, r-1.5); g.lineTo(fx-3.4, r-1.5); g.closePath(); g.fill();
+      g.fillStyle = sh.glow; g.globalAlpha *= 0.85; g.fillRect(fx-3, r-4.4, 6, 1.5); g.globalAlpha /= 0.85;
+    });
+  } else {
+    g.fillStyle = "rgba(255,110,26,.85)";
+    g.beginPath(); g.moveTo(-4.6, r-4); g.quadraticCurveTo(0, r + fl*0.6, 0, r + fl + 5); g.quadraticCurveTo(0, r + fl*0.6, 4.6, r-4); g.closePath(); g.fill();
+    g.fillStyle = "#ffb02e";
+    g.beginPath(); g.moveTo(-3, r-4); g.quadraticCurveTo(0, r + fl*0.45, 0, r + fl*0.72 + 3); g.quadraticCurveTo(0, r + fl*0.45, 3, r-4); g.closePath(); g.fill();
+    g.fillStyle = "#fff3b0";
+    g.beginPath(); g.moveTo(-1.6, r-4); g.lineTo(0, r + fl*0.4 + 2); g.lineTo(1.6, r-4); g.closePath(); g.fill();
+    /* --- nosel mesin gelap --- */
+    g.fillStyle = sh.c4;
+    g.beginPath(); g.moveTo(-5.2, r-6.5); g.lineTo(5.2, r-6.5); g.lineTo(4, r-1.5); g.lineTo(-4, r-1.5); g.closePath(); g.fill();
+    g.fillStyle = sh.glow; g.globalAlpha *= 0.85; g.fillRect(-3.4, r-4.4, 6.8, 1.5); g.globalAlpha /= 0.85;
+  }
   /* --- sayap menyapu + garis aksen + meriam --- */
   [-1, 1].forEach(s=>{
     const wg = g.createLinearGradient(0, 0, s*span, 0);
@@ -2263,8 +3166,8 @@ function drawShip(x, y, r, tilt, invuln, t, def, c){
 }
 function drawEnemy(e){
   ctx.save(); ctx.translate(e.x, e.y);
-  const body = e.type==="elite" ? "#ff3860" : e.type==="shooter" ? "#ffc53d" : e.type==="dart" ? "#ff4d7e" : "#ff7a4d";
-  const dark = e.type==="elite" ? "#8f1030" : e.type==="shooter" ? "#a86f10" : e.type==="dart" ? "#a81f47" : "#b03e14";
+  const body = e.type==="elite" ? "#ff3860" : e.type==="alien" ? "#fb923c" : e.type==="kamikaze" ? "#ef4444" : e.type==="shooter" ? "#ffc53d" : e.type==="dart" ? "#ff4d7e" : "#ff7a4d";
+  const dark = e.type==="elite" ? "#8f1030" : e.type==="alien" ? "#9a3412" : e.type==="kamikaze" ? "#7f1d1d" : e.type==="shooter" ? "#a86f10" : e.type==="dart" ? "#a81f47" : "#b03e14";
   const slim = e.type === "dart" ? 0.68 : 1;             /* dart: badan ramping memanjang */
   const len = e.type === "dart" ? e.r + 7 : e.r + 3;
   /* sayap bergradasi */
@@ -2439,6 +3342,45 @@ function drawBoss(b){
     ctx.globalAlpha = 1;
     turret(-R * 0.62, R * 0.42); turret(R * 0.62, R * 0.42); turret(-R * 0.3, R * 0.62); turret(R * 0.3, R * 0.62);
     core(-R * 0.27, -R * 0.05, 7.5); core(R * 0.27, -R * 0.05, 7.5);
+  } else if(cls.id === "battleship"){
+    /* MEGA BATTLESHIP: lambung super lebar berlapis dek, 4 meriam, core sian di tengah */
+    ctx.beginPath();
+    ctx.moveTo(-R * 1.45, -R * 0.35);
+    ctx.lineTo(-R * 1.1, R * 0.55); ctx.lineTo(-R * 0.4, R * 0.85); ctx.lineTo(0, R * 0.6);
+    ctx.lineTo(R * 0.4, R * 0.85); ctx.lineTo(R * 1.1, R * 0.55); ctx.lineTo(R * 1.45, -R * 0.35);
+    ctx.lineTo(R * 0.9, -R * 0.8); ctx.lineTo(0, -R * 0.55);
+    ctx.lineTo(-R * 0.9, -R * 0.8);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = cls.dark;
+    ctx.fillRect(-R * 0.62, -R * 0.45, R * 1.24, R * 0.5);
+    ctx.strokeStyle = cls.trim; ctx.lineWidth = 2; ctx.globalAlpha = 0.8;
+    ctx.beginPath(); ctx.moveTo(-R * 1.3, R * 0.3); ctx.lineTo(R * 1.3, R * 0.3); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-R * 0.62, -R * 0.45); ctx.lineTo(R * 0.62, -R * 0.45); ctx.stroke();
+    ctx.globalAlpha = 1;
+    turret(-R * 1.05, R * 0.35); turret(R * 1.05, R * 0.35); turret(-R * 0.42, R * 0.55); turret(R * 0.42, R * 0.55);
+    core(-R * 0.85, -R * 0.1, 5.5); core(R * 0.85, -R * 0.1, 5.5);
+    core(0, R * 0.05, 13);
+  } else if(cls.id === "overlord"){
+    /* ALIEN OVERLORD: siluet hitam berduri tajam, aksen merah menyala, core merah besar */
+    ctx.beginPath();
+    const spikes = 12;
+    for(let k=0;k<spikes*2;k++){
+      const a = (k / (spikes*2)) * Math.PI * 2;
+      const rr = (k % 2 === 0) ? R * 1.22 : R * 0.78;
+      const px = Math.cos(a) * rr, py = Math.sin(a) * rr * 0.92;
+      if(k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = cls.dark;
+    ctx.beginPath(); ctx.ellipse(0, 0, R * 0.66, R * 0.6, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = cls.trim; ctx.lineWidth = 2.4; ctx.globalAlpha = 0.85;
+    for(let k=0;k<4;k++){
+      const a0 = t * 0.9 + k * (Math.PI / 2);
+      ctx.beginPath(); ctx.arc(0, 0, R * 0.82, a0, a0 + 0.7); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    core(-R * 0.42, -R * 0.3, 5); core(R * 0.42, -R * 0.3, 5);
+    core(0, R * 0.05, 14);
   } else { /* talon: sayap menyapu + taring kembar */
     ctx.beginPath();
     ctx.moveTo(0, R + 8); ctx.lineTo(R - 6, R - 16); ctx.lineTo(R + 15, -R * 0.15); ctx.lineTo(R - 14, -R + 10);
@@ -2468,19 +3410,69 @@ function drawBoss(b){
   }
   ctx.restore();
 }
-function draw(){
-  /* langit galaksi: gradasi ruang dalam, lalu nebula, planet, baru bintang */
-  const sky = ctx.createLinearGradient(0, 0, 0, H);
-  sky.addColorStop(0, "#04040f"); sky.addColorStop(0.45, "#0a1030"); sky.addColorStop(0.78, "#160b31"); sky.addColorStop(1, "#070b1c");
-  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
-  for(const nb of nebulae){ ctx.globalAlpha = nb.a; ctx.drawImage(nb.img, nb.x, nb.y, nb.s, nb.s); }
-  ctx.globalAlpha = 1;
-  for(const p of planets){
-    const d = p.r * 300 / 74; /* sprite 300px memuat planet berjari-jari 74px */
-    ctx.globalAlpha = 0.92;
-    ctx.drawImage(p.img, p.x - d/2, p.y - d/2, d, d);
+/* Cyber City: menara neon di tepi kiri-kanan yang bergeser turun (terbang di atas kota) */
+function drawCity(){
+  for(const side of [0, 1]){
+    for(let i=0;i<9;i++){
+      const bw = 30 + ((i * 29 + side * 13) % 24);
+      const bx = side === 0 ? 0 : W - bw;
+      const seg = 168;
+      const by = ((i * seg + G.cityY) % (H + seg)) - seg;
+      ctx.fillStyle = "rgba(8,10,26,.88)";
+      ctx.fillRect(bx, by, bw, seg - 14);
+      const cols = ["#31e6ff", "#ff4d7e", "#ffc53d"];
+      for(let k=0;k<7;k++){
+        const wx = side === 0 ? 5 + ((i * 17 + k * 23) % Math.max(6, bw - 12)) : W - bw + 5 + ((i * 17 + k * 23) % Math.max(6, bw - 12));
+        const wy = by + 10 + ((i * 41 + k * 29) % (seg - 44));
+        ctx.fillStyle = cols[(i + k) % 3];
+        ctx.globalAlpha = 0.5 + 0.4 * Math.sin(G.time * 2 + i * 3 + k);
+        ctx.fillRect(wx, wy, 3.4, 5);
+      }
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "rgba(49,230,255,.5)";
+      ctx.fillRect(side === 0 ? bw - 2 : W - bw, by, 2, seg - 14);
+    }
   }
+}
+function draw(){
+  /* langit sesuai latar terpilih: gradasi, nebula, planet, baru bintang */
+  const bgNow = bgOf();
+  /* Gradasi langit di-cache (dibuat sekali per latar & ukuran layar), bukan
+     dibuat ulang tiap frame — lebih ringan untuk GPU HP lemah */
+  if(!draw._sky || draw._skyKey !== bgNow + "|" + H){
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    if(bgNow === "cyber"){ sky.addColorStop(0, "#05020f"); sky.addColorStop(0.45, "#0d0430"); sky.addColorStop(0.78, "#1c0540"); sky.addColorStop(1, "#060213"); }
+    else if(bgNow === "alien"){ sky.addColorStop(0, "#02141a"); sky.addColorStop(0.45, "#06303a"); sky.addColorStop(0.78, "#0d1b3a"); sky.addColorStop(1, "#050a18"); }
+    else { sky.addColorStop(0, "#04040f"); sky.addColorStop(0.45, "#0a1030"); sky.addColorStop(0.78, "#160b31"); sky.addColorStop(1, "#070b1c"); }
+    draw._sky = sky; draw._skyKey = bgNow + "|" + H;
+  }
+  ctx.fillStyle = draw._sky; ctx.fillRect(0, 0, W, H);
+  for(const nb of nebulae){ ctx.globalAlpha = nb.a * (bgNow === "cyber" ? 0.45 : 1); ctx.drawImage(nb.img, nb.x, nb.y, nb.s, nb.s); }
   ctx.globalAlpha = 1;
+  if(bgNow !== "cyber"){
+    for(const p of planets){
+      const d = p.r * 300 / 74; /* sprite 300px memuat planet berjari-jari 74px */
+      ctx.globalAlpha = 0.92;
+      ctx.drawImage(p.img, p.x - d/2, p.y - d/2, d, d);
+    }
+    ctx.globalAlpha = 1;
+  }
+  if(bgNow === "alien" && planetSprites.length > 1){
+    /* planet bercincin raksasa menggantung di langit Alien Planet */
+    ctx.globalAlpha = 0.95;
+    ctx.drawImage(planetSprites[1], W - 196, -30, 215, 215);
+    ctx.globalAlpha = 1;
+    /* siluet daratan berbatu di bawah */
+    ctx.fillStyle = "rgba(16,6,26,.92)";
+    ctx.beginPath(); ctx.moveTo(0, H);
+    for(let x=0;x<=W;x+=36){ ctx.lineTo(x, H - 14 - ((x * 37) % 23) - Math.sin(x * 0.05 + G.time * 0.1) * 2); }
+    ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = "rgba(45,212,191,.35)"; ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=36){ const y = H - 14 - ((x * 37) % 23) - Math.sin(x * 0.05 + G.time * 0.1) * 2; if(x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }
+    ctx.stroke();
+  }
+  if(bgNow === "cyber") drawCity();
   /* bintang: berkelap-kelip halus */
   ctx.fillStyle = "#cfe6ff";
   for(const s of stars){ ctx.globalAlpha = (0.35 + s.s*0.3) * (0.72 + 0.28 * Math.sin(G.time*2.4 + s.tw)); ctx.fillRect(s.x, s.y, s.s, s.s*1.6); }
@@ -2508,6 +3500,24 @@ function draw(){
     ctx.beginPath(); ctx.moveTo(0, -s); ctx.lineTo(s*0.7, 0); ctx.lineTo(0, s); ctx.lineTo(-s*0.7, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
     ctx.restore();
   }
+  /* batu asteroid (rintangan di Asteroid Field) */
+  for(const rk of G.rocks){
+    ctx.save(); ctx.translate(rk.x, rk.y); ctx.rotate(rk.rot);
+    const rg2 = ctx.createRadialGradient(-rk.r * 0.3, -rk.r * 0.3, rk.r * 0.2, 0, 0, rk.r * 1.15);
+    rg2.addColorStop(0, "#a08b6d"); rg2.addColorStop(0.6, "#6b5a4a"); rg2.addColorStop(1, "#3a3128");
+    ctx.fillStyle = rg2; ctx.strokeStyle = "rgba(10,6,2,.6)"; ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    for(let k=0;k<rk.verts.length;k++){
+      const a = (k / rk.verts.length) * Math.PI * 2, rr = rk.r * rk.verts[k];
+      const px = Math.cos(a) * rr, py = Math.sin(a) * rr;
+      if(k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "rgba(30,24,16,.4)";
+    ctx.beginPath(); ctx.arc(-rk.r * 0.25, -rk.r * 0.1, rk.r * 0.22, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(rk.r * 0.3, rk.r * 0.28, rk.r * 0.15, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
   /* musuh & boss */
   for(const e of G.enemies) drawEnemy(e);
   if(G.boss) drawBoss(G.boss);
@@ -2524,8 +3534,29 @@ function draw(){
   /* peluru pemain: bentuk, warna & jejak cahaya khas skin yang dipakai */
   const bsd = shipDef();
   for(const b of G.bullets){
+    if(b.laser){ /* sinar Laser Biru: garis energi panjang biru-putih */
+      ctx.save(); ctx.translate(b.x, b.y);
+      ctx.strokeStyle = "rgba(56,182,255,.45)"; ctx.lineWidth = 6; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(0, 15); ctx.lineTo(0, -17); ctx.stroke();
+      ctx.strokeStyle = "#eaf7ff"; ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(0, 15); ctx.lineTo(0, -17); ctx.stroke();
+      ctx.restore();
+      continue;
+    }
+    if(b.plasma){ /* bola Plasma Cannon: inti putih-biru berhalo berdenyut */
+      ctx.save(); ctx.translate(b.x, b.y);
+      const pr = 9 + Math.sin(G.time * 18 + b.x) * 1.6;
+      ctx.globalAlpha = 0.35; ctx.fillStyle = "#38b6ff";
+      ctx.beginPath(); ctx.arc(0, 0, pr + 6, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1; ctx.fillStyle = "#38b6ff";
+      ctx.beginPath(); ctx.arc(0, 0, pr, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#eaf7ff";
+      ctx.beginPath(); ctx.arc(0, 0, pr * 0.5, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+      continue;
+    }
     const sp = Math.hypot(b.vx, b.vy) || 1, ux = b.vx / sp, uy = b.vy / sp;
-    const tl = bsd.bShape === "tracer" ? 24 : 15;
+    const tl = bsd.bShape === "tracer" ? 24 : bsd.bShape === "plasma" ? 21 : 15;
     const tg = ctx.createLinearGradient(b.x, b.y, b.x - ux * tl, b.y - uy * tl);
     tg.addColorStop(0, hexA(bsd.bCol, 0.55)); tg.addColorStop(1, hexA(bsd.bCol, 0));
     ctx.strokeStyle = tg; ctx.lineWidth = 3; ctx.lineCap = "round";
@@ -2544,6 +3575,14 @@ function draw(){
       ctx.beginPath(); ctx.moveTo(0, -9); ctx.lineTo(3.6, 0); ctx.lineTo(0, 9); ctx.lineTo(-3.6, 0); ctx.closePath(); ctx.fill();
       ctx.fillStyle = bsd.bCore;
       ctx.beginPath(); ctx.moveTo(0, -5); ctx.lineTo(1.8, 0); ctx.lineTo(0, 5); ctx.lineTo(-1.8, 0); ctx.closePath(); ctx.fill();
+    } else if(bsd.bShape === "plasma"){
+      /* Aetherion: pecahan plasma biru besar dengan halo energi menyala */
+      ctx.globalAlpha = 0.32;
+      ctx.beginPath(); ctx.ellipse(0, 0, 6.8, 12.5, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1; ctx.fillStyle = bsd.bCol;
+      ctx.beginPath(); ctx.moveTo(0, -11); ctx.lineTo(3.4, 0); ctx.lineTo(0, 11); ctx.lineTo(-3.4, 0); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = bsd.bCore;
+      ctx.beginPath(); ctx.moveTo(0, -6.5); ctx.lineTo(1.7, 0); ctx.lineTo(0, 6.5); ctx.lineTo(-1.7, 0); ctx.closePath(); ctx.fill();
     } else { /* bolt */
       ctx.beginPath(); ctx.ellipse(0, 0, 3, 8, 0, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = bsd.bCore;
@@ -2561,8 +3600,53 @@ function draw(){
     ctx.fillStyle = "#ffd23d"; ctx.fillRect(-1.5, 5, 3, 4 + Math.random()*3);
     ctx.restore();
   }
+  /* NOVA BEAM Aetherion: kolom sinar biru raksasa dari hidung pesawat sampai atas layar */
+  if(G.beamT > 0 && G.mode !== "over"){
+    const bx = G.player.x, by = G.player.y - G.player.r - 2;
+    const flick = 0.85 + Math.random() * 0.3;
+    ctx.save();
+    const bg2 = ctx.createLinearGradient(bx - 21, 0, bx + 21, 0);
+    bg2.addColorStop(0, "rgba(56,182,255,0)");
+    bg2.addColorStop(0.5, "rgba(56,182,255," + (0.38 * flick).toFixed(3) + ")");
+    bg2.addColorStop(1, "rgba(56,182,255,0)");
+    ctx.fillStyle = bg2; ctx.fillRect(bx - 21, 0, 42, by);
+    const cg2 = ctx.createLinearGradient(bx - 7, 0, bx + 7, 0);
+    cg2.addColorStop(0, "rgba(56,182,255,0)");
+    cg2.addColorStop(0.5, "rgba(234,247,255," + (0.95 * flick).toFixed(3) + ")");
+    cg2.addColorStop(1, "rgba(56,182,255,0)");
+    ctx.fillStyle = cg2; ctx.fillRect(bx - 7, 0, 14, by);
+    ctx.fillStyle = "rgba(234,247,255,.9)";
+    ctx.beginPath(); ctx.arc(bx, by, 7 + Math.random() * 3, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = "rgba(56,182,255,.8)"; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(bx, by, 13 + Math.random() * 5, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+  }
   /* pemain */
   if(G.mode !== "over") {
+    /* Drone Pendamping: bot kecil mengorbit pesawat (posisi sama seperti logika tembaknya) */
+    if(G.skills.drone && (G.mode === "playing" || G.mode === "paused" || G.mode === "levelup")){
+      const nd = G.skills.drone, sdGlow = shipDef().glow;
+      for(let k=0;k<nd;k++){
+        const a0 = G.droneA + k * (Math.PI * 2 / nd);
+        const dx = G.player.x + Math.cos(a0) * 36, dy = G.player.y + Math.sin(a0) * 27;
+        ctx.save(); ctx.translate(dx, dy);
+        ctx.fillStyle = "#22344f"; ctx.strokeStyle = sdGlow; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.arc(0, 0, 6.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = sdGlow;
+        ctx.beginPath(); ctx.arc(0, -1, 2.4, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "rgba(255,150,50,.9)";
+        ctx.beginPath(); ctx.moveTo(-2, 6); ctx.lineTo(0, 9 + Math.sin(G.time * 30 + k) * 2); ctx.lineTo(2, 6); ctx.closePath(); ctx.fill();
+        ctx.restore();
+      }
+    }
+    /* indikator Double Damage aktif */
+    if(G.dmgMulT > 0 && G.mode === "playing"){
+      ctx.save();
+      ctx.font = "800 13px Orbitron, sans-serif"; ctx.textAlign = "center";
+      ctx.fillStyle = "#ffc53d";
+      ctx.fillText("DAMAGE ×2 · " + Math.ceil(G.dmgMulT) + "s", G.player.x, G.player.y - G.player.r - 16);
+      ctx.restore();
+    }
     drawShip(G.player.x, G.player.y, G.player.r, G.player.tilt, G.player.invuln, G.time);
     if(G.player.shield > 0){
       ctx.save(); ctx.translate(G.player.x, G.player.y);
@@ -2643,8 +3727,11 @@ function updateHUD(){
   setText("hudCombo", comboText());
   const ce = $("hudCombo"); if(ce) ce.classList.toggle("hot", comboMul() >= 3);
   const hd = $("hudDiff");
-  if(hd){ const d = (G.mode === "menu" || !G.difficulty) ? diffOf(store.data.difficulty) : curDiff(); const lbl = (G.mode !== "menu" && G.dailyMode) ? "Harian · " + d.label : d.label; if(hd.textContent !== lbl) hd.textContent = lbl; hd.style.color = d.color; }
+  if(hd){ const d = (G.mode === "menu" || !G.difficulty) ? diffOf(store.data.difficulty) : curDiff(); let lbl = (G.mode !== "menu" && G.dailyMode) ? "Harian · " + d.label : d.label; if(G.mode !== "menu" && G.campaignMode){ const cd2 = campDef(G.campaignMode); lbl = "Kampanye " + G.runKills + "/" + (cd2 ? cd2.kills : "?"); } if(hd.textContent !== lbl) hd.textContent = lbl; hd.style.color = d.color; }
   $("livesDisplay").textContent = "♥".repeat(Math.max(0, G.lives)) || "—";
+  setText("hudCoins", ((store.data.coins || 0) + G.runCoins).toLocaleString("id-ID"));
+  const hr = $("hudRank");
+  if(hr){ const rk2 = rankOf(Math.max(store.data.hi || 0, G.score)); const t2 = "🏅 " + rk2.cur.name; if(hr.textContent !== t2) hr.textContent = t2; hr.style.color = rk2.cur.color; }
   updateXP();
 }
 /* Waktu & kombo di HUD diperbarui tiap frame (hanya menulis bila berubah) */
@@ -2656,6 +3743,10 @@ function tickHUD(){
 }
 function updateMenuMeta(){
   $("menuHi").textContent = store.data.hi.toLocaleString("id-ID");
+  const rkM = rankOf(store.data.hi || 0);
+  const mr = $("menuRank"); if(mr){ mr.textContent = rkM.cur.name; mr.style.color = rkM.cur.color; }
+  const mrn = $("menuRankNext"); if(mrn) mrn.textContent = rkM.next ? ("Butuh " + (rkM.next.min - (store.data.hi || 0)).toLocaleString("id-ID") + " skor lagi menuju " + rkM.next.name) : "Rank tertinggi tercapai 👑";
+  const ci = $("campaignInfo"); if(ci) ci.textContent = (store.data.campaign || 0) >= 5 ? "Tamat! Semua level selesai 👑" : ((store.data.campaign || 0) + " dari 5 level selesai");
   const n = Object.keys(store.data.ach).length;
   $("menuAch").textContent = n + " / " + ACH_DEFS.length;
   const mc = $("menuCoins"); if(mc) mc.textContent = (store.data.coins || 0).toLocaleString("id-ID");
@@ -2665,6 +3756,26 @@ function updateMenuMeta(){
   const lb = store.data.leaderboard || [];
   const lbInfo = $("lbMenuInfo");
   if(lbInfo) lbInfo.textContent = lb.length ? ("Teratas: " + lb[0].score.toLocaleString("id-ID") + " · " + (lb[0].name || "Pemain")) : "Skor tertinggi";
+  /* --- Lobi: profil, bar rank, avatar & panggung pesawat, season, titik notifikasi --- */
+  const nm = $("lbName"); if(nm) nm.textContent = (store.data.playerName || "").trim() || "Pemain";
+  const rkL = rankOf(store.data.hi || 0);
+  const lrn = $("lbRankName"); if(lrn){ lrn.textContent = rkL.cur.name; lrn.style.color = rkL.cur.color; }
+  const pp = pilotProgress(store.data.stats.gems || 0);
+  const plv = $("lbPilotLv"); if(plv) plv.textContent = pp.lvl;
+  const mg = $("menuGems"); if(mg) mg.textContent = (store.data.stats.gems || 0).toLocaleString("id-ID");
+  const fill = $("lbXpFill");
+  if(fill){ fill.style.width = clamp(pp.cur / pp.need * 100, 0, 100) + "%"; }
+  const xt = $("lbXpText"); if(xt) xt.textContent = "XP Pilot " + pp.cur + " / " + pp.need + " permata → Lv. " + (pp.lvl + 1);
+  const av = $("lbAvatar"); if(av){ const ag = av.getContext("2d"); if(ag){ ag.clearRect(0, 0, 52, 52); drawShip(26, 29, 13.5, 0, 0, 1.3, shipDef(), ag); } }
+  const ss = $("lbStageShip"); if(ss){ const sg = ss.getContext("2d"); if(sg){ sg.clearRect(0, 0, 240, 170); drawShip(120, 86, 44, 0, 0, 1.3, shipDef(), sg); } }
+  const snm = $("lbShipName"); if(snm) snm.textContent = shipDef().name;
+  const sds = $("lbShipDesc"); if(sds) sds.textContent = "Pesawat terpilih · " + (store.data.coins || 0).toLocaleString("id-ID") + " 🪙 di dompet";
+  const mi = $("lbModeInfo"); if(mi){ const dd2 = diffOf(store.data.difficulty); mi.textContent = dd2.label + " · " + bgDef(store.data.bg).name + " · Skor " + fmtScoreMul(dd2.scoreMul); }
+  const scd = $("lbSeasonCd"); if(scd){ const now2 = new Date(); const end2 = new Date(now2.getFullYear(), now2.getMonth() + 1, 1); const ms2 = end2 - now2; scd.textContent = "berakhir dlm " + Math.floor(ms2 / 86400000) + "h " + Math.floor(ms2 % 86400000 / 3600000) + "j"; }
+  const dN = $("dotNotice"); if(dN) dN.style.display = store.data.noticeSeen ? "none" : "";
+  const dNT = $("dotNoticeTop"); if(dNT) dNT.style.display = store.data.noticeSeen ? "none" : "";
+  const dE = $("dotEvent"); if(dE) dE.style.display = (store.data.campaign || 0) >= 5 ? "none" : "";
+  const dD = $("dotDaily"); if(dD) dD.style.display = dailyStore().entries.length ? "none" : "";
   const sv = store.data.save;
   $("btnContinue").disabled = !sv;
   $("continueInfo").textContent = sv ? ("Waktu " + fmtTime(sv.elapsed != null ? sv.elapsed : (sv.wave ? (sv.wave - 1) * 40 : 0)) + " · " + diffOf(sv.difficulty || "normal").label + (sv.daily ? " · Harian" : "") + " · Skor " + sv.score.toLocaleString("id-ID")) : "Tidak ada simpanan";
@@ -2695,6 +3806,7 @@ function resumeGame(){
 /* Tulis simpanan run saat ini ke penyimpanan (dipakai tombol Simpan & simpan otomatis) */
 function writeRunSave(){
   if(!G.player) return;
+  if(G.campaignMode) return; /* run kampanye tidak menimpa simpanan mode endless */
   if(G.mode !== "playing" && G.mode !== "paused" && G.mode !== "levelup") return;
   store.data.save = { elapsed:Math.round(G.runTime), score:G.score, lives:G.lives, weapon:G.player.weapon, runKills:G.runKills, level:G.level, xp:G.xp, skills:Object.assign({}, G.skills), difficulty:G.difficulty || store.data.difficulty, daily:!!G.dailyMode, runCoins:G.runCoins, bestCombo:G.bestCombo };
   store.save();
@@ -2751,7 +3863,7 @@ $("btnContinue").addEventListener("click", ()=>{ if(store.data.save) startGame(t
 $("btnLeaderboard").addEventListener("click", ()=>{ lbReturn = "scrMenu"; lbFilter = "all"; renderLeaderboard(); showScreen("scrLeaderboard"); fetchGlobalLeaderboard(false); });
 $("btnOverLeaderboard").addEventListener("click", ()=>{ lbReturn = "scrOver"; renderLeaderboard(); showScreen("scrLeaderboard"); fetchGlobalLeaderboard(false); });
 $("btnSaveScore").addEventListener("click", saveScoreToLeaderboard);
-$("lbName").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); saveScoreToLeaderboard(); } });
+$("lbNameInput").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); saveScoreToLeaderboard(); } });
 $("btnAch").addEventListener("click", ()=>{ renderAchPanel(); showScreen("scrAch"); });
 $("btnHow").addEventListener("click", ()=> showScreen("scrHow"));
 $("btnCredits").addEventListener("click", ()=> showScreen("scrCredits"));
@@ -2768,7 +3880,29 @@ $("btnQuit").addEventListener("click", ()=>{
   $("bossBarWrap").style.display = "none";
   updateMenuMeta(); showScreen("scrMenu");
 });
-$("btnAgain").addEventListener("click", ()=> startGame(false, G.dailyMode));
+$("btnAgain").addEventListener("click", ()=> startGame(false, G.dailyMode, G.campaignMode || 0));
+$("btnCampaign").addEventListener("click", ()=>{ renderCampaign(); showScreen("scrCampaign"); });
+$("btnCampNext").addEventListener("click", ()=>{ if(G.campaignMode >= 1 && G.campaignMode < 5) startGame(false, false, G.campaignMode + 1); });
+$("btnCampReplay").addEventListener("click", ()=>{ if(G.campaignMode >= 1) startGame(false, false, G.campaignMode); });
+$("btnCampMenu").addEventListener("click", ()=>{ G.mode = "menu"; G.campaignMode = 0; G.campaignBg = null; updateMenuMeta(); showScreen("scrMenu"); });
+/* ---------- Lobi: kabel pintasan ikon, banner & nav bawah ke layar yang sudah ada ---------- */
+function openNotice(){ store.data.noticeSeen = true; store.save(); updateMenuMeta(); showScreen("scrNotice"); }
+$("lbBtnNoticeTop").addEventListener("click", openNotice);
+$("lbIcoNotice").addEventListener("click", openNotice);
+$("lbBtnSettings").addEventListener("click", ()=> $("btnSettings").click());
+$("lbIcoEvent").addEventListener("click", ()=> $("btnCampaign").click());
+$("lbIcoDaily").addEventListener("click", ()=> openMissions());
+$("lbIcoRank").addEventListener("click", ()=> $("btnLeaderboard").click());
+$("lbIcoAch").addEventListener("click", ()=> $("btnAch").click());
+$("lbBannerEvent").addEventListener("click", ()=> $("btnGarage").click());
+$("lbBannerFree").addEventListener("click", ()=> openMissions());
+$("lbModeCard").addEventListener("click", ()=>{ const el = $("missionSettings"); if(el) el.scrollIntoView({ behavior:"smooth", block:"center" }); });
+$("lbNavShop").addEventListener("click", ()=> $("btnGarage").click());
+$("lbNavSkin").addEventListener("click", ()=>{ $("btnGarage").click(); setTimeout(()=>{ const el = $("shipList"); if(el) el.scrollIntoView({ block:"start" }); }, 80); });
+$("lbNavUpgrade").addEventListener("click", ()=>{ $("btnGarage").click(); setTimeout(()=>{ const el = $("upAnchor"); if(el) el.scrollIntoView({ block:"start" }); }, 80); });
+$("lbNavDrone").addEventListener("click", ()=> showScreen("scrDrone"));
+$("lbNavInv").addEventListener("click", ()=> $("btnStats").click());
+$("btnDronePlay").addEventListener("click", ()=> startGame(false));
 $("btnOverMenu").addEventListener("click", ()=>{ G.mode = "menu"; updateMenuMeta(); showScreen("scrMenu"); });
 
 /* Simpan otomatis saat aplikasi disembunyikan / halaman ditutup di tengah permainan:
@@ -2820,9 +3954,643 @@ try{
 $("bootReload").addEventListener("click", ()=> location.reload());
 $("bootReset").addEventListener("click", ()=>{ try{ localStorage.removeItem(LS_KEY); }catch(e){} try{ indexedDB.deleteDatabase(IDB_NAME); }catch(e){} location.reload(); });
 
+/* ============================================================
+   FITUR BARU: Misi Harian, Login Harian, Boss Rush, Galeri Musuh,
+   Tutorial Interaktif, Diamond & Spin, Profil & Nickname,
+   Musik Menu, Mode Hemat & Optimasi Performa HP Lemah
+   ============================================================ */
+function yesterdayStr(){ const d = new Date(); d.setDate(d.getDate() - 1); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+/* Bersihkan nickname: buang karakter yang bisa merusak tampilan/markup, maks 20 karakter (sesuai validasi Firebase) */
+function cleanNick(s){ return String(s == null ? "" : s).replace(/[<>&"'`\\]/g, "").replace(/[\x00-\x1f\x7f]/g, "").trim().slice(0, 20); }
+function ecoOn(){ return !!S.eco; }
+
+/* ---------- MISI HARIAN: 3 misi, reset tiap tengah malam, hadiah koin + diamond ---------- */
+const MISSIONS = [
+  { id:"kills",   icon:"💥", name:"Pembasmi Musuh",   desc:"Hancurkan 100 musuh hari ini (dari semua permainan)", target:100, coins:150, dia:3 },
+  { id:"survive", icon:"⏱️", name:"Penyintas Sejati", desc:"Bertahan 3 menit dalam SATU permainan hari ini",       target:180, coins:120, dia:3, time:true },
+  { id:"boss",    icon:"👑", name:"Pemburu Boss",     desc:"Kalahkan 1 boss hari ini (mode apa pun)",               target:1,   coins:200, dia:5 }
+];
+function missionsStore(){
+  const t = todayStr();
+  if(!store.data.missions || store.data.missions.date !== t){
+    store.data.missions = { date:t, prog:{ kills:0, survive:0, boss:0 }, claimed:{} };
+    store.save();
+  }
+  return store.data.missions;
+}
+function missionClaimable(){ const m = missionsStore(); return MISSIONS.some(d => (m.prog[d.id] || 0) >= d.target && !m.claimed[d.id]); }
+function openMissions(){ renderMissions(); showScreen("scrMissions"); }
+function renderMissions(){
+  renderLogin();
+  const m = missionsStore();
+  $("misDateLbl").textContent = fmtDateID(m.date);
+  const box = $("missionList"); box.innerHTML = "";
+  MISSIONS.forEach(d=>{
+    const prog = Math.min(d.target, m.prog[d.id] || 0);
+    const done = prog >= d.target, claimed = !!m.claimed[d.id];
+    const row = document.createElement("div");
+    row.className = "misRow" + (claimed ? " claimed" : done ? " done" : "");
+    const progTxt = d.time ? (fmtTime(prog) + " / " + fmtTime(d.target)) : (prog.toLocaleString("id-ID") + " / " + d.target.toLocaleString("id-ID"));
+    row.innerHTML = '<div class="top"><span class="ic">' + d.icon + '</span><div style="flex:1; min-width:0;"><b>' + d.name + '</b><small>' + d.desc + '</small></div><span class="reward">+' + d.coins + ' 🪙<br>+' + d.dia + ' 💎</span></div>' +
+      '<div class="misBarOuter"><div class="misBar" style="width:' + (prog / d.target * 100) + '%"></div></div>' +
+      '<div style="margin-top:8px;"><small style="color:var(--muted); font-weight:700;">Progres: ' + progTxt + "</small></div>";
+    const btn = document.createElement("button");
+    btn.className = "gBtn" + (done && !claimed ? " use" : "");
+    btn.style.cssText = "width:100%; margin-top:9px;";
+    if(claimed){ btn.textContent = "Sudah Diklaim ✓"; btn.disabled = true; }
+    else if(done){ btn.textContent = "🎁 Klaim +" + d.coins + " 🪙 + " + d.dia + " 💎"; btn.addEventListener("click", ()=> claimMission(d.id)); }
+    else { btn.textContent = "Belum Selesai"; btn.disabled = true; }
+    row.appendChild(btn);
+    box.appendChild(row);
+  });
+}
+function claimMission(id){
+  const m = missionsStore(); const d = MISSIONS.find(x => x.id === id); if(!d) return;
+  if((m.prog[id] || 0) < d.target || m.claimed[id]) return;
+  m.claimed[id] = true;
+  store.data.coins = (store.data.coins || 0) + d.coins;
+  store.data.diamonds = (store.data.diamonds || 0) + d.dia;
+  store.save(); AudioSys.ensure(); AudioSys.ach();
+  renderMissions(); updateMenuMeta();
+}
+
+/* ---------- HADIAH LOGIN HARIAN: 7 hari beruntun, makin besar (koin + diamond) ---------- */
+const LOGIN_REWARDS = [ { coins:50, dia:0 }, { coins:75, dia:0 }, { coins:100, dia:2 }, { coins:150, dia:0 }, { coins:200, dia:3 }, { coins:300, dia:0 }, { coins:500, dia:10 } ];
+function loginInfo(){
+  const lg = store.data.login || { last:"", streak:0 };
+  const claimedToday = lg.last === todayStr();
+  const cont = lg.last === yesterdayStr();
+  const claimDay = claimedToday ? (((Math.max(1, lg.streak) - 1) % 7) + 1) : (cont ? (lg.streak % 7) + 1 : 1);
+  return { lg, claimedToday, claimDay };
+}
+function loginClaimable(){ return !loginInfo().claimedToday; }
+function renderLogin(){
+  const info = loginInfo();
+  $("loginStreakLbl").textContent = info.lg.streak > 0 ? ("Beruntun " + info.lg.streak + " hari 🔥") : "Mulai hari ini!";
+  const grid = $("loginGrid"); grid.innerHTML = "";
+  for(let day = 1; day <= 7; day++){
+    const r = LOGIN_REWARDS[day - 1];
+    const cell = document.createElement("div");
+    let cls = "loginCell";
+    const got = info.claimedToday ? day <= info.claimDay : day < info.claimDay;
+    if(got) cls += " got";
+    if(day === info.claimDay && !info.claimedToday) cls += " today";
+    cell.className = cls;
+    cell.innerHTML = "<small>HARI " + day + "</small><b>" + r.coins + " 🪙</b>" + (r.dia ? "<small>+" + r.dia + " 💎</small>" : "<small>&nbsp;</small>") + (got ? "<small>✓</small>" : "");
+    grid.appendChild(cell);
+  }
+  const btn = $("btnClaimLogin");
+  if(info.claimedToday){ btn.disabled = true; btn.textContent = "✓ Hadiah Hari Ini Sudah Diklaim — Kembali Besok!"; }
+  else { btn.disabled = false; const r = LOGIN_REWARDS[info.claimDay - 1]; btn.textContent = "🎁 Klaim Hari " + info.claimDay + ": " + r.coins + " 🪙" + (r.dia ? " + " + r.dia + " 💎" : ""); }
+}
+function claimLogin(){
+  const info = loginInfo(); if(info.claimedToday) return;
+  const r = LOGIN_REWARDS[info.claimDay - 1];
+  const cont = info.lg.last === yesterdayStr();
+  store.data.login = { last: todayStr(), streak: cont ? (info.lg.streak || 0) + 1 : 1 };
+  store.data.coins = (store.data.coins || 0) + r.coins;
+  store.data.diamonds = (store.data.diamonds || 0) + (r.dia || 0);
+  store.save(); AudioSys.ensure(); AudioSys.levelup();
+  renderMissions(); updateMenuMeta();
+}
+
+/* ---------- GALERI MUSUH: musuh & boss yang pernah dikalahkan, lengkap HP + pola ---------- */
+const GALERI_ENEMIES = [
+  { key:"basic",    name:"Drone Tempur",  hp:"1 — naik +1 tiap 40 detik bertahan", pola:"Terbang lurus ke bawah tanpa menembak. Musuh paling dasar, datang berkelompok." },
+  { key:"zig",      name:"Zigzag",        hp:"Sama seperti Drone Tempur",          pola:"Bergerak zigzag sinusoidal sambil turun — jalurnya susah ditebak." },
+  { key:"dart",     name:"Dart",          hp:"Sama seperti Drone Tempur",          pola:"Menukik lurus sangat cepat (2× kecepatan biasa), badan ramping memanjang." },
+  { key:"shooter",  name:"Penembak",      hp:"2× Drone + 1",                       pola:"Menembak peluru memburu ke arah pemain tiap ±2 detik sambil turun perlahan." },
+  { key:"alien",    name:"Alien Fighter", hp:"3× Drone + 2",                       pola:"Pesawat alien oranye: bergelombang lebar sambil menembak memburu. Muncul setelah 75 detik." },
+  { key:"kamikaze", name:"Kamikaze",      hp:"Sama seperti Drone Tempur",          pola:"Menukik memburu posisi pemain dan makin lama makin cepat — tabrakannya berbahaya! Muncul setelah 100 detik." },
+  { key:"elite",    name:"Elite 👑",      hp:"6× Drone + 4",                       pola:"Bermahkota emas, sangat alot, menembak menyebar 3 arah. Menjatuhkan banyak XP & 5 koin." }
+];
+const BOSS_PAT_DESC = {
+  spiral:"Spiral peluru dua lengan yang berputar terus-menerus.",
+  spread:"Kipas peluru lebar ke bawah, makin banyak saat HP di bawah separuh.",
+  aimed:"Tembakan memburu presisi 3 peluru, plus cincin peluru ke segala arah saat HP < 60%.",
+  hydra:"Spiral tiga lengan dari tiga kepala bercore.",
+  dread:"Bergantian pola spiral & kipas tiap 3 detik.",
+  overlord:"Bergantian spiral & tembakan memburu, plus memanggil 2 Dart tiap 5 detik."
+};
+function markGallery(key){ if(key && !store.data.gallery[key]){ store.data.gallery[key] = true; store.save(); } }
+function galIconEnemy(g, type){
+  const body = type==="elite" ? "#ff3860" : type==="alien" ? "#fb923c" : type==="kamikaze" ? "#ef4444" : type==="shooter" ? "#ffc53d" : type==="dart" ? "#ff4d7e" : "#ff7a4d";
+  g.save(); g.translate(29, 29);
+  g.fillStyle = body;
+  g.beginPath(); g.moveTo(-20, -6); g.lineTo(-5, 2); g.lineTo(-20, 10); g.closePath(); g.fill();
+  g.beginPath(); g.moveTo(20, -6); g.lineTo(5, 2); g.lineTo(20, 10); g.closePath(); g.fill();
+  g.beginPath(); g.moveTo(0, 16); g.lineTo(9, -4); g.lineTo(5, -14); g.lineTo(-5, -14); g.lineTo(-9, -4); g.closePath(); g.fill();
+  g.fillStyle = "#2b0f0f"; g.beginPath(); g.arc(0, 0, 5, 0, Math.PI*2); g.fill();
+  g.fillStyle = type==="elite" ? "#ffc53d" : "#ff5252"; g.beginPath(); g.arc(0, 0, 2.8, 0, Math.PI*2); g.fill();
+  if(type === "elite"){ g.fillStyle = "#ffc53d"; for(let k=-1;k<=1;k++){ g.beginPath(); g.moveTo(k*10-4, -16); g.lineTo(k*10, -25); g.lineTo(k*10+4, -16); g.closePath(); g.fill(); } }
+  g.restore();
+}
+function galIconBoss(g, cls){
+  g.save(); g.translate(29, 29);
+  g.fillStyle = cls.hull;
+  if(cls.id === "aegis"){ g.beginPath(); for(let k=0;k<6;k++){ const a = Math.PI/2 + k*Math.PI/3; const px = Math.cos(a)*19, py = Math.sin(a)*19; if(k===0) g.moveTo(px,py); else g.lineTo(px,py); } g.closePath(); g.fill(); }
+  else if(cls.id === "overlord"){ g.beginPath(); for(let k=0;k<16;k++){ const a = k/16*Math.PI*2; const rr = k%2===0 ? 22 : 14; const px = Math.cos(a)*rr, py = Math.sin(a)*rr*0.92; if(k===0) g.moveTo(px,py); else g.lineTo(px,py); } g.closePath(); g.fill(); }
+  else { g.beginPath(); g.ellipse(0, 0, 21, 18, 0, 0, Math.PI*2); g.fill(); }
+  g.fillStyle = cls.dark; g.beginPath(); g.arc(0, 0, 11, 0, Math.PI*2); g.fill();
+  g.fillStyle = cls.core; g.beginPath(); g.arc(0, 0, 6, 0, Math.PI*2); g.fill();
+  g.fillStyle = cls.coreHot; g.beginPath(); g.arc(0, 0, 2.8, 0, Math.PI*2); g.fill();
+  g.restore();
+}
+function renderGallery(){
+  const box = $("galleryList"); box.innerHTML = "";
+  const addRow = (key, name, hp, pola, drawFn)=>{
+    const got = !!store.data.gallery[key];
+    const row = document.createElement("div");
+    row.className = "galRow" + (got ? "" : " locked");
+    const cvEl = document.createElement("canvas"); cvEl.width = 58; cvEl.height = 58; cvEl.setAttribute("aria-hidden", "true");
+    row.appendChild(cvEl);
+    const tx = document.createElement("div"); tx.style.cssText = "flex:1; min-width:0;";
+    if(got) tx.innerHTML = "<b>" + name + '</b><small><span class="hp">HP: ' + hp + "</span></small><small>" + pola + "</small>";
+    else tx.innerHTML = "<b>??? — " + name + "</b><small>Belum pernah dikalahkan. Kalahkan musuh ini untuk membuka data HP &amp; pola serangannya!</small>";
+    row.appendChild(tx);
+    const st = document.createElement("span");
+    st.style.cssText = "font-family:'Orbitron',sans-serif; font-size:11px; flex:0 0 auto; color:" + (got ? "var(--green)" : "var(--muted)");
+    st.textContent = got ? "✓ KALAH" : "🔒";
+    row.appendChild(st);
+    box.appendChild(row);
+    const g2 = cvEl.getContext("2d"); if(g2){ if(!got) g2.globalAlpha = 0.35; drawFn(g2); }
+  };
+  GALERI_ENEMIES.forEach(e => addRow(e.key, e.name, e.hp, e.pola, g => galIconEnemy(g, e.key)));
+  const lbl = document.createElement("p"); lbl.className = "secLbl"; lbl.textContent = "BOSS — di bawah 35% HP semua boss mengamuk (menembak lebih cepat)";
+  box.appendChild(lbl);
+  BOSS_CLASSES.forEach(cls => addRow("boss_" + cls.id, "BOSS " + cls.name, "±(190 + 110 × nomor boss) × 1,18 tiap kemunculan", cls.tag + " — " + (BOSS_PAT_DESC[cls.pat] || ""), g => galIconBoss(g, cls)));
+}
+
+/* ---------- PROFIL: background & banner profil (ala Free Fire) + nickname ---------- */
+const PROFILE_BGS = [
+  { id:"nebula",      name:"Nebula Biru",   css:"linear-gradient(135deg,#0b2a5b,#123a7d 55%,#0a1a3d)", spin:false },
+  { id:"sunset",      name:"Senja Oranye",  css:"linear-gradient(135deg,#7c2d12,#b45309 55%,#451a03)", spin:false },
+  { id:"emerald",     name:"Zamrud",        css:"linear-gradient(135deg,#064e3b,#059669 55%,#022c22)", spin:false },
+  { id:"crimson",     name:"Merah Bara",    css:"linear-gradient(135deg,#7f1d1d,#dc2626 55%,#450a0a)", spin:false },
+  { id:"nebulastorm", name:"Badai Nebula",  css:"linear-gradient(135deg,#4c1d95,#db2777 55%,#1e1b4b)", spin:true }
+];
+const PROFILE_BANNERS = [
+  { id:"pilot",    name:"Pilot Andalan",   icon:"⭐", css:"linear-gradient(90deg,#155e9e,#38b6f6)", spin:false },
+  { id:"striker",  name:"Penyerang Cepat", icon:"⚡", css:"linear-gradient(90deg,#7c2d12,#f97316)", spin:false },
+  { id:"guardian", name:"Penjaga Galaksi", icon:"🛡️", css:"linear-gradient(90deg,#064e3b,#10b981)", spin:false },
+  { id:"champion", name:"Juara Galaksi",   icon:"👑", css:"linear-gradient(90deg,#713f12,#f59e0b)", spin:true }
+];
+function profBgDef(){ return PROFILE_BGS.find(b => b.id === (store.data.profile || {}).bg) || PROFILE_BGS[0]; }
+function profBannerDef(){ return PROFILE_BANNERS.find(b => b.id === (store.data.profile || {}).banner) || PROFILE_BANNERS[0]; }
+function cosOwned(kind, id){
+  const def = (kind === "bg" ? PROFILE_BGS : PROFILE_BANNERS).find(x => x.id === id);
+  if(!def) return false;
+  if(!def.spin) return true;
+  return (store.data.spinLoot || []).indexOf(kind + ":" + id) >= 0;
+}
+function openProfile(){ renderProfile(); showScreen("scrProfile"); }
+function renderProfile(){
+  const bg = profBgDef(), bn = profBannerDef();
+  $("profHead").style.background = bg.css;
+  const bl = $("profBannerLine"); bl.style.background = bn.css; bl.textContent = bn.icon + " " + bn.name;
+  const av = $("profAvatar"); const ag = av.getContext("2d");
+  if(ag){ ag.clearRect(0, 0, 72, 72); drawShip(36, 40, 17, 0, 0, 1.3, shipDef(), ag); }
+  $("profName").textContent = (store.data.playerName || "").trim() || "Pemain";
+  const pp = pilotProgress(store.data.stats.gems || 0), rk = rankOf(store.data.hi || 0), st = store.data.stats;
+  $("profMeta").textContent = "Lv. " + pp.lvl + " Pilot · Rank " + rk.cur.name + " · " + shipDef().name;
+  $("nickInput").value = store.data.playerName || "";
+  const cells = [
+    ["SKOR TERTINGGI", (store.data.hi || 0).toLocaleString("id-ID")],
+    ["DIAMOND 💎", (store.data.diamonds || 0).toLocaleString("id-ID")],
+    ["KOIN 🪙", (store.data.coins || 0).toLocaleString("id-ID")],
+    ["MUSUH HANCUR", (st.kills || 0).toLocaleString("id-ID")],
+    ["BOSS DIKALAHKAN", (st.bosses || 0).toLocaleString("id-ID")],
+    ["BOSS RUSH TERBAIK", (store.data.rushBest || 0).toLocaleString("id-ID")]
+  ];
+  $("profStats").innerHTML = cells.map(c => '<div class="cell"><small>' + c[0] + "</small><b>" + c[1] + "</b></div>").join("");
+  renderPickGrid($("profBgGrid"), PROFILE_BGS, "bg", bg.id);
+  renderPickGrid($("profBannerGrid"), PROFILE_BANNERS, "banner", bn.id);
+}
+function renderPickGrid(box, defs, kind, curId){
+  if(!box) return;
+  box.innerHTML = "";
+  defs.forEach(d=>{
+    const owned = cosOwned(kind, d.id);
+    const btn = document.createElement("button");
+    btn.className = "pickBtn" + (curId === d.id ? " sel" : "") + (owned ? "" : " locked");
+    btn.style.background = d.css;
+    btn.innerHTML = (kind === "banner" ? d.icon + " " : "") + d.name + "<small>" + (curId === d.id ? "Sedang dipakai ✓" : owned ? "Ketuk untuk memakai" : "🎰 Eksklusif SPIN") + "</small>";
+    btn.addEventListener("click", ()=>{
+      if(!owned){ openSpin(); return; }
+      if(!store.data.profile) store.data.profile = { bg:"nebula", banner:"pilot" };
+      store.data.profile[kind] = d.id; store.save();
+      AudioSys.ensure(); AudioSys.powerup();
+      renderProfile(); updateMenuMeta();
+    });
+    box.appendChild(btn);
+  });
+}
+function saveNick(){
+  store.data.playerName = cleanNick($("nickInput").value);
+  store.save(); AudioSys.ensure(); AudioSys.powerup();
+  renderProfile(); updateMenuMeta();
+  const b = $("btnSaveNick"); b.textContent = "Tersimpan ✓";
+  setTimeout(()=>{ b.textContent = "Simpan"; }, 1400);
+}
+
+/* ---------- SPIN BERLIAN: skin langka eksklusif, hanya dari roda ini ---------- */
+const SPIN_COST = 10;
+const SPIN_POOL = [
+  { kind:"coins",  amt:100, label:"100 Koin",        icon:"🪙", w:20, col:"#2563eb", rarity:"UMUM" },
+  { kind:"coins",  amt:250, label:"250 Koin",        icon:"🪙", w:13, col:"#7c3aed", rarity:"LANGKA" },
+  { kind:"dia",    amt:5,   label:"5 Diamond",       icon:"💎", w:12, col:"#0ea5e9", rarity:"UMUM" },
+  { kind:"ship",   id:"wraith", label:"Nebula Wraith",  icon:"🌌", w:9,  col:"#6d28d9", rarity:"EPIC · SPIN" },
+  { kind:"coins",  amt:150, label:"150 Koin",        icon:"🪙", w:16, col:"#0891b2", rarity:"UMUM" },
+  { kind:"bg",     id:"nebulastorm", label:"BG Badai Nebula", icon:"🖼️", w:7, col:"#db2777", rarity:"EPIC · SPIN" },
+  { kind:"dia",    amt:12,  label:"12 Diamond",      icon:"💎", w:5,  col:"#0284c7", rarity:"LANGKA" },
+  { kind:"ship",   id:"flare", label:"Solar Flare",  icon:"☀️", w:6,  col:"#ea580c", rarity:"EPIC · SPIN" },
+  { kind:"banner", id:"champion", label:"Banner Juara Galaksi", icon:"👑", w:6, col:"#ca8a04", rarity:"EPIC · SPIN" },
+  { kind:"ship",   id:"reaper", label:"Void Reaper", icon:"☠️", w:6,  col:"#dc2626", rarity:"MITOS · SPIN" }
+];
+let spinBusy = false, spinRot = 0;
+function openSpin(){ buildWheel(); renderSpin(); showScreen("scrSpin"); }
+function buildWheel(){
+  const wheel = $("spinWheel"); if(!wheel) return;
+  const seg = 360 / SPIN_POOL.length;
+  let grad = "conic-gradient(from 0deg";
+  SPIN_POOL.forEach((p, i)=>{ grad += ", " + p.col + " " + (i * seg) + "deg " + ((i + 1) * seg) + "deg"; });
+  wheel.style.background = grad + ")";
+  wheel.style.transition = "none";
+  wheel.style.transform = "rotate(" + spinRot + "deg)";
+  wheel.querySelectorAll(".segLbl").forEach(n => n.remove());
+  SPIN_POOL.forEach((p, i)=>{
+    const a = (i * seg + seg / 2) * Math.PI / 180;
+    const s = document.createElement("span");
+    s.className = "segLbl"; s.textContent = p.icon;
+    s.style.left = (50 + 37 * Math.sin(a)) + "%";
+    s.style.top = (50 - 37 * Math.cos(a)) + "%";
+    s.style.transform = "translate(-50%,-50%)";
+    wheel.appendChild(s);
+  });
+}
+function renderSpin(){
+  $("spinDiaBal").textContent = (store.data.diamonds || 0).toLocaleString("id-ID");
+  const btn = $("btnSpinGo");
+  btn.disabled = spinBusy || (store.data.diamonds || 0) < SPIN_COST;
+  btn.textContent = spinBusy ? "🎰 Berputar…" : ("🎰 SPIN — " + SPIN_COST + " 💎" + ((store.data.diamonds || 0) < SPIN_COST ? " (diamond kurang — kerjakan misi!)" : ""));
+  const box = $("spinPrizes"); box.innerHTML = "";
+  SPIN_POOL.forEach(p=>{
+    let owned = false;
+    if(p.kind === "ship") owned = (store.data.shipsOwned || []).indexOf(p.id) >= 0;
+    if(p.kind === "bg" || p.kind === "banner") owned = cosOwned(p.kind, p.id);
+    const row = document.createElement("div"); row.className = "btRow";
+    const left = document.createElement("span"); left.textContent = p.icon + " " + p.label;
+    const right = document.createElement("b"); right.textContent = owned && p.kind !== "coins" && p.kind !== "dia" ? "PUNYA ✓ → +8 💎" : p.rarity;
+    row.appendChild(left); row.appendChild(right);
+    box.appendChild(row);
+  });
+}
+function pickSpinPrize(){
+  let tot = 0; SPIN_POOL.forEach(p => tot += p.w);
+  let r = Math.random() * tot;
+  for(let i = 0; i < SPIN_POOL.length; i++){ r -= SPIN_POOL[i].w; if(r <= 0) return i; }
+  return SPIN_POOL.length - 1;
+}
+function doSpin(){
+  if(spinBusy) return;
+  AudioSys.ensure();
+  if((store.data.diamonds || 0) < SPIN_COST){ AudioSys.hit(); return; }
+  store.data.diamonds -= SPIN_COST; store.save();
+  spinBusy = true; renderSpin(); updateMenuMeta();
+  const idx = pickSpinPrize();
+  const seg = 360 / SPIN_POOL.length;
+  const targetMod = (360 - (idx * seg + seg / 2)) % 360;
+  const delta = (targetMod - (spinRot % 360) + 360) % 360;
+  spinRot += 360 * 5 + delta;
+  const wheel = $("spinWheel");
+  const dur = (ecoOn() || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) ? 900 : 4400;
+  wheel.style.transition = "transform " + dur + "ms cubic-bezier(.12,.75,.12,1)";
+  wheel.style.transform = "rotate(" + spinRot + "deg)";
+  $("spinResult").textContent = "Berputar… 🎰";
+  setTimeout(()=> awardSpin(SPIN_POOL[idx]), dur + 90);
+}
+function awardSpin(p){
+  spinBusy = false;
+  let msg = "";
+  if(p.kind === "coins"){ store.data.coins = (store.data.coins || 0) + p.amt; msg = "🪙 +" + p.amt + " Koin!"; }
+  else if(p.kind === "dia"){ store.data.diamonds = (store.data.diamonds || 0) + p.amt; msg = "💎 +" + p.amt + " Diamond!"; }
+  else if(p.kind === "ship"){
+    if((store.data.shipsOwned || []).indexOf(p.id) >= 0){ store.data.diamonds = (store.data.diamonds || 0) + 8; msg = "🛩️ " + p.label + " sudah kamu punya — duplikat berubah jadi +8 💎!"; }
+    else { store.data.shipsOwned.push(p.id); msg = "🎉 SKIN LANGKA! 🛩️ " + p.label + " masuk Hanggar — pakai dari Hanggar!"; }
+  } else if(p.kind === "bg" || p.kind === "banner"){
+    const key = p.kind + ":" + p.id;
+    if((store.data.spinLoot || []).indexOf(key) >= 0){ store.data.diamonds = (store.data.diamonds || 0) + 8; msg = p.icon + " " + p.label + " sudah kamu punya — duplikat berubah jadi +8 💎!"; }
+    else { store.data.spinLoot.push(key); msg = "🎉 LANGKA! " + p.icon + " " + p.label + " — pasang dari layar Profil!"; }
+  }
+  store.save();
+  $("spinResult").textContent = msg;
+  AudioSys.levelup();
+  renderSpin(); updateMenuMeta();
+}
+
+/* ---------- BOSS RUSH: boss terus-menerus, tanpa musuh kecil, skor khusus ---------- */
+function startRush(){
+  startGame(false);
+  G.bossRush = true;
+  G.nextBossAt = 0;
+  showBanner("👑 BOSS RUSH", "Boss datang terus-menerus — tanpa musuh kecil!");
+}
+
+/* ---------- TUTORIAL INTERAKTIF ±30 detik: geser → auto-fire → power-up → XP ---------- */
+let tut = null;
+function hideTutBar(){ const b = $("tutBar"); if(b) b.classList.remove("show"); }
+function startTutorial(){
+  startGame(false);
+  G.tutorial = true; G.lives = 99; G.nextBossAt = 1e9; G.statsFlushed = true;
+  tut = { step:0, move:0, lx:G.player.x, ly:G.player.y, baseKills:0, basePow:0, baseGems:0, spawned:false };
+  showBanner("🎓 TUTORIAL", "Ikuti panduan singkat ini — 30 detik saja!");
+  tutShowStep();
+  $("tutBar").classList.add("show");
+}
+function tutShowStep(){
+  if(!tut) return;
+  const steps = [
+    ["Geser untuk Bergerak", "Sentuh & geser layar ke segala arah — pesawat mengikuti gerakan jarimu. Coba bergerak jauh!"],
+    ["Tembakan Otomatis", "Pesawatmu menembak SENDIRI tanpa henti — tidak ada tombol tembak. Hancurkan 3 drone latihan yang datang!"],
+    ["Ambil Power-Up", "Sebuah power-up W sedang jatuh — terbang melewatinya untuk mengambilnya. Senjatamu naik level!"],
+    ["Kumpulkan Permata XP", "Permata hijau = XP. Ambil 3 permata — XP penuh berarti NAIK LEVEL dan memilih 1 dari 3 skill!"]
+  ];
+  const s = steps[tut.step]; if(!s) return;
+  $("tutStepLbl").textContent = "TUTORIAL · LANGKAH " + (tut.step + 1) + " / 4";
+  $("tutTitle").textContent = s[0];
+  $("tutDesc").textContent = s[1];
+  $("tutDots").textContent = "●".repeat(tut.step + 1) + "○".repeat(3 - tut.step);
+}
+function tutNext(){
+  if(!tut) return;
+  tut.step++; tut.spawned = false;
+  AudioSys.powerup();
+  if(tut.step > 3) tutFinish(true); else tutShowStep();
+}
+function tutTick(dt){
+  if(!tut || G.mode !== "playing") return;
+  /* tutorial memakai panggung bersih: musuh & peluru musuh dari sistem endless disingkirkan */
+  if(G.enemies.some(e => !e.tut)) G.enemies = G.enemies.filter(e => e.tut);
+  G.ebullets.length = 0;
+  const pl = G.player;
+  if(tut.step === 0){
+    tut.move += Math.hypot(pl.x - tut.lx, pl.y - tut.ly);
+    if(tut.move > 320) tutNext();
+  } else if(tut.step === 1){
+    if(!tut.spawned){
+      tut.spawned = true; tut.baseKills = G.runKills;
+      for(let k = 0; k < 3; k++) G.enemies.push({ x:W * (0.25 + 0.25 * k), y:-30 - k * 46, r:15, type:"basic", hp:1, maxhp:1, vy:44, t:0, fireT:99, flash:0, tut:true });
+    }
+    else if(G.runKills - tut.baseKills >= 3) tutNext();
+    else if(!G.enemies.some(e => e.tut)) tut.spawned = false;
+  } else if(tut.step === 2){
+    if(!tut.spawned){
+      tut.spawned = true; tut.basePow = store.data.stats.powerups || 0;
+      G.powers.push({ x:W / 2, y:-24, r:14, vy:95, kind:"weapon", label:"W", color:"#31e6ff", t:0 });
+    }
+    else if((store.data.stats.powerups || 0) > tut.basePow || pl.weapon >= 2) tutNext();
+    else if(!G.powers.length) tut.spawned = false;
+  } else if(tut.step === 3){
+    if(!tut.spawned){
+      tut.spawned = true; tut.baseGems = store.data.stats.gems || 0;
+      for(let k = 0; k < 5; k++) dropGem(W / 2 + (k - 2) * 38, 110 + Math.abs(k - 2) * 14, 1);
+    }
+    else if((store.data.stats.gems || 0) - tut.baseGems >= 3) tutNext();
+    else if(!G.gems.length) tut.spawned = false;
+  }
+  tut.lx = pl.x; tut.ly = pl.y;
+}
+function tutFinish(reward){
+  const first = reward && !store.data.tutDone;
+  if(first){ store.data.tutDone = true; store.data.coins = (store.data.coins || 0) + 50; store.save(); }
+  G.tutorial = false; tut = null; hideTutBar();
+  G.enemies = []; G.ebullets = [];
+  G.mode = "menu";
+  $("tutDoneInfo").textContent = first ? "Kamu dapat bonus pilot baru: +50 🪙! Sekarang taklukkan galaksi, Pilot!" : "Kamu sudah menguasai dasar-dasarnya. Selamat bertempur, Pilot!";
+  updateMenuMeta();
+  showScreen("scrTutDone");
+}
+
+/* ---------- DROP DIAMOND IN-GAME: super langka, cuma 1 💎 per drop ----------
+   Musuh biasa <1% · elite 3% · boss 30%. Sumber utama diamond tetap misi + login. */
+const DIA_CH = { basic:0.004, zig:0.005, dart:0.005, shooter:0.008, kamikaze:0.006, alien:0.01, elite:0.03 };
+function dropDiamond(x, y){
+  if(!G.diams) G.diams = [];
+  if(G.diams.length >= 3) return;
+  G.diams.push({ x, y, vx:0, vy:88, t:0, mag:false });
+}
+function drawDiams(){
+  if(!G.diams || !G.diams.length) return;
+  for(const d of G.diams){
+    ctx.save(); ctx.translate(d.x, d.y + Math.sin(d.t * 6) * 2);
+    ctx.globalAlpha = 0.32 + 0.22 * Math.sin(d.t * 8);
+    ctx.fillStyle = "#38b6ff";
+    ctx.beginPath(); ctx.arc(0, 0, 13, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.font = "19px serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("💎", 0, 1);
+    ctx.restore();
+  }
+}
+function tickDiams(dt){
+  if(!G.diams || !G.diams.length || G.mode !== "playing") return;
+  const pl = G.player;
+  for(let i = G.diams.length - 1; i >= 0; i--){
+    const d = G.diams[i]; d.t += dt;
+    const dist = Math.hypot(pl.x - d.x, pl.y - d.y);
+    if(dist < pl.magnetR) d.mag = true;
+    if(d.mag){ const a = Math.atan2(pl.y - d.y, pl.x - d.x); d.vx = Math.cos(a) * 430; d.vy = Math.sin(a) * 430; }
+    else { d.vx *= 0.98; d.vy += (88 - d.vy) * Math.min(1, dt * 2); }
+    d.x += d.vx * dt; d.y += d.vy * dt;
+    if(d.y > H + 24){ G.diams.splice(i, 1); continue; }
+    if(dist < pl.r + 15){
+      G.diams.splice(i, 1);
+      store.data.diamonds = (store.data.diamonds || 0) + 1; store.save();
+      floatText(pl.x, pl.y - 40, "💎 +1 DIAMOND!", "#7dd3fc");
+      AudioSys.ach(); updateHUD();
+    }
+  }
+}
+
+/* ---------- Kait ke mesin game yang sudah ada (pembungkus fungsi lama) ---------- */
+const _startGame0 = startGame;
+startGame = function(a, b, c){
+  _startGame0(a, b, c);
+  G.runBosses = 0; G.diams = []; G.bossRush = false; G.tutorial = false; tut = null; hideTutBar();
+};
+const _flush0 = flushRunStats;
+flushRunStats = function(){
+  const was = G.statsFlushed;
+  _flush0();
+  /* progres Misi Harian dicatat dari run yang baru selesai */
+  if(!was && G.statsFlushed && !G.tutorial){
+    const m = missionsStore();
+    m.prog.kills = Math.min(100000, (m.prog.kills || 0) + (G.runKills || 0));
+    m.prog.survive = Math.max(m.prog.survive || 0, Math.min(180, Math.round(G.runTime || 0)));
+    m.prog.boss = (m.prog.boss || 0) + (G.runBosses || 0);
+    store.save();
+  }
+};
+const _killEnemy0 = killEnemy;
+killEnemy = function(e, idx){
+  const t = e.type, x = e.x, y = e.y;
+  _killEnemy0(e, idx);
+  markGallery(t);
+  if(Math.random() < (DIA_CH[t] || 0.004)) dropDiamond(x, y);
+};
+const _killBoss0 = killBoss;
+killBoss = function(){
+  const b = G.boss;
+  const bx = b ? b.x : 0, by = b ? b.y : 0, cid = b && b.cls ? b.cls.id : "";
+  _killBoss0();
+  G.runBosses = (G.runBosses || 0) + 1;
+  if(cid) markGallery("boss_" + cid);
+  if(Math.random() < 0.3) dropDiamond(bx, by);
+};
+const _hitPlayer0 = hitPlayer;
+hitPlayer = function(){
+  if(G.tutorial){ /* di tutorial pemain kebal — fokus belajar, bukan mati */
+    const pl = G.player;
+    if(pl.invuln > 0) return;
+    pl.invuln = 1; G.flash = Math.max(G.flash, 0.3);
+    explode(pl.x, pl.y, "#3dff9a", 10); AudioSys.hit();
+    return;
+  }
+  _hitPlayer0();
+};
+const _writeSave0 = writeRunSave;
+writeRunSave = function(){ if(G.tutorial || G.bossRush) return; _writeSave0(); };
+const _gameOver0 = gameOver;
+gameOver = function(){
+  /* Boss Rush & tutorial punya skor khusus — tidak masuk leaderboard endless/global */
+  if(G.bossRush || G.tutorial){ G.lbSavedRun = true; G.fbSubmittedRun = true; }
+  _gameOver0();
+  const ov = $("ovRush");
+  if(ov){
+    if(G.bossRush){
+      if(G.score > (store.data.rushBest || 0)) store.data.rushBest = G.score;
+      if((G.runBosses || 0) > (store.data.rushBosses || 0)) store.data.rushBosses = G.runBosses;
+      store.save();
+      ov.style.display = "block";
+      $("ovRushInfo").textContent = (G.runBosses || 0) + " boss tumbang · Skor " + G.score.toLocaleString("id-ID") + " · Rekor Rush: " + (store.data.rushBest || 0).toLocaleString("id-ID");
+    } else ov.style.display = "none";
+  }
+  /* musik menu mengalun lagi di layar game over (kalau musik menyala) */
+  setTimeout(()=>{ if(G.mode === "over") AudioSys.startMusic(); }, 1300);
+  updateMenuMeta();
+};
+const _update0 = update;
+update = function(dt){ _update0(dt); postTick(dt); };
+function postTick(dt){
+  /* Mode Hemat / kualitas Rendah: tanpa slow-mo & tanpa guncangan layar */
+  if(ecoOn() || S.quality === "low"){ G.slowT = 0; if(ecoOn()) G.shake = 0; }
+  /* Boss Rush: musuh kecil langsung disingkirkan, boss berikutnya dipaksa datang */
+  if(G.bossRush) G.enemies.length = 0;
+  /* Batas entitas aktif sesuai kualitas — HP lemah tidak kebanjiran objek */
+  const eCap = ecoOn() ? 20 : S.quality === "low" ? 26 : S.quality === "med" ? 34 : 42;
+  if(G.enemies.length > eCap) G.enemies.length = eCap;
+  if(G.bullets.length > 420) G.bullets.splice(0, G.bullets.length - 420);
+  if(G.ebullets.length > 320) G.ebullets.splice(0, G.ebullets.length - 320);
+  if(G.mode === "playing" && G.bossRush && !G.boss && !G.bossPending){
+    G.bossPending = true; G.bossTimer = 1.3;
+    showBanner("👑 BOSS BERIKUTNYA!", bossClassFor(G.bossCount + 1).name + " mendekat…");
+  }
+  if(G.tutorial){
+    if(G.mode !== "playing" && G.mode !== "paused" && G.mode !== "levelup"){ G.tutorial = false; tut = null; hideTutBar(); }
+    else tutTick(dt);
+  }
+  tickDiams(dt);
+}
+let fpsFrames = 0;
+const _draw0 = draw;
+draw = function(){ _draw0(); drawDiams(); fpsFrames++; };
+const _updateHUD0 = updateHUD;
+updateHUD = function(){ _updateHUD0(); setText("hudDia", "💎 " + (store.data.diamonds || 0).toLocaleString("id-ID")); };
+const _umm0 = updateMenuMeta;
+updateMenuMeta = function(){
+  _umm0();
+  /* 💎 di lobi kini menampilkan saldo DIAMOND (mata uang spin), bukan total permata XP */
+  const mg = $("menuGems");
+  if(mg){ mg.textContent = (store.data.diamonds || 0).toLocaleString("id-ID"); mg.title = ""; }
+  const gemCur = document.querySelector(".lbCur.gem"); if(gemCur) gemCur.title = "Diamond kamu — dari misi, login harian & drop langka. Pakai untuk SPIN!";
+  const dd = $("dotDaily"); if(dd && (loginClaimable() || missionClaimable())) dd.style.display = "";
+  const lp = document.querySelector(".lbProfile"); if(lp) lp.style.background = profBgDef().css;
+  const ri = $("rushInfo"); if(ri) ri.textContent = (store.data.rushBest || 0) > 0 ? ("Rekor " + store.data.rushBest.toLocaleString("id-ID") + " · " + (store.data.rushBosses || 0) + " boss") : "Boss nonstop, tanpa musuh kecil";
+  const ti = $("tutInfo"); if(ti) ti.textContent = store.data.tutDone ? "Selesai ✓ — ulangi kapan saja" : "Panduan 30 detik + bonus 50 🪙";
+  const mi = $("misInfo"); if(mi) mi.textContent = (loginClaimable() || missionClaimable()) ? "Ada hadiah bisa diklaim! 🎁" : "3 misi + login harian berhadiah";
+  const pi = $("profInfo"); if(pi) pi.textContent = ((store.data.playerName || "").trim() || "Pemain") + " · Rank " + rankOf(store.data.hi || 0).cur.name;
+  const si = $("spinInfo"); if(si) si.textContent = "Skin langka · 10 💎 / putaran · punya " + (store.data.diamonds || 0) + " 💎";
+};
+const _renderStats0 = renderStats;
+renderStats = function(){
+  _renderStats0();
+  const sg = $("statGrid");
+  if(sg) sg.innerHTML += '<div class="cell"><small>DIAMOND 💎</small><b>' + (store.data.diamonds || 0).toLocaleString("id-ID") + '</b></div>' +
+    '<div class="cell"><small>BOSS RUSH TERBAIK</small><b>' + (store.data.rushBest || 0).toLocaleString("id-ID") + " · " + (store.data.rushBosses || 0) + ' boss</b></div>' +
+    '<div class="cell"><small>LOGIN BERUNTUN</small><b>' + ((store.data.login || {}).streak || 0) + ' hari</b></div>' +
+    '<div class="cell"><small>GALERI MUSUH</small><b>' + Object.keys(store.data.gallery || {}).length + " / " + (GALERI_ENEMIES.length + BOSS_CLASSES.length) + "</b></div>";
+};
+const _syncSet0 = syncSettingsUI;
+syncSettingsUI = function(){
+  _syncSet0();
+  document.querySelectorAll("#segMusicOn button").forEach(b => b.classList.toggle("sel", (b.dataset.m === "on") === (S.musicOn !== false)));
+  document.querySelectorAll("#segEco button").forEach(b => b.classList.toggle("sel", (b.dataset.e === "on") === !!S.eco));
+};
+
+/* ---------- Performa: deteksi HP lemah saat pertama main + turun kualitas otomatis saat FPS jeblok ---------- */
+if(!store.data.perfInit){
+  store.data.perfInit = 1;
+  const weak = (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
+  if(weak) S.quality = "low";
+  store.save();
+}
+let fpsDrops = 0;
+setInterval(()=>{
+  const fps = fpsFrames / 3; fpsFrames = 0;
+  if(G.mode !== "playing" || fpsDrops >= 2) return;
+  if(fps > 4 && fps < 36 && S.quality !== "low"){
+    S.quality = S.quality === "high" ? "med" : "low";
+    fpsDrops++; store.save(); resize();
+    showToast({ icon:"⚡", name:"Grafik diringankan otomatis", desc:"FPS rendah terdeteksi — kualitas diturunkan agar game tetap lancar tanpa freeze." });
+  }
+}, 3000);
+
+/* ---------- Musik latar di menu: mengalun setelah interaksi pertama (aturan browser) ---------- */
+document.addEventListener("pointerdown", ()=>{ AudioSys.ensure(); if(G.mode === "menu" || G.mode === "over" || G.mode === "campwin") AudioSys.startMusic(); }, true);
+["btnQuit", "btnOverMenu", "btnCampMenu"].forEach(id=>{ const el = $(id); if(el) el.addEventListener("click", ()=> setTimeout(()=>{ if(G.mode === "menu") AudioSys.startMusic(); }, 80)); });
+
+/* ---------- Pengaturan baru: musik latar & mode hemat ---------- */
+document.querySelectorAll("#segMusicOn button").forEach(b => b.addEventListener("click", ()=>{
+  S.musicOn = b.dataset.m === "on"; store.save(); syncSettingsUI();
+  AudioSys.ensure(); if(S.musicOn) AudioSys.startMusic(); else AudioSys.stopMusic();
+}));
+document.querySelectorAll("#segEco button").forEach(b => b.addEventListener("click", ()=>{
+  S.eco = b.dataset.e === "on";
+  if(S.eco){ S.quality = "low"; AudioSys.stopMusic(); }
+  store.save(); syncSettingsUI(); resize();
+}));
+
+/* ---------- Kabel tombol-tombol baru ---------- */
+$("btnMissions").addEventListener("click", openMissions);
+$("btnClaimLogin").addEventListener("click", claimLogin);
+$("btnRush").addEventListener("click", startRush);
+$("btnGallery").addEventListener("click", ()=>{ renderGallery(); showScreen("scrGallery"); });
+$("btnProfile").addEventListener("click", openProfile);
+$("btnSpin").addEventListener("click", openSpin);
+$("btnTutorial").addEventListener("click", startTutorial);
+$("btnSaveNick").addEventListener("click", saveNick);
+$("nickInput").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); saveNick(); } });
+$("btnProfileSpin").addEventListener("click", openSpin);
+$("btnSpinGo").addEventListener("click", doSpin);
+$("tutSkip").addEventListener("click", ()=>{ if(G.tutorial) tutFinish(false); });
+$("btnTutPlay").addEventListener("click", ()=> startGame(false));
+$("btnTutMenu").addEventListener("click", ()=>{ G.mode = "menu"; updateMenuMeta(); showScreen("scrMenu"); });
+const lbProfEl = document.querySelector(".lbProfile");
+if(lbProfEl) lbProfEl.addEventListener("click", openProfile);
+
 /* ---------- Mulai ---------- */
 window.addEventListener("resize", resize);
-resize(); renderDiffGrid(); updateHUD(); updateMenuMeta(); renderAchPanel(); renderLeaderboard();
+resize(); renderDiffGrid(); renderBgGrid(); updateHUD(); updateMenuMeta(); renderAchPanel(); renderLeaderboard();
 requestAnimationFrame(loop);
 window.__gameBooted = true;
 if(window.__bootWatchdog) clearTimeout(window.__bootWatchdog);
