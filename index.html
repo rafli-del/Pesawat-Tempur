@@ -7,16 +7,16 @@
     <meta name="theme-color" content="#070b16" />
     <link rel="icon" href="data:," />
     <title>Arcade Tembak-tembakan 2D</title>
-    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis di latar galaksi dengan berbagai planet, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard. Mode endless, 5 level kesulitan: Easy, Normal, Hard, Extreme, Impossible." />
+    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis di latar galaksi dengan berbagai planet, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Mode endless, 5 level kesulitan: Easy, Normal, Hard, Extreme, Impossible." />
     <meta name="keywords" content="game tembak-tembakan, arcade 2d, game pesawat, space shooter, game gratis, game browser, game HP, tembak-tembakan 2D" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="rfyjntan" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:title" content="Arcade Tembak-tembakan 2D — Game Pesawat Gratis" />
-    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: latar galaksi dengan planet, auto-fire, XP dan skill acak, boss dengan HP yang makin besar, leaderboard, dan 5 level kesulitan. Main langsung, tanpa install." />
+    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: latar galaksi dengan planet, auto-fire, XP dan skill acak, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, dan 5 level kesulitan. Main langsung, tanpa install." />
     <meta property="og:url" content="https://rafli-del.github.io/Pesawat-Tempur/" />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: latar galaksi dengan berbagai planet, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard. Mode endless dengan 5 level kesulitan."}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: latar galaksi dengan berbagai planet, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless dengan 5 level kesulitan."}</script>
     <style>
       /* Font lokal — tanpa permintaan jaringan, halaman selalu bisa dibuka */
       @font-face{
@@ -535,7 +535,7 @@
               <div class="row"><div class="ic">📅</div><p>Tantangan harian<small>Setiap hari ada satu susunan musuh yang sama untuk semua pemain. Mainkan lewat tombol Tantangan Harian di menu utama, lalu catat skormu di tab Harian pada Leaderboard untuk dibandingkan dengan teman yang main di perangkat ini.</small></p></div>
               <div class="row"><div class="ic">🪙</div><p>Koin, pesawat &amp; upgrade<small>Setiap musuh yang hancur memberi koin (elite &amp; boss memberi jauh lebih banyak), ditambah bonus dari skor akhir. Tukarkan di Hanggar: buka pesawat Viper (cepat), Titan (damage besar + nyawa), atau Spectre (peluru tembus), dan beli upgrade permanen — damage, kecepatan, laju tembak, nyawa awal. Setiap pesawat punya model, warna &amp; bentuk peluru sendiri — baut energi biru Falcon, tracer hijau Viper, peluru meriam oranye Titan, pecahan kristal ungu Spectre — lengkap dengan kilat moncong, jejak cahaya, dan kilatan kena sewarna pelurunya.</small></p></div>
               <div class="row"><div class="ic">🎚️</div><p>Level kesulitan<small>Pilih di menu utama sebelum main: <b>Easy</b> (musuh lambat &amp; rapuh, 4 nyawa), <b>Normal</b> (seimbang), <b>Hard</b> (lebih cepat &amp; tebal), <b>Extreme</b> (gerombolan padat, boss sangat tebal), sampai <b>Impossible</b> (serba maksimal, cuma 2 nyawa). Mode makin sulit = pengali skor makin besar: Easy ×1 · Normal ×1,5 · Hard ×2 · Extreme ×3 · Impossible ×5.</small></p></div>
-              <div class="row"><div class="ic">🏆</div><p>Leaderboard<small>Kalau skormu masuk 10 besar saat game over, tulis namamu dan skormu tercatat di Leaderboard — lengkap dengan mode, waktu bertahan, jumlah musuh yang dihancurkan, dan tanggalnya. Buka Leaderboard dari menu utama untuk melihat semua peringkat, bisa disaring per level kesulitan atau tab Harian.</small></p></div>
+              <div class="row"><div class="ic">🏆</div><p>Leaderboard<small>Setiap game over, skormu terkirim OTOMATIS ke papan 🌐 Global — 10 skor tertinggi dari semua pemain di semua perangkat, jadi siapa pun bisa melihat peringkatmu. Kalau skormu juga masuk 10 besar di perangkat ini, tulis namamu dan skormu tercatat di papan per-HP — lengkap dengan mode, waktu bertahan, jumlah musuh yang dihancurkan, dan tanggalnya. Buka Leaderboard dari menu utama untuk melihat semua peringkat: tab Global, per level kesulitan, atau tab Harian. Lagi offline? Papan per-HP tetap tampil seperti biasa.</small></p></div>
               <div class="row"><div class="ic">⏸️</div><p>Jeda &amp; simpan<small>Tombol ❚❚ atau <kbd>P</kbd> untuk jeda. Progres tersimpan <b>otomatis</b> setiap kali jeda atau keluar ke menu — lanjutkan kapan saja lewat tombol Lanjutkan di menu utama.</small></p></div>
             </div>
             <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
@@ -860,6 +860,80 @@ function lbAdd(entry){
 function lbDateStr(ts){
   try{ return new Date(ts).toLocaleDateString("id-ID", { day:"numeric", month:"short", year:"numeric" }); }catch(e){ return ""; }
 }
+
+/* ---------- Leaderboard GLOBAL (Firebase Realtime Database) ----------
+   Papan global bersama semua pemain, disimpan di /leaderboard pada database
+   milik pembuat game. Tiap game over, skor dikirim otomatis (name, score,
+   mode, time, ts). Membaca papan global memakai REST API Firebase — tanpa
+   SDK dan tanpa kunci rahasia. Kalau offline / Firebase tidak terjangkau,
+   papan per-HP yang lama tetap tampil seperti biasa. */
+const FB_BASE = "https://arcade-tembak-tembakan-default-rtdb.asia-southeast1.firebasedatabase.app";
+let fbGlobalCache = null;      /* array entri global terurut (maks 10) atau null bila belum dimuat */
+let fbGlobalLoading = false;
+let fbGlobalError = false;
+let fbGlobalFetchedAt = 0;
+function fbFetchWithTimeout(url, opts, ms){
+  return new Promise((resolve, reject)=>{
+    let ctrl = null, timer = null;
+    try{
+      if(typeof AbortController !== "undefined"){
+        ctrl = new AbortController();
+        if(opts) opts.signal = ctrl.signal; else opts = { signal: ctrl.signal };
+      }
+    }catch(e){}
+    timer = setTimeout(()=>{ try{ if(ctrl) ctrl.abort(); }catch(e){} reject(new Error("timeout")); }, ms || 9000);
+    fetch(url, opts).then(r=>{ clearTimeout(timer); resolve(r); }, err=>{ clearTimeout(timer); reject(err); });
+  });
+}
+/* Kirim satu skor ke papan global. Gagal (offline dsb.) diam saja — skor
+   tetap aman di papan per-HP dan permainan tidak terganggu. */
+function submitGlobalScore(entry){
+  try{
+    const payload = {
+      name: String(entry.name || "Pemain").slice(0, 20),
+      score: Math.round(entry.score || 0),
+      mode: String(entry.mode || "normal"),
+      time: Math.max(0, Math.round(entry.time || 0)),
+      ts: entry.ts || Date.now()
+    };
+    if(!(payload.score > 0)) return;
+    fbFetchWithTimeout(FB_BASE + "/leaderboard.json", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }, 9000).then(r=>{
+      if(r && r.ok){ fbGlobalCache = null; fbGlobalFetchedAt = 0; }
+    }).catch(()=>{});
+  }catch(e){}
+}
+/* Ambil papan global: top 10 skor tertinggi. Entri tanpa skor angka diabaikan. */
+function fetchGlobalLeaderboard(force){
+  if(fbGlobalLoading) return;
+  if(!force && fbGlobalCache && Date.now() - fbGlobalFetchedAt < 30000) return;
+  fbGlobalLoading = true; fbGlobalError = false;
+  fbFetchWithTimeout(FB_BASE + "/leaderboard.json", null, 9000)
+    .then(r=>{ if(!r || !r.ok) throw new Error("http"); return r.json(); })
+    .then(data=>{
+      const rows = [];
+      if(data && typeof data === "object"){
+        Object.keys(data).forEach(k=>{
+          const e = data[k];
+          if(!e || typeof e !== "object") return;
+          if(typeof e.score !== "number" || !isFinite(e.score)) return; /* abaikan entri tanpa skor angka */
+          rows.push(e);
+        });
+      }
+      rows.sort((a,b)=> b.score - a.score || (a.ts || 0) - (b.ts || 0));
+      fbGlobalCache = rows.slice(0, LB_MAX);
+      fbGlobalFetchedAt = Date.now();
+      fbGlobalLoading = false;
+      if(lbFilter === "global" && $("scrLeaderboard").classList.contains("open")) renderLeaderboard();
+    })
+    .catch(()=>{
+      fbGlobalLoading = false; fbGlobalError = true;
+      if(lbFilter === "global" && $("scrLeaderboard").classList.contains("open")) renderLeaderboard();
+    });
+}
 function renderDiffGrid(){
   const grid = $("diffGrid"); if(!grid) return;
   const cur = store.data.difficulty;
@@ -883,7 +957,7 @@ function renderDiffGrid(){
 function renderLeaderboard(){
   const tabs = $("lbTabs");
   tabs.innerHTML = "";
-  [{ id:"all", label:"Semua" }, { id:"daily", label:"📅 Harian" }].concat(DIFF_ORDER.map(id=>({ id, label:DIFFS[id].label }))).forEach(t=>{
+  [{ id:"global", label:"🌐 Global" }, { id:"all", label:"Semua" }, { id:"daily", label:"📅 Harian" }].concat(DIFF_ORDER.map(id=>({ id, label:DIFFS[id].label }))).forEach(t=>{
     const b = document.createElement("button");
     b.textContent = t.label;
     b.className = lbFilter === t.id ? "sel" : "";
@@ -891,11 +965,43 @@ function renderLeaderboard(){
     tabs.appendChild(b);
   });
   const isDaily = lbFilter === "daily";
+  const isGlobal = lbFilter === "global";
   const note = $("lbNote");
-  if(note) note.textContent = isDaily
+  if(note) note.textContent = isGlobal
+    ? "Papan GLOBAL — 10 skor tertinggi dari SEMUA pemain di seluruh perangkat, langsung dari server. Skormu terkirim otomatis setiap game over."
+    : isDaily
     ? "Skor Tantangan Harian — " + fmtDateID(todayStr()) + ". Susunan musuh hari ini sama untuk semua pemain, jadi skor hari ini adil untuk dibandingkan."
     : "10 skor tertinggi dari semua permainan di perangkat ini. Skor dari mode yang lebih sulit dapat pengali lebih besar — jadi lebih cepat naik peringkat!";
   const list = $("lbList");
+  const medals = ["🥇","🥈","🥉"];
+  if(isGlobal){
+    fetchGlobalLeaderboard(false);
+    if(fbGlobalLoading && !fbGlobalCache){
+      list.innerHTML = '<div class="lbEmpty">⏳ Memuat papan global…</div>';
+      return;
+    }
+    if(fbGlobalError && !fbGlobalCache){
+      list.innerHTML = '<div class="lbEmpty">📡 Tidak bisa terhubung ke papan global.<br>Periksa koneksi internetmu, lalu ketuk tab 🌐 Global lagi untuk mencoba ulang — atau lihat papan per-HP lewat tab Semua.</div>';
+      return;
+    }
+    const grows = fbGlobalCache || [];
+    if(!grows.length){
+      list.innerHTML = '<div class="lbEmpty">Belum ada skor global.<br>Jadilah yang pertama — selesaikan satu permainan dan skormu langsung tampil di sini untuk semua pemain!</div>';
+      return;
+    }
+    list.innerHTML = grows.map((e, i)=>{
+      const rank = i + 1;
+      const d = diffOf(e.mode);
+      const modeLabel = DIFFS[e.mode] ? d.label : String(e.mode || "Normal");
+      const when = typeof e.time === "number" ? "⏱ " + fmtTime(e.time) : "";
+      const meta = [modeLabel, when, e.ts ? lbDateStr(e.ts) : ""].filter(Boolean).join(" · ");
+      return '<div class="lbRow' + (rank <= 3 ? " top" + rank : "") + (e.ts === lbHighlightTs ? " mine" : "") + '">'
+        + '<div class="lbRank">' + (medals[rank - 1] || rank) + "</div>"
+        + '<div class="lbMain"><b>' + escapeHtml(e.name || "Pemain") + '</b><small>' + escapeHtml(meta) + "</small></div>"
+        + '<div class="lbScore"><b>' + Math.round(e.score).toLocaleString("id-ID") + '</b><small>PERINGKAT #' + rank + "</small></div></div>";
+    }).join("") + (fbGlobalError ? '<div class="lbEmpty" style="margin-top:7px;">📡 Koneksi ke server sempat gagal — ini papan global terakhir yang berhasil dimuat.</div>' : "");
+    return;
+  }
   const all = isDaily ? dailyStore().entries : (store.data.leaderboard || []);
   const rows = (isDaily || lbFilter === "all") ? all : all.filter(e => e.difficulty === lbFilter);
   if(!rows.length){
@@ -906,7 +1012,6 @@ function renderLeaderboard(){
         : "Belum ada skor tercatat.<br>Selesaikan satu permainan — kalau skormu masuk 10 besar, kamu bisa mencatat namamu di sini!") + "</div>";
     return;
   }
-  const medals = ["🥇","🥈","🥉"];
   list.innerHTML = rows.map((e)=>{
     const rankAll = all.indexOf(e) + 1;
     const d = diffOf(e.difficulty);
@@ -1306,7 +1411,7 @@ function newPlanet(anywhere){
 /* ---------- Status game ---------- */
 const G = {
   mode:"menu",            // menu | playing | paused | levelup | over
-  difficulty:"normal", lbSavedRun:false, dailyMode:false, rng:null,
+  difficulty:"normal", lbSavedRun:false, fbSubmittedRun:false, dailyMode:false, rng:null,
   score:0, lives:3, runKills:0,
   runTime:0, lastMinute:0, noHitTime:0,
   combo:0, comboT:0, bestCombo:0,
@@ -1572,7 +1677,7 @@ function startGame(fromSave, daily){
   G.bullets = []; G.ebullets = []; G.enemies = []; G.parts = []; G.powers = []; G.texts = []; G.gems = []; G.missiles = []; G.rings = [];
   G.boss = null; $("bossBarWrap").style.display = "none";
   G.player = newPlayer(); G.shake = 0; G.flash = 0; G.slowT = 0; G.time = 0;
-  G.lbSavedRun = false; G.statsFlushed = false;
+  G.lbSavedRun = false; G.fbSubmittedRun = false; G.statsFlushed = false;
   G.runTime = 0; G.lastMinute = 0; G.noHitTime = 0;
   G.combo = 0; G.comboT = 0; G.bestCombo = 0;
   G.runCoins = 0; G.runShots = 0; G.runHits = 0;
@@ -1658,6 +1763,14 @@ function gameOver(){
     G.autoLbEntry = autoEntry; G.lbSavedRun = true;
     lbHighlightTs = autoEntry.ts; lbFilter = G.dailyMode ? "daily" : "all";
     $("lbSavedRank").textContent = "#" + autoRank;
+  }
+  /* Papan GLOBAL: setiap game over, skor run ini juga dikirim otomatis ke
+     server Firebase supaya bisa dilihat semua pemain. Nama yang terkirim
+     adalah nama terakhir yang dipakai pemain (tersimpan di perangkat). */
+  if(G.score > 0 && !G.fbSubmittedRun){
+    G.fbSubmittedRun = true;
+    G.fbEntryTs = Date.now();
+    submitGlobalScore({ name:(store.data.playerName || "").trim() || "Pemain", score:G.score, mode:G.difficulty || store.data.difficulty, time:Math.round(G.runTime), ts:G.fbEntryTs });
   }
   $("lbEntry").classList.toggle("show", qualifies);
   $("lbSaved").classList.toggle("show", qualifies);
@@ -2635,8 +2748,8 @@ $("btnDaily").addEventListener("click", ()=>{ store.data.save = null; store.save
 $("btnGarage").addEventListener("click", ()=>{ renderGarage(); showScreen("scrGarage"); });
 $("btnStats").addEventListener("click", ()=>{ renderStats(); showScreen("scrStats"); });
 $("btnContinue").addEventListener("click", ()=>{ if(store.data.save) startGame(true); });
-$("btnLeaderboard").addEventListener("click", ()=>{ lbReturn = "scrMenu"; lbFilter = "all"; renderLeaderboard(); showScreen("scrLeaderboard"); });
-$("btnOverLeaderboard").addEventListener("click", ()=>{ lbReturn = "scrOver"; renderLeaderboard(); showScreen("scrLeaderboard"); });
+$("btnLeaderboard").addEventListener("click", ()=>{ lbReturn = "scrMenu"; lbFilter = "all"; renderLeaderboard(); showScreen("scrLeaderboard"); fetchGlobalLeaderboard(false); });
+$("btnOverLeaderboard").addEventListener("click", ()=>{ lbReturn = "scrOver"; renderLeaderboard(); showScreen("scrLeaderboard"); fetchGlobalLeaderboard(false); });
 $("btnSaveScore").addEventListener("click", saveScoreToLeaderboard);
 $("lbName").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); saveScoreToLeaderboard(); } });
 $("btnAch").addEventListener("click", ()=>{ renderAchPanel(); showScreen("scrAch"); });
