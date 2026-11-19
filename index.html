@@ -7,16 +7,16 @@
     <meta name="theme-color" content="#070b16" />
     <link rel="icon" href="data:," />
     <title>Arcade Tembak-tembakan 2D</title>
-    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss, dan kejar skor tertinggi di leaderboard. Mode endless, 5 level kesulitan: Easy, Normal, Hard, Extreme, Impossible." />
+    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis di latar galaksi dengan berbagai planet, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard. Mode endless, 5 level kesulitan: Easy, Normal, Hard, Extreme, Impossible." />
     <meta name="keywords" content="game tembak-tembakan, arcade 2d, game pesawat, space shooter, game gratis, game browser, game HP, tembak-tembakan 2D" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="rfyjntan" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:title" content="Arcade Tembak-tembakan 2D — Game Pesawat Gratis" />
-    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: auto-fire, XP dan skill acak, boss, leaderboard, dan 5 level kesulitan. Main langsung, tanpa install." />
+    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: latar galaksi dengan planet, auto-fire, XP dan skill acak, boss dengan HP yang makin besar, leaderboard, dan 5 level kesulitan. Main langsung, tanpa install." />
     <meta property="og:url" content="https://rafli-del.github.io/Pesawat-Tempur/" />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss, dan kejar skor tertinggi di leaderboard. Mode endless dengan 5 level kesulitan."}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: latar galaksi dengan berbagai planet, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard. Mode endless dengan 5 level kesulitan."}</script>
     <style>
       /* Font lokal — tanpa permintaan jaringan, halaman selalu bisa dibuka */
       @font-face{
@@ -347,6 +347,7 @@
       .gCard{ display:flex; gap:12px; align-items:center; background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin:0 0 9px; }
       .gCard.sel{ border-color:var(--cyan); box-shadow:inset 0 0 0 1px var(--cyan); }
       .gCard .ic{ font-size:30px; flex:0 0 auto; line-height:1.1; }
+      .gCard canvas.shipPrev{ flex:0 0 auto; width:56px; height:56px; }
       .gCard .tx{ flex:1; min-width:0; }
       .gCard .tx b{ display:block; font-size:16px; }
       .gCard .tx small{ color:var(--muted); font-weight:600; font-size:13px; display:block; line-height:1.35; }
@@ -432,7 +433,7 @@
         <section class="screen open" id="scrMenu">
           <div class="card">
             <h1><span class="a">ARCADE</span><br /><span class="b">TEMBAK-TEMBAKAN</span> 2D</h1>
-            <p class="tagline">Mode endless: bertahanlah selama mungkin! Musuh makin ganas seiring waktu dan boss datang berkala. Jaga kombo, kumpulkan XP &amp; koin, buka pesawat baru!</p>
+            <p class="tagline">Mode endless di tengah galaksi: bertahanlah selama mungkin di antara nebula &amp; planet-planet! Musuh makin ganas seiring waktu dan boss datang berkala — HP boss naik berlipat di setiap kemunculan. Jaga kombo, kumpulkan XP &amp; koin, buka pesawat baru!</p>
             <div class="hiLine">
               <div><small>SKOR TERTINGGI</small><b id="menuHi">0</b></div>
               <div><small>KOIN</small><b id="menuCoins" style="color:var(--amber);">0</b></div>
@@ -528,11 +529,11 @@
               <div class="row"><div class="ic">👆</div><p>Geser untuk bergerak<small>Sentuh &amp; geser layar ke mana saja — pesawat mengikuti gerakan jarimu untuk menghindari tembakan musuh. Di PC: seret mouse, atau tombol <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / panah.</small></p></div>
               <div class="row"><div class="ic">🔫</div><p>Tembakan otomatis<small>Pesawat menembak sendiri tanpa henti — tidak ada tombol tembak. Tugasmu cuma menghindar dan tetap berada di posisi aman.</small></p></div>
               <div class="row"><div class="ic">⭐</div><p>XP &amp; pilih skill<small>Musuh yang hancur menjatuhkan permata XP — terbang melewatinya untuk mengambil. Setiap naik level, permainan berhenti sejenak dan kamu memilih sendiri 1 dari 3 skill acak yang ditawarkan (tembakan cepat, peluru berat, misil pendamping, magnet XP, dan lainnya). Skill menumpuk sepanjang permainan!</small></p></div>
-              <div class="row"><div class="ic">♾️</div><p>Mode endless &amp; boss<small>Tidak ada lagi gelombang atau stage — permainan berjalan terus selama kamu bertahan. Semakin lama, musuh makin banyak, makin cepat, dan makin tebal, termasuk musuh ELITE bermahkota yang alot dan menembak menyebar. Boss besar datang berkala berdasarkan waktu bertahan (bar HP merah di atas layar), bergantian pola: tembakan SPIRAL berputar dan tembakan PENYEBAR melebar. Setiap menit bertahan ada bonus skor!</small></p></div>
+              <div class="row"><div class="ic">♾️</div><p>Mode endless &amp; boss<small>Tidak ada lagi gelombang atau stage — permainan berjalan terus selama kamu bertahan, melintasi latar galaksi penuh nebula berwarna dan planet-planet yang melayang lewat (raksasa gas, planet bercincin, planet lava, es, dan lainnya). Semakin lama, musuh makin banyak, makin cepat, dan makin tebal, termasuk musuh ELITE bermahkota yang alot dan menembak menyebar. Boss besar datang berkala berdasarkan waktu bertahan (bar HP merah di atas layar) — dan setiap boss BERBEDA model, warna &amp; pola serangnya, berputar lewat 5 kelas: VORTEX (spiral kembar), TALON (kipas lebar), AEGIS (tembakan memburu + cincin peluru), HYDRA (spiral tiga lengan), dan DREADNOUGHT (raksasa campuran spiral + kipas). HP boss naik BERLIPAT di setiap kemunculan — boss ke-5 sudah sekitar dua kali lebih alot, boss ke-10 sekitar lima kali — badannya ikut membesar, pelurunya makin cepat, dan tembakannya makin rapat. Dan di bawah 35% HP boss mengamuk, menembak lebih cepat lagi! Setiap menit bertahan ada bonus skor!</small></p></div>
               <div class="row"><div class="ic">⚡</div><p>Ambil power-up<small><b style="color:var(--cyan)">W</b> = senjata ganda/triple, <b style="color:var(--green)">S</b> = perisai pelindung, <b style="color:var(--pink)">♥</b> = nyawa ekstra.</small></p></div>
               <div class="row"><div class="ic">🔥</div><p>Kombo skor<small>Hancurkan musuh beruntun tanpa terkena tembakan untuk menaikkan pengali kombo: 8 kill beruntun = ×2, 15 = ×3, 25 = ×4, 40 = ×5. Kombo punya batas waktu 4 detik sejak kill terakhir — dan sekali kena hit, kombo langsung putus dan pengali kembali ×1. Jangan rakus!</small></p></div>
               <div class="row"><div class="ic">📅</div><p>Tantangan harian<small>Setiap hari ada satu susunan musuh yang sama untuk semua pemain. Mainkan lewat tombol Tantangan Harian di menu utama, lalu catat skormu di tab Harian pada Leaderboard untuk dibandingkan dengan teman yang main di perangkat ini.</small></p></div>
-              <div class="row"><div class="ic">🪙</div><p>Koin, pesawat &amp; upgrade<small>Setiap musuh yang hancur memberi koin (elite &amp; boss memberi jauh lebih banyak), ditambah bonus dari skor akhir. Tukarkan di Hanggar: buka pesawat Viper (cepat), Titan (damage besar + nyawa), atau Spectre (peluru tembus), dan beli upgrade permanen — damage, kecepatan, laju tembak, nyawa awal.</small></p></div>
+              <div class="row"><div class="ic">🪙</div><p>Koin, pesawat &amp; upgrade<small>Setiap musuh yang hancur memberi koin (elite &amp; boss memberi jauh lebih banyak), ditambah bonus dari skor akhir. Tukarkan di Hanggar: buka pesawat Viper (cepat), Titan (damage besar + nyawa), atau Spectre (peluru tembus), dan beli upgrade permanen — damage, kecepatan, laju tembak, nyawa awal. Setiap pesawat punya model, warna &amp; bentuk peluru sendiri — baut energi biru Falcon, tracer hijau Viper, peluru meriam oranye Titan, pecahan kristal ungu Spectre — lengkap dengan kilat moncong, jejak cahaya, dan kilatan kena sewarna pelurunya.</small></p></div>
               <div class="row"><div class="ic">🎚️</div><p>Level kesulitan<small>Pilih di menu utama sebelum main: <b>Easy</b> (musuh lambat &amp; rapuh, 4 nyawa), <b>Normal</b> (seimbang), <b>Hard</b> (lebih cepat &amp; tebal), <b>Extreme</b> (gerombolan padat, boss sangat tebal), sampai <b>Impossible</b> (serba maksimal, cuma 2 nyawa). Mode makin sulit = pengali skor makin besar: Easy ×1 · Normal ×1,5 · Hard ×2 · Extreme ×3 · Impossible ×5.</small></p></div>
               <div class="row"><div class="ic">🏆</div><p>Leaderboard<small>Kalau skormu masuk 10 besar saat game over, tulis namamu dan skormu tercatat di Leaderboard — lengkap dengan mode, waktu bertahan, jumlah musuh yang dihancurkan, dan tanggalnya. Buka Leaderboard dari menu utama untuk melihat semua peringkat, bisa disaring per level kesulitan atau tab Harian.</small></p></div>
               <div class="row"><div class="ic">⏸️</div><p>Jeda &amp; simpan<small>Tombol ❚❚ atau <kbd>P</kbd> untuk jeda. Progres tersimpan <b>otomatis</b> setiap kali jeda atau keluar ke menu — lanjutkan kapan saja lewat tombol Lanjutkan di menu utama.</small></p></div>
@@ -944,11 +945,16 @@ function dailyAdd(entry){
 }
 
 /* ---------- Hanggar: pesawat yang bisa dibuka & upgrade permanen ---------- */
+/* c1/c2/c3 = gradasi logam badan (hidung→ekor), c4 = logam gelap, wing = warna sayap,
+   glow = warna aksen menyala, wide = lebar badan, sweep = panjang sapuan sayap.
+   Tiap skin sengaja dibuat beda siluet & warna supaya terasa seperti pesawat lain. */
+/* bCol/bCore/bShape = warna & bentuk peluru khas tiap skin (baut energi, tracer,
+   peluru meriam, pecahan kristal) — lengkap dengan jejak cahaya & kilatan kenanya. */
 const SHIPS = [
-  { id:"falcon",  icon:"🛩️", name:"Falcon",  cost:0,   desc:"Seimbang untuk semua pilot. Pilihan bawaan.", speedMul:1,    dmg:0, fireMul:1,    lives:0, pierce:0, r:15, c1:"#7df3ff", c2:"#31b6ff", c3:"#1668c9", wing:"#1d7ea8" },
-  { id:"viper",   icon:"🐍", name:"Viper",   cost:150, desc:"Sangat cepat, tembakan 15% lebih rapat. Buat pilot lincah pengejar kombo.", speedMul:1.28, dmg:0, fireMul:0.85, lives:0, pierce:0, r:14, c1:"#c9ff8a", c2:"#5fd92e", c3:"#2c7a12", wing:"#3f8f1d" },
-  { id:"titan",   icon:"🛡️", name:"Titan",   cost:400, desc:"Lambat tapi alot: damage +1 dan +1 nyawa awal. Badan lebih besar.", speedMul:0.85, dmg:1, fireMul:1.08, lives:1, pierce:0, r:18, c1:"#ffe28a", c2:"#ff9f2e", c3:"#c25e10", wing:"#8f5a1d" },
-  { id:"spectre", icon:"👻", name:"Spectre", cost:900, desc:"Cepat, peluru menembus 1 musuh, tembakan 22% lebih rapat.", speedMul:1.15, dmg:0, fireMul:0.78, lives:0, pierce:1, r:14, c1:"#eec9ff", c2:"#b45cff", c3:"#6d28b8", wing:"#5b21a8" }
+  { id:"falcon",  icon:"🛩️", name:"Falcon",  cost:0,   desc:"Seimbang untuk semua pilot. Pilihan bawaan. Tembakan: baut energi biru.", speedMul:1,    dmg:0, fireMul:1,    lives:0, pierce:0, r:15, c1:"#bfefff", c2:"#38b6f6", c3:"#155e9e", c4:"#0a2c4d", wing:"#1c6ea8", glow:"#7df3ff", wide:1,    sweep:1,    bCol:"#4fd8ff", bCore:"#ffffff", bShape:"bolt" },
+  { id:"viper",   icon:"🐍", name:"Viper",   cost:150, desc:"Sangat cepat, tembakan 15% lebih rapat. Buat pilot lincah pengejar kombo. Tembakan: tracer hijau ramping berjejak panjang.", speedMul:1.28, dmg:0, fireMul:0.85, lives:0, pierce:0, r:14, c1:"#e6ffb3", c2:"#7ee82e", c3:"#2f7a10", c4:"#122e06", wing:"#3f8f1d", glow:"#c9ff5e", wide:0.82, sweep:1.32, bCol:"#a6ff4d", bCore:"#f4ffd6", bShape:"tracer" },
+  { id:"titan",   icon:"🛡️", name:"Titan",   cost:400, desc:"Lambat tapi alot: damage +1 dan +1 nyawa awal. Badan lebih besar. Tembakan: peluru meriam oranye besar.", speedMul:0.85, dmg:1, fireMul:1.08, lives:1, pierce:0, r:18, c1:"#fff0b3", c2:"#ffb02e", c3:"#b45f06", c4:"#4a2a05", wing:"#8f5a1d", glow:"#ffd23d", wide:1.32, sweep:0.92, bCol:"#ffb02e", bCore:"#fff3b0", bShape:"shell" },
+  { id:"spectre", icon:"👻", name:"Spectre", cost:900, desc:"Cepat, peluru menembus 1 musuh, tembakan 22% lebih rapat. Tembakan: pecahan kristal ungu.", speedMul:1.15, dmg:0, fireMul:0.78, lives:0, pierce:1, r:14, c1:"#f3d9ff", c2:"#b45cff", c3:"#5b21a8", c4:"#1d0b38", wing:"#5b21a8", glow:"#e879f9", wide:0.9,  sweep:1.12, bCol:"#e879f9", bCore:"#fdf4ff", bShape:"shard" }
 ];
 const UPGRADES = [
   { id:"dmg",  icon:"💢", name:"Damage Permanen",  desc:"+1 damage semua peluru per level.",        max:3, costs:[120, 250, 450] },
@@ -966,7 +972,7 @@ function renderGarage(){
     const sel = store.data.ship === sh.id;
     const card = document.createElement("div");
     card.className = "gCard" + (sel ? " sel" : "");
-    card.innerHTML = '<div class="ic">' + sh.icon + '</div><div class="tx"><b>' + sh.name + '</b><small>' + sh.desc + "</small></div>";
+    card.innerHTML = '<canvas class="shipPrev" width="84" height="84" aria-hidden="true"></canvas><div class="tx"><b>' + sh.name + '</b><small>' + sh.desc + "</small></div>";
     const btn = document.createElement("button");
     btn.className = "gBtn" + (owned ? " use" : "");
     if(sel){ btn.textContent = "Terpilih ✓"; btn.disabled = true; }
@@ -985,6 +991,9 @@ function renderGarage(){
       });
     }
     card.appendChild(btn); sl.appendChild(card);
+    /* Pratinjau model asli pesawat ini — digambar dengan mesin gambar yang sama seperti di dalam game */
+    const pc = card.querySelector(".shipPrev");
+    if(pc){ const pg = pc.getContext("2d"); if(pg) drawShip(42, 44, sh.r * 1.35, 0, 0, 1.3, sh, pg); }
   });
   const ul = $("upList"); ul.innerHTML = "";
   UPGRADES.forEach(u=>{
@@ -1147,7 +1156,151 @@ let stars = [];
 function buildStars(){
   const n = S.quality==="low" ? 40 : S.quality==="med" ? 80 : 130;
   stars = [];
-  for(let i=0;i<n;i++) stars.push({ x:Math.random()*W, y:Math.random()*H, s:rand(0.6,2.2), v:rand(18,70) });
+  for(let i=0;i<n;i++) stars.push({ x:Math.random()*W, y:Math.random()*H, s:rand(0.6,2.2), v:rand(18,70), tw:rand(0, Math.PI*2) });
+  buildSky();
+}
+
+/* ---------- Latar GALAKSI: nebula berlapis + planet-planet melayang ----------
+   Nebula & planet dirender sekali ke kanvas offscreen (sprite), lalu digambar
+   ulang tiap frame — tampil mewah tapi tetap ringan di HP. Keduanya bergerak
+   jauh lebih lambat dari bintang (efek parallax kedalaman ruang angkasa). */
+function skyCanvas(w, h){ const c = document.createElement("canvas"); c.width = w; c.height = h; return c; }
+const NEBULA_PALETTES = [
+  ["168,85,247", "76,29,149"],   /* ungu */
+  ["34,211,238", "30,64,175"],   /* sian-biru */
+  ["244,114,182", "131,24,67"],  /* magenta */
+  ["251,146,60", "154,52,18"],   /* jingga bara */
+  ["45,212,191", "19,78,94"]     /* teal */
+];
+function makeNebulaSprite(){
+  const S2 = 340, c = skyCanvas(S2, S2), g = c.getContext("2d");
+  const pal = NEBULA_PALETTES[(Math.random()*NEBULA_PALETTES.length)|0];
+  for(let i=0;i<9;i++){
+    const x = S2/2 + rand(-70, 70), y = S2/2 + rand(-70, 70), r = rand(55, 130);
+    const col = Math.random() < 0.6 ? pal[0] : pal[1];
+    const gr = g.createRadialGradient(x, y, 0, x, y, r);
+    gr.addColorStop(0, "rgba(" + col + "," + rand(0.16, 0.30).toFixed(2) + ")");
+    gr.addColorStop(0.6, "rgba(" + col + "," + rand(0.05, 0.12).toFixed(2) + ")");
+    gr.addColorStop(1, "rgba(" + col + ",0)");
+    g.fillStyle = gr; g.beginPath(); g.arc(x, y, r, 0, Math.PI*2); g.fill();
+  }
+  /* taburan bintang redup di dalam nebula */
+  g.fillStyle = "rgba(255,255,255,.8)";
+  for(let i=0;i<26;i++){ g.globalAlpha = rand(0.15, 0.6); const r = rand(0.5, 1.3); g.beginPath(); g.arc(rand(30, S2-30), rand(30, S2-30), r, 0, Math.PI*2); g.fill(); }
+  g.globalAlpha = 1;
+  return c;
+}
+/* Jenis planet: raksasa gas berlapis, bercincin, berbatu berkawah, es, lava, samudra */
+const PLANET_TYPES = [
+  { id:"gas",   light:"#ffe3b3", mid:"#e8975a", dark:"#7c3f16", band:"rgba(255,240,214,.28)", band2:"rgba(124,63,22,.30)" },
+  { id:"ring",  light:"#fdf0c8", mid:"#d9b878", dark:"#6e5220", band:"rgba(255,246,220,.25)", band2:"rgba(110,82,32,.28)", ring:"216,186,120" },
+  { id:"rock",  light:"#d8cfc2", mid:"#8d8272", dark:"#3a352c" },
+  { id:"ice",   light:"#ffffff", mid:"#a8d8f0", dark:"#2c5d84", band:"rgba(255,255,255,.35)", band2:"rgba(70,130,180,.25)" },
+  { id:"lava",  light:"#ffb37a", mid:"#8a4a22", dark:"#180806" },
+  { id:"ocean", light:"#b8f4ff", mid:"#2e9bc6", dark:"#0b3552", band:"rgba(190,242,255,.22)", band2:"rgba(16,80,120,.25)" }
+];
+function makePlanetSprite(def){
+  const S2 = 300, c = skyCanvas(S2, S2), g = c.getContext("2d");
+  const cx = S2/2, cy = S2/2, pr = 74;
+  const ringBack = ()=>{
+    if(def.id !== "ring") return;
+    g.save(); g.translate(cx, cy); g.rotate(-0.32); g.scale(1, 0.30);
+    g.strokeStyle = "rgba(" + def.ring + ",.55)"; g.lineWidth = 15;
+    g.beginPath(); g.arc(0, 0, pr + 34, 0, Math.PI*2); g.stroke();
+    g.strokeStyle = "rgba(" + def.ring + ",.30)"; g.lineWidth = 7;
+    g.beginPath(); g.arc(0, 0, pr + 52, 0, Math.PI*2); g.stroke();
+    g.restore();
+  };
+  ringBack();
+  /* badan planet: gradasi cahaya dari kiri-atas, gelap di kanan-bawah */
+  const body = g.createRadialGradient(cx - pr*0.45, cy - pr*0.5, pr*0.12, cx, cy, pr*1.05);
+  body.addColorStop(0, def.light); body.addColorStop(0.45, def.mid); body.addColorStop(1, def.dark);
+  g.fillStyle = body; g.beginPath(); g.arc(cx, cy, pr, 0, Math.PI*2); g.fill();
+  g.save();
+  g.beginPath(); g.arc(cx, cy, pr, 0, Math.PI*2); g.clip();
+  if(def.band){ /* pita awan horizontal khas raksasa gas / es / samudra */
+    let y = cy - pr + 6;
+    while(y < cy + pr){
+      const h = rand(7, 17);
+      g.fillStyle = Math.random() < 0.5 ? def.band : def.band2;
+      g.fillRect(cx - pr, y + rand(-2, 2), pr*2, h);
+      y += h + rand(5, 13);
+    }
+    if(def.id === "gas"){ /* badai oval besar */
+      g.fillStyle = "rgba(255,120,60,.5)";
+      g.beginPath(); g.ellipse(cx + pr*0.25, cy + pr*0.28, pr*0.30, pr*0.16, 0, 0, Math.PI*2); g.fill();
+      g.fillStyle = "rgba(255,190,130,.55)";
+      g.beginPath(); g.ellipse(cx + pr*0.25, cy + pr*0.28, pr*0.18, pr*0.09, 0, 0, Math.PI*2); g.fill();
+    }
+  }
+  if(def.id === "rock"){ /* kawah tumbukan */
+    for(let i=0;i<11;i++){
+      const a = rand(0, Math.PI*2), d = rand(0, pr*0.78), x = cx + Math.cos(a)*d, y = cy + Math.sin(a)*d, r = rand(4, 13);
+      g.fillStyle = "rgba(30,26,20,.35)"; g.beginPath(); g.arc(x, y, r, 0, Math.PI*2); g.fill();
+      g.strokeStyle = "rgba(255,246,230,.28)"; g.lineWidth = 1.6;
+      g.beginPath(); g.arc(x, y, r, Math.PI*1.05, Math.PI*1.65); g.stroke();
+    }
+  }
+  if(def.id === "lava"){ /* retakan magma menyala */
+    g.strokeStyle = "rgba(255,110,26,.9)"; g.lineCap = "round";
+    for(let i=0;i<8;i++){
+      g.lineWidth = rand(1.4, 3);
+      let x = cx + rand(-pr*0.7, pr*0.7), y = cy + rand(-pr*0.7, pr*0.7);
+      g.beginPath(); g.moveTo(x, y);
+      for(let k=0;k<4;k++){ x += rand(-22, 22); y += rand(-16, 20); g.lineTo(x, y); }
+      g.stroke();
+    }
+    g.fillStyle = "rgba(255,150,50,.35)";
+    for(let i=0;i<5;i++){ g.beginPath(); g.arc(cx + rand(-pr*0.6, pr*0.6), cy + rand(-pr*0.6, pr*0.6), rand(5, 12), 0, Math.PI*2); g.fill(); }
+  }
+  if(def.id === "ice"){ /* tudung kutub putih */
+    g.fillStyle = "rgba(255,255,255,.75)";
+    g.beginPath(); g.ellipse(cx, cy - pr*0.92, pr*0.55, pr*0.22, 0, 0, Math.PI*2); g.fill();
+    g.beginPath(); g.ellipse(cx, cy + pr*0.95, pr*0.42, pr*0.18, 0, 0, Math.PI*2); g.fill();
+  }
+  if(def.id === "ocean"){ /* pusaran awan putih melengkung */
+    g.strokeStyle = "rgba(255,255,255,.4)"; g.lineCap = "round";
+    for(let i=0;i<6;i++){
+      g.lineWidth = rand(3, 6);
+      const y = cy + rand(-pr*0.7, pr*0.7);
+      g.beginPath(); g.arc(cx + rand(-14, 14), y, rand(18, 44), rand(0, 2), rand(2.6, 4.4)); g.stroke();
+    }
+  }
+  /* bayangan terminator: sisi malam di kanan-bawah + sorot tepi tipis */
+  const shade = g.createRadialGradient(cx - pr*0.55, cy - pr*0.55, pr*0.35, cx + pr*0.25, cy + pr*0.25, pr*1.45);
+  shade.addColorStop(0, "rgba(2,4,12,0)"); shade.addColorStop(0.62, "rgba(2,4,12,0)"); shade.addColorStop(1, "rgba(2,4,12,.62)");
+  g.fillStyle = shade; g.fillRect(cx - pr, cy - pr, pr*2, pr*2);
+  g.restore();
+  g.strokeStyle = "rgba(190,220,255,.20)"; g.lineWidth = 1.6;
+  g.beginPath(); g.arc(cx, cy, pr - 1, Math.PI*0.9, Math.PI*1.7); g.stroke();
+  if(def.id === "ring"){ /* lengkung cincin bagian depan planet */
+    g.save(); g.translate(cx, cy); g.rotate(-0.32); g.scale(1, 0.30);
+    g.beginPath(); g.rect(-S2, 0, S2*2, S2); g.clip();
+    g.strokeStyle = "rgba(" + def.ring + ",.75)"; g.lineWidth = 15;
+    g.beginPath(); g.arc(0, 0, pr + 34, 0, Math.PI*2); g.stroke();
+    g.strokeStyle = "rgba(" + def.ring + ",.4)"; g.lineWidth = 7;
+    g.beginPath(); g.arc(0, 0, pr + 52, 0, Math.PI*2); g.stroke();
+    g.restore();
+  }
+  return c;
+}
+let nebulae = [], planets = [], planetSprites = [];
+function buildSky(){
+  const q = S.quality;
+  const nNeb = q === "low" ? 2 : q === "med" ? 3 : 4;
+  nebulae = [];
+  for(let i=0;i<nNeb;i++){
+    nebulae.push({ img:makeNebulaSprite(), x:rand(-60, Math.max(60, W-160)), y:rand(-80, Math.max(80, H-160)), s:rand(300, 560), v:rand(2.5, 6), a:rand(0.5, 0.85) });
+  }
+  if(!planetSprites.length) planetSprites = PLANET_TYPES.map(makePlanetSprite);
+  planets = [];
+  const nPl = q === "low" ? 1 : q === "med" ? 2 : 2;
+  for(let i=0;i<nPl;i++) planets.push(newPlanet(i === 0));
+}
+function newPlanet(anywhere){
+  const idx = (Math.random()*planetSprites.length)|0;
+  const r = rand(34, 74);
+  return { img:planetSprites[idx], r, x:rand(r + 6, Math.max(r + 7, W - r - 6)), y:anywhere ? rand(-40, Math.max(0, H - 60)) : -r*2.4 - rand(0, 160), v:rand(3.5, 8.5) };
 }
 
 /* ---------- Status game ---------- */
@@ -1159,7 +1312,7 @@ const G = {
   combo:0, comboT:0, bestCombo:0,
   runCoins:0, runShots:0, runHits:0, statsFlushed:true,
   level:1, xp:0, skills:{},
-  player:null, bullets:[], ebullets:[], enemies:[], parts:[], powers:[], texts:[], gems:[], missiles:[], rings:[],
+  player:null, bullets:[], ebullets:[], enemies:[], parts:[], powers:[], texts:[], gems:[], missiles:[], rings:[], muzzles:[], impacts:[],
   boss:null, bossCount:0, nextBossAt:75, bossPending:false, bossTimer:0, spawnTimer:0,
   shake:0, flash:0, slowT:0, fireCd:0, missileT:0, shieldRegenT:0,
   time:0
@@ -1232,16 +1385,42 @@ function spawnEnemy(){
     x: rrange(30, W-30), y: -34, r: type === "elite" ? 25 : type === "shooter" ? 19 : 15,
     type, hp: hpBase, maxhp: hpBase,
     vy: c.speed * (type === "dart" ? 2.1 : type === "zig" ? 0.9 : type === "elite" ? 0.62 : 1) * rrange(0.85, 1.15),
-    t: rrange(0, Math.PI*2), fireT: rrange(1.2, 2.6)
+    t: rrange(0, Math.PI*2), fireT: rrange(1.2, 2.6), flash:0
   });
 }
-/* Boss bergantian pola: ganjil = SPIRAL (tembakan berputar), genap = PENYEBAR (kipas lebar) */
+/* ---------- Kelas BOSS: model, warna & pola serangan BERBEDA di setiap kemunculan ----------
+   Boss berputar melewati 5 kelas ini; makin lama bertahan (boss ke-6, 7, dst. mengulang
+   kelas dari awal) HP-nya naik BERLIPAT (×1,18 tiap kemunculan + bonus waktu bertahan),
+   badannya sedikit membesar, pelurunya makin cepat & laju tembaknya makin rapat —
+   dan di bawah 35% HP boss mengamuk. */
+const BOSS_CLASSES = [
+  { id:"vortex", name:"VORTEX",      pat:"spiral", tag:"Spiral Kembar",
+    hull:"#a78bfa", hull2:"#5b21b6", dark:"#241047", trim:"#ddd6fe", core:"#22d3ee", coreHot:"#ecfeff",
+    swaySpd:0.45, swayAmp:0.18, r:52 },
+  { id:"talon",  name:"TALON",       pat:"spread", tag:"Kipas Lebar",
+    hull:"#f87171", hull2:"#8e2438", dark:"#420b18", trim:"#fecdd3", core:"#ffd23d", coreHot:"#fefce8",
+    swaySpd:0.7,  swayAmp:0.28, r:52 },
+  { id:"aegis",  name:"AEGIS",       pat:"aimed",  tag:"Pemburu Presisi",
+    hull:"#7dd3fc", hull2:"#075985", dark:"#0a2438", trim:"#e0f2fe", core:"#facc15", coreHot:"#fefce8",
+    swaySpd:0.55, swayAmp:0.34, r:54 },
+  { id:"hydra",  name:"HYDRA",       pat:"hydra",  tag:"Spiral Tiga Lengan",
+    hull:"#86efac", hull2:"#166534", dark:"#0b2917", trim:"#dcfce7", core:"#f472b6", coreHot:"#fdf2f8",
+    swaySpd:0.5,  swayAmp:0.22, r:54 },
+  { id:"dread",  name:"DREADNOUGHT", pat:"dread",  tag:"Spiral + Kipas Bergantian",
+    hull:"#fbbf24", hull2:"#92400e", dark:"#331b04", trim:"#fef3c7", core:"#ef4444", coreHot:"#fef2f2",
+    swaySpd:0.6,  swayAmp:0.24, r:60 }
+];
+function bossClassFor(n){ return BOSS_CLASSES[(Math.max(1, n) - 1) % BOSS_CLASSES.length]; }
 function spawnBoss(){
   G.bossCount++;
-  const type = G.bossCount % 2 === 1 ? "spiral" : "spread";
-  const hp = Math.round((170 + G.bossCount * 85 + G.runTime * 0.9) * curDiff().bossMul);
-  G.boss = { x:W/2, y:-70, r:52, hp, maxhp:hp, t:0, fireT:1.4, spiralA: rand(0, 6), type,
-             name: type === "spiral" ? "BOSS SPIRAL" : "BOSS PENYEBAR" };
+  const cls = bossClassFor(G.bossCount);
+  /* HP boss: basis naik tiap kemunculan, dikali faktor lipat ×1,18^(n-1) dan bonus
+     waktu bertahan — boss ke-5 sudah ±2× lebih alot dari pola lama, ke-10 ±5×. */
+  const hp = Math.round(((190 + G.bossCount * 110) * Math.pow(1.18, G.bossCount - 1) + G.runTime * 1.2) * curDiff().bossMul);
+  const rBig = Math.round(cls.r * (1 + Math.min(0.3, (G.bossCount - 1) * 0.035)));
+  G.boss = { x:W/2, y:-70, r:rBig, hp, maxhp:hp, t:0, fireT:1.4, spiralA: rand(0, 6),
+             type: cls.pat, cls, phase:0, phaseT:3, burst:0, flash:0,
+             name: "BOSS " + cls.name };
   $("bossName").textContent = G.boss.name + " #" + G.bossCount;
   $("bossBarWrap").style.display = "flex";
   updateBossBar();
@@ -1274,6 +1453,12 @@ function applyPower(p){
   AudioSys.powerup(); updateHUD(); checkAchievements();
 }
 function floatText(x, y, txt, color){ G.texts.push({ x, y, txt, color, t:0 }); }
+/* Efek kena peluru pemain: percikan + cincin kejut sewarna peluru skin yang dipakai */
+function impactFX(x, y){
+  const sd = shipDef();
+  explode(x, y, sd.bCol, 3);
+  G.impacts.push({ x, y, t:0, col:sd.bCol, core:sd.bCore });
+}
 
 /* ---------- XP, Level & Skill Acak ---------- */
 const SKILL_DEFS = [
@@ -1582,10 +1767,15 @@ function update(dt){
   G.time += dt;
   /* bintang */
   for(const s of stars){ s.y += s.v*dt; if(s.y > H){ s.y = -2; s.x = Math.random()*W; } }
+  /* nebula & planet: melayang jauh lebih lambat (parallax galaksi) */
+  for(const nb of nebulae){ nb.y += nb.v*dt; if(nb.y - nb.s*0.35 > H){ nb.y = -nb.s*0.6; nb.x = rand(-60, Math.max(60, W-160)); nb.img = makeNebulaSprite(); } }
+  for(let i=0;i<planets.length;i++){ const p = planets[i]; p.y += p.v*dt; if(p.y - p.r*2.4 > H) planets[i] = newPlanet(false); }
   /* partikel & teks selalu jalan (juga saat menu) */
   for(let i=G.parts.length-1;i>=0;i--){ const p=G.parts[i]; p.t+=dt; p.x+=p.vx*dt; p.y+=p.vy*dt; p.vx*=0.96; p.vy*=0.96; if(p.t>p.life) G.parts.splice(i,1); }
   for(let i=G.texts.length-1;i>=0;i--){ const t=G.texts[i]; t.t+=dt; t.y-=34*dt; if(t.t>1.1) G.texts.splice(i,1); }
   for(let i=G.rings.length-1;i>=0;i--){ const rg=G.rings[i]; rg.t+=dt; rg.r += 300*dt; if(rg.t>0.5) G.rings.splice(i,1); }
+  for(let i=G.muzzles.length-1;i>=0;i--){ const mz=G.muzzles[i]; mz.t+=dt; if(mz.t>0.07) G.muzzles.splice(i,1); }
+  for(let i=G.impacts.length-1;i>=0;i--){ const im=G.impacts[i]; im.t+=dt; if(im.t>0.18) G.impacts.splice(i,1); }
   if(G.flash > 0) G.flash = Math.max(0, G.flash - dt*1.5);
   if(G.mode !== "playing") return;
 
@@ -1612,7 +1802,7 @@ function update(dt){
   if(G.fireCd <= 0){
     G.fireCd = 0.16 * pl.fireMul;
     const y = pl.y - pl.r - 4;
-    const mk = (x, yy, vx, vy)=>{ G.runShots++; return { x, y:yy, vx, vy, r:4, dmg:pl.dmg, pierce:pl.pierce, hitSet:[], hitBoss:false }; };
+    const mk = (x, yy, vx, vy)=>{ G.runShots++; const sd = shipDef(); G.muzzles.push({ x, y:yy - 3, t:0, col:sd.bCol, core:sd.bCore }); return { x, y:yy, vx, vy, r:4, dmg:pl.dmg, pierce:pl.pierce, hitSet:[], hitBoss:false }; };
     if(pl.weapon === 1){ G.bullets.push(mk(pl.x, y, 0, -560)); }
     else if(pl.weapon === 2){ G.bullets.push(mk(pl.x-9, y, 0, -560), mk(pl.x+9, y, 0, -560)); }
     else { G.bullets.push(mk(pl.x, y, 0, -580), mk(pl.x-11, y+4, -70, -540), mk(pl.x+11, y+4, 70, -540)); }
@@ -1644,7 +1834,8 @@ function update(dt){
   /* boss berkala berdasarkan waktu bertahan: pertama 75 detik, lalu tiap 90 detik setelah boss kalah */
   if(!G.boss && !G.bossPending && G.runTime >= G.nextBossAt){
     G.bossPending = true; G.bossTimer = 1.6;
-    showBanner("⚠ BOSS MENDEKATI ⚠", "Boss #" + (G.bossCount + 1) + " — bersiap!");
+    const upCls = bossClassFor(G.bossCount + 1);
+    showBanner("⚠ BOSS " + upCls.name + " MENDEKATI ⚠", "Boss #" + (G.bossCount + 1) + " · " + upCls.tag + " — bersiap!");
     AudioSys.bossWarn();
   }
   if(G.bossPending){ G.bossTimer -= dt; if(G.bossTimer <= 0){ G.bossPending = false; spawnBoss(); } }
@@ -1664,34 +1855,66 @@ function update(dt){
     if(G.comboT <= 0){ if(G.combo >= 8) floatText(pl.x, pl.y - 46, "KOMBO PUTUS!", "#ff5252"); G.combo = 0; updateHUD(); }
   }
 
-  /* boss: dua pola serangan bergantian */
+  /* boss: tiap kelas punya gerak & pola serangan khas; di bawah 35% HP boss mengamuk */
   if(G.boss){
-    const b = G.boss; b.t += dt;
+    const b = G.boss, cls = b.cls || BOSS_CLASSES[0];
+    b.t += dt;
+    if(b.flash > 0) b.flash -= dt;
     b.y += (86 - b.y) * Math.min(1, dt*1.4);
-    b.x = W/2 + Math.sin(b.t * (b.type === "spiral" ? 0.45 : 0.7)) * (W * (b.type === "spiral" ? 0.18 : 0.28));
-    const bsp = 215 * curDiff().ebulletMul;
+    b.x = W/2 + Math.sin(b.t * cls.swaySpd) * (W * cls.swayAmp);
+    /* makin banyak boss yang sudah datang: peluru makin cepat & laju tembak makin rapat */
+    const bsp = 215 * curDiff().ebulletMul * (1 + Math.min(0.45, (G.bossCount - 1) * 0.045));
+    const tempo = Math.max(0.55, 1 - (G.bossCount - 1) * 0.055);
+    const rage = b.hp < b.maxhp * 0.35;
     if(b.y > 40){
-      if(b.type === "spiral"){
+      let pat = cls.pat;
+      if(pat === "dread"){
+        b.phaseT -= dt;
+        if(b.phaseT <= 0){ b.phase = 1 - b.phase; b.phaseT = 3; b.fireT = Math.min(b.fireT, 0.3); }
+        pat = b.phase === 0 ? "spiral" : "spread";
+      }
+      if(pat === "spiral" || pat === "hydra"){
         b.fireT -= dt;
         if(b.fireT <= 0){
-          b.fireT = 0.085;
-          b.spiralA += 0.46;
-          for(let k=0;k<2;k++){
-            const a = b.spiralA + k * Math.PI;
+          const arms = pat === "hydra" ? 3 : 2;
+          b.fireT = (pat === "hydra" ? 0.11 : (rage ? 0.068 : 0.085)) * tempo;
+          b.spiralA += pat === "hydra" ? 0.38 : 0.46;
+          for(let k=0;k<arms;k++){
+            const a = b.spiralA + k * (Math.PI * 2 / arms);
             G.ebullets.push({ x:b.x, y:b.y + 10, vx:Math.cos(a)*bsp*0.92, vy:Math.sin(a)*bsp*0.92, r:5 });
           }
           if(Math.random() < 0.25) AudioSys.enemyShoot();
         }
-      } else {
+      } else if(pat === "spread"){
         b.fireT -= dt;
         if(b.fireT <= 0){
-          b.fireT = Math.max(0.6, 1.2 - G.bossCount * 0.05);
+          b.fireT = Math.max(0.45, 1.2 - G.bossCount * 0.05) * tempo * (rage ? 0.72 : 1);
           const n = 3 + (b.hp < b.maxhp/2 ? 2 : 0) + (curDiff().id === "impossible" ? 1 : 0);
           for(let i=0;i<n;i++){
             const a = Math.PI/2 + (i - (n-1)/2) * 0.32;
             G.ebullets.push({ x:b.x, y:b.y + b.r - 6, vx:Math.cos(a)*bsp, vy:Math.sin(a)*bsp, r:5 });
           }
           AudioSys.enemyShoot();
+        }
+      } else if(pat === "aimed"){
+        b.fireT -= dt;
+        if(b.fireT <= 0){
+          const a = Math.atan2(pl.y - b.y, pl.x - b.x);
+          [-0.14, 0, 0.14].forEach(off => G.ebullets.push({ x:b.x, y:b.y + b.r - 8, vx:Math.cos(a+off)*bsp*1.12, vy:Math.sin(a+off)*bsp*1.12, r:5 }));
+          AudioSys.enemyShoot();
+          b.burst++;
+          if(b.burst >= 3){
+            b.burst = 0;
+            b.fireT = (rage ? 0.7 : 1.05) * tempo;
+            /* di bawah 60% HP: sesekali lepaskan cincin peluru ke segala arah */
+            if(b.hp < b.maxhp * 0.6 && Math.random() < 0.6){
+              const off0 = rand(0, Math.PI * 2);
+              for(let k=0;k<14;k++){
+                const aa = off0 + k * (Math.PI * 2 / 14);
+                G.ebullets.push({ x:b.x, y:b.y, vx:Math.cos(aa)*bsp*0.8, vy:Math.sin(aa)*bsp*0.8, r:5 });
+              }
+            }
+          } else b.fireT = 0.14;
         }
       }
     }
@@ -1700,6 +1923,7 @@ function update(dt){
   /* musuh */
   for(let i=G.enemies.length-1;i>=0;i--){
     const e = G.enemies[i]; e.t += dt;
+    if(e.flash > 0) e.flash -= dt;
     e.y += e.vy*dt;
     if(e.type === "zig") e.x += Math.sin(e.t*4) * 90 * dt;
     if(e.type === "shooter" || e.type === "elite"){
@@ -1731,7 +1955,7 @@ function update(dt){
     if(G.boss){
       const bs = G.boss;
       if(!b.hitBoss && Math.hypot(b.x-bs.x, b.y-bs.y) < bs.r + b.r){
-        bs.hp -= b.dmg; G.runHits++; explode(b.x, b.y, "#ffd23d", 2);
+        bs.hp -= b.dmg; G.runHits++; bs.flash = 0.07; impactFX(b.x, b.y);
         if(bs.hp <= 0){ killBoss(); used = true; }
         else if(b.pierce > 0){ b.pierce--; b.hitBoss = true; }
         else used = true;
@@ -1743,8 +1967,8 @@ function update(dt){
         const e = G.enemies[j];
         if(b.hitSet.includes(e)) continue;
         if(Math.hypot(b.x-e.x, b.y-e.y) < e.r + b.r){
-          e.hp -= b.dmg; G.runHits++;
-          if(e.hp <= 0) killEnemy(e, j); else explode(b.x, b.y, "#ffd23d", 2);
+          e.hp -= b.dmg; G.runHits++; e.flash = 0.09;
+          if(e.hp <= 0) killEnemy(e, j); else impactFX(b.x, b.y);
           if(b.pierce > 0){ b.pierce--; b.hitSet.push(e); }
           else used = true;
           break;
@@ -1805,14 +2029,14 @@ function update(dt){
     if(m.t > 3 || m.y < -20 || m.y > H+20 || m.x < -20 || m.x > W+20){ G.missiles.splice(i,1); continue; }
     let boom = false;
     if(G.boss && Math.hypot(m.x-G.boss.x, m.y-G.boss.y) < G.boss.r + 6){
-      G.boss.hp -= m.dmg; boom = true;
+      G.boss.hp -= m.dmg; G.boss.flash = 0.07; boom = true;
       if(G.boss.hp <= 0) killBoss(); else updateBossBar();
     }
     if(!boom){
       for(let j=G.enemies.length-1;j>=0;j--){
         const e = G.enemies[j];
         if(Math.hypot(m.x-e.x, m.y-e.y) < e.r + 6){
-          e.hp -= m.dmg; boom = true;
+          e.hp -= m.dmg; e.flash = 0.09; boom = true;
           if(e.hp <= 0) killEnemy(e, j);
           break;
         }
@@ -1830,48 +2054,149 @@ function killEnemySilent(e, idx){
 }
 
 /* ---------- Gambar ---------- */
-function drawShip(x, y, r, tilt, invuln, t){
-  const sh = shipDef();
-  ctx.save(); ctx.translate(x, y); ctx.rotate(tilt);
-  if(invuln > 0 && Math.floor(t*14) % 2 === 0) ctx.globalAlpha = 0.35;
-  /* api */
-  const fl = 8 + Math.sin(t*40)*3;
-  ctx.fillStyle = "#ff9f2e";
-  ctx.beginPath(); ctx.moveTo(-5, r-2); ctx.lineTo(0, r+fl+4); ctx.lineTo(5, r-2); ctx.closePath(); ctx.fill();
-  /* sayap */
-  ctx.fillStyle = sh.wing;
-  ctx.beginPath(); ctx.moveTo(-r-6, r-2); ctx.lineTo(-6, -2); ctx.lineTo(-6, r-4); ctx.closePath(); ctx.fill();
-  ctx.beginPath(); ctx.moveTo(r+6, r-2); ctx.lineTo(6, -2); ctx.lineTo(6, r-4); ctx.closePath(); ctx.fill();
-  /* badan */
-  const grad = ctx.createLinearGradient(0,-r,0,r);
-  grad.addColorStop(0, sh.c1); grad.addColorStop(0.55, sh.c2); grad.addColorStop(1, sh.c3);
-  ctx.fillStyle = grad;
-  ctx.beginPath(); ctx.moveTo(0, -r-4); ctx.lineTo(7, 2); ctx.lineTo(6, r-2); ctx.lineTo(-6, r-2); ctx.lineTo(-7, 2); ctx.closePath(); ctx.fill();
-  /* kokpit */
-  ctx.fillStyle = "#eafcff";
-  ctx.beginPath(); ctx.ellipse(0, -4, 3.4, 6, 0, 0, Math.PI*2); ctx.fill();
-  ctx.restore();
+function hexA(hex, a){
+  const n = parseInt(String(hex).slice(1), 16);
+  return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")";
+}
+/* Model pesawat pemain — digambar vektor berlapis supaya terlihat seperti jet tempur
+   sungguhan: api mesin berlapis, sayap menyapu bergaris aksen, badan logam bergradasi
+   dengan garis panel & ventilasi, kokpit kaca mengkilap, meriam di sayap, dan lampu
+   navigasi berkedip. Siluet & warna mengikuti skin (def) — tiap pesawat beda rupa.
+   Parameter def & c hanya dipakai pratinjau Hanggar; di dalam game memakai pesawat aktif. */
+function drawShip(x, y, r, tilt, invuln, t, def, c){
+  const sh = def || shipDef();
+  const g = c || ctx;
+  const wide = sh.wide || 1, sweep = sh.sweep || 1;
+  const hw = 7.2 * wide;                    /* setengah lebar badan */
+  const span = (r + 11) * sweep;            /* ujung sayap */
+  const outl = "rgba(3,10,24,.55)";
+  g.save(); g.translate(x, y); g.rotate(tilt);
+  if(invuln > 0 && Math.floor(t*14) % 2 === 0) g.globalAlpha = 0.35;
+  /* --- api mesin berlapis (berdenyut) --- */
+  const fl = 9 + Math.sin(t*42)*3 + Math.sin(t*97)*1.6;
+  g.fillStyle = "rgba(255,110,26,.85)";
+  g.beginPath(); g.moveTo(-4.6, r-4); g.quadraticCurveTo(0, r + fl*0.6, 0, r + fl + 5); g.quadraticCurveTo(0, r + fl*0.6, 4.6, r-4); g.closePath(); g.fill();
+  g.fillStyle = "#ffb02e";
+  g.beginPath(); g.moveTo(-3, r-4); g.quadraticCurveTo(0, r + fl*0.45, 0, r + fl*0.72 + 3); g.quadraticCurveTo(0, r + fl*0.45, 3, r-4); g.closePath(); g.fill();
+  g.fillStyle = "#fff3b0";
+  g.beginPath(); g.moveTo(-1.6, r-4); g.lineTo(0, r + fl*0.4 + 2); g.lineTo(1.6, r-4); g.closePath(); g.fill();
+  /* --- nosel mesin gelap --- */
+  g.fillStyle = sh.c4;
+  g.beginPath(); g.moveTo(-5.2, r-6.5); g.lineTo(5.2, r-6.5); g.lineTo(4, r-1.5); g.lineTo(-4, r-1.5); g.closePath(); g.fill();
+  g.fillStyle = sh.glow; g.globalAlpha *= 0.85; g.fillRect(-3.4, r-4.4, 6.8, 1.5); g.globalAlpha /= 0.85;
+  /* --- sayap menyapu + garis aksen + meriam --- */
+  [-1, 1].forEach(s=>{
+    const wg = g.createLinearGradient(0, 0, s*span, 0);
+    wg.addColorStop(0, sh.wing); wg.addColorStop(1, sh.c4);
+    g.fillStyle = wg; g.strokeStyle = outl; g.lineWidth = 1;
+    g.beginPath();
+    g.moveTo(s*(hw-1), -r*0.08);
+    g.lineTo(s*span, r*0.52);
+    g.lineTo(s*span*0.93, r*0.8);
+    g.lineTo(s*(hw-0.5), r*0.58);
+    g.closePath(); g.fill(); g.stroke();
+    g.strokeStyle = sh.glow; g.globalAlpha *= 0.75; g.lineWidth = 1.6;
+    g.beginPath(); g.moveTo(s*(hw+0.5), r*0.08); g.lineTo(s*span*0.9, r*0.55); g.stroke();
+    g.globalAlpha /= 0.75;
+    /* meriam di sayap */
+    const cxp = s*(hw + (span-hw)*0.45);
+    g.fillStyle = "#101f36";
+    g.fillRect(cxp-1.4, -r*0.34, 2.8, r*0.62);
+    g.fillStyle = sh.glow;
+    g.beginPath(); g.arc(cxp, -r*0.36, 1.7, 0, Math.PI*2); g.fill();
+    /* sirip ekor kecil */
+    g.fillStyle = sh.c3; g.strokeStyle = outl; g.lineWidth = 0.8;
+    g.beginPath(); g.moveTo(s*(hw+0.5), r*0.4); g.lineTo(s*(hw+4.6), r*0.98); g.lineTo(s*(hw-1.5), r*0.82); g.closePath(); g.fill(); g.stroke();
+  });
+  /* --- badan logam bergradasi --- */
+  const grad = g.createLinearGradient(0, -r-5, 0, r);
+  grad.addColorStop(0, sh.c1); grad.addColorStop(0.5, sh.c2); grad.addColorStop(1, sh.c3);
+  g.fillStyle = grad; g.strokeStyle = outl; g.lineWidth = 1.1;
+  g.beginPath();
+  g.moveTo(0, -r-5);
+  g.quadraticCurveTo(hw*0.9, -r*0.55, hw, -r*0.08);
+  g.lineTo(hw*0.88, r*0.55); g.lineTo(hw*0.52, r-3.2); g.lineTo(0, r-5.6);
+  g.lineTo(-hw*0.52, r-3.2); g.lineTo(-hw*0.88, r*0.55); g.lineTo(-hw, -r*0.08);
+  g.quadraticCurveTo(-hw*0.9, -r*0.55, 0, -r-5);
+  g.closePath(); g.fill(); g.stroke();
+  /* kilau tulang tengah badan */
+  g.fillStyle = "rgba(255,255,255,.26)";
+  g.beginPath(); g.moveTo(0, -r-4); g.lineTo(hw*0.3, r*0.3); g.lineTo(-hw*0.3, r*0.3); g.closePath(); g.fill();
+  /* garis panel + ventilasi udara */
+  g.strokeStyle = "rgba(2,10,24,.35)"; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(-hw*0.82, -r*0.12); g.quadraticCurveTo(0, -r*0.02, hw*0.82, -r*0.12); g.stroke();
+  g.beginPath(); g.moveTo(-hw*0.8, r*0.42); g.quadraticCurveTo(0, r*0.52, hw*0.8, r*0.42); g.stroke();
+  g.fillStyle = "rgba(2,10,24,.45)";
+  [-1, 1].forEach(s=>{ g.fillRect(s*hw*0.6 - 1.6, r*0.2, 3.2, 5.5); });
+  /* garis aksen menyala dari hidung ke akar sayap */
+  g.strokeStyle = sh.glow; g.lineWidth = 1.7; g.globalAlpha *= 0.9;
+  [-1, 1].forEach(s=>{ g.beginPath(); g.moveTo(s*1.4, -r-3.4); g.quadraticCurveTo(s*hw*0.75, -r*0.3, s*(hw+0.6), r*0.14); g.stroke(); });
+  g.globalAlpha /= 0.9;
+  /* --- kokpit kaca mengkilap --- */
+  const cg = g.createLinearGradient(0, -r*0.78, 0, r*0.12);
+  cg.addColorStop(0, "#ffffff"); cg.addColorStop(0.45, sh.glow); cg.addColorStop(1, sh.c3);
+  g.fillStyle = cg; g.strokeStyle = outl; g.lineWidth = 1;
+  g.beginPath(); g.ellipse(0, -r*0.33, hw*0.52, r*0.42, 0, 0, Math.PI*2); g.fill(); g.stroke();
+  g.fillStyle = "rgba(255,255,255,.92)";
+  g.beginPath(); g.ellipse(-hw*0.18, -r*0.48, hw*0.16, r*0.13, -0.5, 0, Math.PI*2); g.fill();
+  /* --- lampu navigasi berkedip: kiri merah, kanan hijau --- */
+  const blink = 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t*6));
+  g.globalAlpha *= blink; g.fillStyle = "#ff5252";
+  g.beginPath(); g.arc(-span*0.97, r*0.6, 2, 0, Math.PI*2); g.fill();
+  g.fillStyle = "#3dff9a";
+  g.beginPath(); g.arc(span*0.97, r*0.6, 2, 0, Math.PI*2); g.fill();
+  g.globalAlpha /= blink;
+  g.restore();
 }
 function drawEnemy(e){
   ctx.save(); ctx.translate(e.x, e.y);
-  if(e.type === "elite"){
-    /* mahkota emas musuh elite */
-    ctx.fillStyle = "#ffc53d";
-    for(let k=-1;k<=1;k++){
-      ctx.beginPath(); ctx.moveTo(k*11 - 4, -e.r + 5); ctx.lineTo(k*11, -e.r - 9); ctx.lineTo(k*11 + 4, -e.r + 5); ctx.closePath(); ctx.fill();
-    }
-  }
   const body = e.type==="elite" ? "#ff3860" : e.type==="shooter" ? "#ffc53d" : e.type==="dart" ? "#ff4d7e" : "#ff7a4d";
   const dark = e.type==="elite" ? "#8f1030" : e.type==="shooter" ? "#a86f10" : e.type==="dart" ? "#a81f47" : "#b03e14";
-  ctx.fillStyle = dark;
-  ctx.beginPath(); ctx.moveTo(-e.r-4, -4); ctx.lineTo(-4, 4); ctx.lineTo(-e.r-4, 10); ctx.closePath(); ctx.fill();
-  ctx.beginPath(); ctx.moveTo(e.r+4, -4); ctx.lineTo(4, 4); ctx.lineTo(e.r+4, 10); ctx.closePath(); ctx.fill();
-  ctx.fillStyle = body;
-  ctx.beginPath(); ctx.moveTo(0, e.r+3); ctx.lineTo(8, -4); ctx.lineTo(5, -e.r+2); ctx.lineTo(-5, -e.r+2); ctx.lineTo(-8, -4); ctx.closePath(); ctx.fill();
+  const slim = e.type === "dart" ? 0.68 : 1;             /* dart: badan ramping memanjang */
+  const len = e.type === "dart" ? e.r + 7 : e.r + 3;
+  /* sayap bergradasi */
+  const wg = ctx.createLinearGradient(-e.r, 0, e.r, 0);
+  wg.addColorStop(0, dark); wg.addColorStop(0.5, body); wg.addColorStop(1, dark);
+  ctx.fillStyle = wg;
+  ctx.beginPath(); ctx.moveTo(-e.r-5, -5); ctx.lineTo(-4*slim, 3); ctx.lineTo(-e.r-5, 11); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(e.r+5, -5); ctx.lineTo(4*slim, 3); ctx.lineTo(e.r+5, 11); ctx.closePath(); ctx.fill();
+  /* pod meriam kembar untuk penembak & elite */
+  if(e.type === "shooter" || e.type === "elite"){
+    ctx.fillStyle = "#2b0f0f";
+    [-1, 1].forEach(s=>{ ctx.fillRect(s*e.r*0.52 - 2, len - 13, 4, 10); });
+  }
+  /* badan logam bergradasi + garis tepi */
+  const bg = ctx.createLinearGradient(0, -e.r, 0, len);
+  bg.addColorStop(0, dark); bg.addColorStop(0.45, body); bg.addColorStop(1, body);
+  ctx.fillStyle = bg; ctx.strokeStyle = "rgba(20,2,8,.5)"; ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, len);
+  ctx.lineTo(8*slim, -3); ctx.lineTo(5*slim, -e.r+2); ctx.lineTo(-5*slim, -e.r+2); ctx.lineTo(-8*slim, -3);
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+  /* garis panel */
+  ctx.strokeStyle = "rgba(20,2,8,.35)";
+  ctx.beginPath(); ctx.moveTo(-6*slim, -e.r*0.3); ctx.lineTo(6*slim, -e.r*0.3); ctx.stroke();
+  /* mata sensor bercincin + kilau */
   ctx.fillStyle = "#2b0f0f";
-  ctx.beginPath(); ctx.arc(0, 0, e.type==="elite" ? 6 : 4, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(0, 0, e.type==="elite" ? 6.5 : 4.5, 0, Math.PI*2); ctx.fill();
   ctx.fillStyle = e.type==="elite" ? "#ffc53d" : "#ff5252";
-  ctx.beginPath(); ctx.arc(0, 0, e.type==="elite" ? 3.4 : 2.2, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(0, 0, e.type==="elite" ? 3.6 : 2.4, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = "rgba(255,255,255,.85)";
+  ctx.beginPath(); ctx.arc(-1, -1, 1, 0, Math.PI*2); ctx.fill();
+  /* mahkota emas musuh elite */
+  if(e.type === "elite"){
+    ctx.fillStyle = "#ffc53d"; ctx.strokeStyle = "#a86f10"; ctx.lineWidth = 0.8;
+    for(let k=-1;k<=1;k++){
+      ctx.beginPath(); ctx.moveTo(k*11 - 4.5, -e.r + 4); ctx.lineTo(k*11, -e.r - 10); ctx.lineTo(k*11 + 4.5, -e.r + 4); ctx.closePath(); ctx.fill(); ctx.stroke();
+    }
+  }
+  /* kilatan putih sesaat saat kena tembak */
+  if(e.flash > 0){
+    ctx.globalAlpha = Math.min(0.75, (e.flash / 0.09) * 0.75);
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath(); ctx.ellipse(0, 0, e.r * 0.85, e.r, 0, 0, Math.PI*2); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
   ctx.restore();
   if(e.maxhp > 1 && e.hp < e.maxhp){
     const bw = Math.max(28, e.r * 1.6);
@@ -1879,31 +2204,173 @@ function drawEnemy(e){
     ctx.fillStyle = e.type==="elite" ? "#ffc53d" : "#3dff9a"; ctx.fillRect(e.x - bw/2, e.y - e.r - 12, bw*(e.hp/e.maxhp), 4);
   }
 }
+/* Model boss digambar per kelas — siluet, ornamen & warna lambung semuanya beda:
+   VORTEX bundar bercincin putar, TALON bersayap taring, AEGIS segi enam berperisai,
+   HYDRA berkepala tiga, DREADNOUGHT raksasa berduri dengan core kembar. */
 function drawBoss(b){
+  const cls = b.cls || BOSS_CLASSES[0];
+  const R = b.r, t = b.t;
+  const pulse = 1 + Math.sin(t * 6) * 0.07;
   ctx.save(); ctx.translate(b.x, b.y);
-  ctx.fillStyle = "#5c1a2e";
-  ctx.beginPath(); ctx.moveTo(-b.r-16, 6); ctx.lineTo(-b.r+8, -14); ctx.lineTo(-b.r+16, 22); ctx.closePath(); ctx.fill();
-  ctx.beginPath(); ctx.moveTo(b.r+16, 6); ctx.lineTo(b.r-8, -14); ctx.lineTo(b.r-16, 22); ctx.closePath(); ctx.fill();
-  const grad = ctx.createLinearGradient(0,-b.r,0,b.r);
-  grad.addColorStop(0, "#8e2438"); grad.addColorStop(1, "#c22e4a");
-  ctx.fillStyle = grad;
-  ctx.beginPath();
-  ctx.moveTo(0, b.r+8); ctx.lineTo(b.r-6, b.r-16); ctx.lineTo(b.r-14, -b.r+10);
-  ctx.lineTo(0, -b.r-6); ctx.lineTo(-(b.r-14), -b.r+10); ctx.lineTo(-(b.r-6), b.r-16);
-  ctx.closePath(); ctx.fill();
-  ctx.fillStyle = "#ffd23d";
-  ctx.beginPath(); ctx.arc(0, -6, 13, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = "#ff5252";
-  ctx.beginPath(); ctx.arc(0, -6, 7 + Math.sin(b.t*6)*1.5, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = "#2b0f0f";
-  [-26, 26].forEach(x=>{ ctx.fillRect(x-5, b.r-20, 10, 12); });
+  /* api knalpot di sisi atas */
+  [-1, 1].forEach(s=>{
+    const fx = s * R * 0.45, fl = 11 + Math.sin(t * 40 + s * 2) * 4;
+    ctx.fillStyle = "rgba(255,110,26,.85)";
+    ctx.beginPath(); ctx.moveTo(fx - 4, -R * 0.5); ctx.lineTo(fx, -R * 0.5 - fl); ctx.lineTo(fx + 4, -R * 0.5); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#ffd23d";
+    ctx.beginPath(); ctx.moveTo(fx - 2, -R * 0.5); ctx.lineTo(fx, -R * 0.5 - fl * 0.6); ctx.lineTo(fx + 2, -R * 0.5); ctx.closePath(); ctx.fill();
+  });
+  const hullGrad = ()=>{
+    const gr = ctx.createLinearGradient(0, -R, 0, R);
+    gr.addColorStop(0, cls.hull2); gr.addColorStop(0.55, cls.hull); gr.addColorStop(1, cls.dark);
+    return gr;
+  };
+  const core = (cx, cy, rad)=>{
+    ctx.fillStyle = cls.core; ctx.globalAlpha = 0.3;
+    ctx.beginPath(); ctx.arc(cx, cy, rad * 1.8 * pulse, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, rad * pulse, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = cls.coreHot;
+    ctx.beginPath(); ctx.arc(cx, cy, rad * 0.5 * pulse, 0, Math.PI * 2); ctx.fill();
+  };
+  const turret = (tx, ty)=>{
+    ctx.fillStyle = cls.dark;
+    ctx.beginPath(); ctx.arc(tx, ty, 6.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillRect(tx - 1.8, ty, 3.6, 10);
+    ctx.fillStyle = cls.trim;
+    ctx.beginPath(); ctx.arc(tx, ty, 2.4, 0, Math.PI * 2); ctx.fill();
+  };
+  ctx.fillStyle = hullGrad(); ctx.strokeStyle = "rgba(5,2,12,.6)"; ctx.lineWidth = 1.4;
+
+  if(cls.id === "vortex"){
+    /* lambung bundar lebar + cincin putar + pod samping bercore */
+    ctx.beginPath();
+    ctx.moveTo(0, R + 6);
+    ctx.quadraticCurveTo(R + 12, R * 0.3, R + 8, -R * 0.35);
+    ctx.quadraticCurveTo(R * 0.6, -R - 6, 0, -R - 4);
+    ctx.quadraticCurveTo(-R * 0.6, -R - 6, -R - 8, -R * 0.35);
+    ctx.quadraticCurveTo(-R - 12, R * 0.3, 0, R + 6);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = cls.trim; ctx.lineWidth = 3; ctx.globalAlpha = 0.8;
+    for(let k = 0; k < 3; k++){
+      const a0 = t * 1.3 + k * (Math.PI * 2 / 3);
+      ctx.beginPath(); ctx.arc(0, 0, R + 9, a0, a0 + 1.1); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    [-1, 1].forEach(s=>{
+      ctx.fillStyle = cls.dark;
+      ctx.beginPath(); ctx.arc(s * (R + 1), R * 0.05, 10, 0, Math.PI * 2); ctx.fill();
+      core(s * (R + 1), R * 0.05, 3.6);
+    });
+    turret(-R * 0.5, R * 0.52); turret(R * 0.5, R * 0.52);
+    core(0, R * 0.08, 12);
+  } else if(cls.id === "aegis"){
+    /* lambung segi enam berlapis + perisai busur berputar */
+    const hex = rad=>{
+      ctx.beginPath();
+      for(let k = 0; k < 6; k++){
+        const a = Math.PI / 2 + k * Math.PI / 3, px = Math.cos(a) * rad, py = Math.sin(a) * rad;
+        if(k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+    };
+    hex(R); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = cls.dark; hex(R * 0.62); ctx.fill();
+    ctx.strokeStyle = cls.trim; ctx.lineWidth = 4; ctx.globalAlpha = 0.75;
+    for(let k = 0; k < 3; k++){
+      const a0 = -t * 0.7 + k * (Math.PI * 2 / 3);
+      ctx.beginPath(); ctx.arc(0, 0, R + 11, a0, a0 + 0.95); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    turret(-R * 0.55, R * 0.4); turret(R * 0.55, R * 0.4);
+    core(0, R * 0.05, 13);
+  } else if(cls.id === "hydra"){
+    /* lambung utama + tiga kepala pod bercore */
+    ctx.beginPath();
+    ctx.moveTo(0, R * 0.6);
+    ctx.quadraticCurveTo(R + 8, R * 0.2, R * 0.8, -R * 0.5);
+    ctx.quadraticCurveTo(R * 0.4, -R - 4, 0, -R - 2);
+    ctx.quadraticCurveTo(-R * 0.4, -R - 4, -R * 0.8, -R * 0.5);
+    ctx.quadraticCurveTo(-R - 8, R * 0.2, 0, R * 0.6);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = cls.hull2; ctx.lineWidth = 9;
+    [[0, R * 0.62], [-R * 0.66, R * 0.34], [R * 0.66, R * 0.34]].forEach(p=>{
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(p[0], p[1]); ctx.stroke();
+    });
+    [[0, R * 0.62, 13], [-R * 0.66, R * 0.34, 11], [R * 0.66, R * 0.34, 11]].forEach(p=>{
+      ctx.fillStyle = cls.dark;
+      ctx.beginPath(); ctx.arc(p[0], p[1], p[2], 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = cls.trim; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(p[0], p[1], p[2], 0, Math.PI * 2); ctx.stroke();
+      core(p[0], p[1], 4.6);
+    });
+    core(0, -R * 0.25, 8);
+  } else if(cls.id === "dread"){
+    /* raksasa berlapis baja: lambung luar + pelat dalam + duri mahkota + 4 meriam + core kembar */
+    ctx.beginPath();
+    ctx.moveTo(0, R + 10); ctx.lineTo(R - 6, R - 14); ctx.lineTo(R + 16, -R * 0.25); ctx.lineTo(R - 14, -R + 8);
+    ctx.lineTo(0, -R - 6); ctx.lineTo(-(R - 14), -R + 8); ctx.lineTo(-R - 16, -R * 0.25); ctx.lineTo(-(R - 6), R - 14);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = cls.dark;
+    ctx.beginPath();
+    ctx.moveTo(0, R * 0.62); ctx.lineTo(R * 0.55, R * 0.2); ctx.lineTo(R * 0.45, -R * 0.5); ctx.lineTo(0, -R * 0.72);
+    ctx.lineTo(-R * 0.45, -R * 0.5); ctx.lineTo(-R * 0.55, R * 0.2);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = cls.hull;
+    [-0.55, 0, 0.55].forEach(fx=>{
+      ctx.beginPath(); ctx.moveTo(R * fx - 6, -R * 0.72); ctx.lineTo(R * fx, -R - 12); ctx.lineTo(R * fx + 6, -R * 0.72); ctx.closePath(); ctx.fill();
+    });
+    ctx.strokeStyle = cls.trim; ctx.lineWidth = 2; ctx.globalAlpha = 0.85;
+    ctx.beginPath(); ctx.moveTo(-R * 0.7, R * 0.28); ctx.lineTo(R * 0.7, R * 0.28); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-R * 0.5, -R * 0.42); ctx.lineTo(R * 0.5, -R * 0.42); ctx.stroke();
+    ctx.globalAlpha = 1;
+    turret(-R * 0.62, R * 0.42); turret(R * 0.62, R * 0.42); turret(-R * 0.3, R * 0.62); turret(R * 0.3, R * 0.62);
+    core(-R * 0.27, -R * 0.05, 7.5); core(R * 0.27, -R * 0.05, 7.5);
+  } else { /* talon: sayap menyapu + taring kembar */
+    ctx.beginPath();
+    ctx.moveTo(0, R + 8); ctx.lineTo(R - 6, R - 16); ctx.lineTo(R + 15, -R * 0.15); ctx.lineTo(R - 14, -R + 10);
+    ctx.lineTo(0, -R - 6); ctx.lineTo(-(R - 14), -R + 10); ctx.lineTo(-R - 15, -R * 0.15); ctx.lineTo(-(R - 6), R - 16);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = cls.hull2;
+    [-1, 1].forEach(s=>{
+      ctx.beginPath(); ctx.moveTo(s * 13, R - 6); ctx.lineTo(s * 7, R + 14); ctx.lineTo(s * 4, R - 4); ctx.closePath(); ctx.fill();
+    });
+    ctx.strokeStyle = cls.trim; ctx.lineWidth = 2; ctx.globalAlpha = 0.85;
+    [-1, 1].forEach(s=>{
+      ctx.beginPath(); ctx.moveTo(s * (R - 12), R - 14); ctx.lineTo(s * (R + 11), -R * 0.12); ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    turret(-R * 0.52, R * 0.45); turret(R * 0.52, R * 0.45);
+    core(0, -R * 0.08, 12.5);
+  }
+  /* garis panel bersama */
+  ctx.strokeStyle = "rgba(5,2,12,.35)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(-R * 0.6, -R * 0.28); ctx.quadraticCurveTo(0, -R * 0.16, R * 0.6, -R * 0.28); ctx.stroke();
+  /* kilatan putih sesaat saat kena tembak */
+  if(b.flash > 0){
+    ctx.globalAlpha = Math.min(0.5, (b.flash / 0.07) * 0.5);
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath(); ctx.ellipse(0, 0, R * 0.95, R, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
   ctx.restore();
 }
 function draw(){
-  ctx.fillStyle = "#070b16"; ctx.fillRect(0, 0, W, H);
-  /* bintang */
+  /* langit galaksi: gradasi ruang dalam, lalu nebula, planet, baru bintang */
+  const sky = ctx.createLinearGradient(0, 0, 0, H);
+  sky.addColorStop(0, "#04040f"); sky.addColorStop(0.45, "#0a1030"); sky.addColorStop(0.78, "#160b31"); sky.addColorStop(1, "#070b1c");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  for(const nb of nebulae){ ctx.globalAlpha = nb.a; ctx.drawImage(nb.img, nb.x, nb.y, nb.s, nb.s); }
+  ctx.globalAlpha = 1;
+  for(const p of planets){
+    const d = p.r * 300 / 74; /* sprite 300px memuat planet berjari-jari 74px */
+    ctx.globalAlpha = 0.92;
+    ctx.drawImage(p.img, p.x - d/2, p.y - d/2, d, d);
+  }
+  ctx.globalAlpha = 1;
+  /* bintang: berkelap-kelip halus */
   ctx.fillStyle = "#cfe6ff";
-  for(const s of stars){ ctx.globalAlpha = 0.35 + s.s*0.3; ctx.fillRect(s.x, s.y, s.s, s.s*1.6); }
+  for(const s of stars){ ctx.globalAlpha = (0.35 + s.s*0.3) * (0.72 + 0.28 * Math.sin(G.time*2.4 + s.tw)); ctx.fillRect(s.x, s.y, s.s, s.s*1.6); }
   ctx.globalAlpha = 1;
   ctx.save();
   if(G.shake > 0) ctx.translate(rand(-G.shake, G.shake)*0.5, rand(-G.shake, G.shake)*0.5);
@@ -1931,9 +2398,46 @@ function draw(){
   /* musuh & boss */
   for(const e of G.enemies) drawEnemy(e);
   if(G.boss) drawBoss(G.boss);
-  /* peluru */
-  ctx.fillStyle = "#aef7ff";
-  for(const b of G.bullets){ ctx.beginPath(); ctx.ellipse(b.x, b.y, 3, 7, 0, 0, Math.PI*2); ctx.fill(); }
+  /* efek kena: cincin kejut + inti terang sewarna peluru skin */
+  for(const im of G.impacts){
+    const k = im.t / 0.18;
+    ctx.save(); ctx.globalAlpha = Math.max(0, 1 - k);
+    ctx.strokeStyle = im.col; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(im.x, im.y, 4 + im.t * 70, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = im.core;
+    ctx.beginPath(); ctx.arc(im.x, im.y, Math.max(0.1, 5 * (1 - k)), 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+  /* peluru pemain: bentuk, warna & jejak cahaya khas skin yang dipakai */
+  const bsd = shipDef();
+  for(const b of G.bullets){
+    const sp = Math.hypot(b.vx, b.vy) || 1, ux = b.vx / sp, uy = b.vy / sp;
+    const tl = bsd.bShape === "tracer" ? 24 : 15;
+    const tg = ctx.createLinearGradient(b.x, b.y, b.x - ux * tl, b.y - uy * tl);
+    tg.addColorStop(0, hexA(bsd.bCol, 0.55)); tg.addColorStop(1, hexA(bsd.bCol, 0));
+    ctx.strokeStyle = tg; ctx.lineWidth = 3; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.lineTo(b.x - ux * tl, b.y - uy * tl); ctx.stroke();
+    ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(Math.atan2(b.vy, b.vx) + Math.PI / 2);
+    ctx.fillStyle = bsd.bCol;
+    if(bsd.bShape === "tracer"){
+      ctx.beginPath(); ctx.ellipse(0, 0, 2, 10, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = bsd.bCore;
+      ctx.beginPath(); ctx.ellipse(0, 0, 0.9, 6, 0, 0, Math.PI * 2); ctx.fill();
+    } else if(bsd.bShape === "shell"){
+      ctx.beginPath(); ctx.ellipse(0, 0, 4.2, 7.5, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = bsd.bCore;
+      ctx.beginPath(); ctx.ellipse(0, -1, 2.3, 4.2, 0, 0, Math.PI * 2); ctx.fill();
+    } else if(bsd.bShape === "shard"){
+      ctx.beginPath(); ctx.moveTo(0, -9); ctx.lineTo(3.6, 0); ctx.lineTo(0, 9); ctx.lineTo(-3.6, 0); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = bsd.bCore;
+      ctx.beginPath(); ctx.moveTo(0, -5); ctx.lineTo(1.8, 0); ctx.lineTo(0, 5); ctx.lineTo(-1.8, 0); ctx.closePath(); ctx.fill();
+    } else { /* bolt */
+      ctx.beginPath(); ctx.ellipse(0, 0, 3, 8, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = bsd.bCore;
+      ctx.beginPath(); ctx.ellipse(0, 0, 1.5, 5, 0, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
   ctx.fillStyle = "#ff6b81";
   for(const b of G.ebullets){ ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI*2); ctx.fill(); }
   /* misil pendamping */
@@ -1953,6 +2457,19 @@ function draw(){
       ctx.beginPath(); ctx.arc(0, 0, G.player.r + 10 + Math.sin(G.time*6)*1.5, 0, Math.PI*2); ctx.stroke();
       ctx.restore();
     }
+  }
+  /* kilat moncong sesaat setiap peluru ditembakkan (warna khas skin) */
+  for(const mz of G.muzzles){
+    const k = Math.max(0, 1 - mz.t / 0.07);
+    ctx.save(); ctx.translate(mz.x, mz.y); ctx.globalAlpha = k;
+    ctx.fillStyle = mz.col;
+    ctx.beginPath(); ctx.arc(0, 0, 6.5 * k + 2, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = mz.core; ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(-8 * k, 0); ctx.lineTo(8 * k, 0);
+    ctx.moveTo(0, -9 * k); ctx.lineTo(0, 5 * k);
+    ctx.stroke();
+    ctx.restore();
   }
   /* partikel */
   for(const p of G.parts){
