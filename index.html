@@ -535,7 +535,7 @@
               <div class="row"><div class="ic">🪙</div><p>Koin, pesawat &amp; upgrade<small>Setiap musuh yang hancur memberi koin (elite &amp; boss memberi jauh lebih banyak), ditambah bonus dari skor akhir. Tukarkan di Hanggar: buka pesawat Viper (cepat), Titan (damage besar + nyawa), atau Spectre (peluru tembus), dan beli upgrade permanen — damage, kecepatan, laju tembak, nyawa awal.</small></p></div>
               <div class="row"><div class="ic">🎚️</div><p>Level kesulitan<small>Pilih di menu utama sebelum main: <b>Easy</b> (musuh lambat &amp; rapuh, 4 nyawa), <b>Normal</b> (seimbang), <b>Hard</b> (lebih cepat &amp; tebal), <b>Extreme</b> (gerombolan padat, boss sangat tebal), sampai <b>Impossible</b> (serba maksimal, cuma 2 nyawa). Mode makin sulit = pengali skor makin besar: Easy ×1 · Normal ×1,5 · Hard ×2 · Extreme ×3 · Impossible ×5.</small></p></div>
               <div class="row"><div class="ic">🏆</div><p>Leaderboard<small>Kalau skormu masuk 10 besar saat game over, tulis namamu dan skormu tercatat di Leaderboard — lengkap dengan mode, waktu bertahan, jumlah musuh yang dihancurkan, dan tanggalnya. Buka Leaderboard dari menu utama untuk melihat semua peringkat, bisa disaring per level kesulitan atau tab Harian.</small></p></div>
-              <div class="row"><div class="ic">⏸️</div><p>Jeda &amp; simpan<small>Tombol ❚❚ atau <kbd>P</kbd> untuk jeda. Dari menu jeda kamu bisa menyimpan progres dan melanjutkannya kapan saja.</small></p></div>
+              <div class="row"><div class="ic">⏸️</div><p>Jeda &amp; simpan<small>Tombol ❚❚ atau <kbd>P</kbd> untuk jeda. Progres tersimpan <b>otomatis</b> setiap kali jeda atau keluar ke menu — lanjutkan kapan saja lewat tombol Lanjutkan di menu utama.</small></p></div>
             </div>
             <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
           </div>
@@ -1919,7 +1919,9 @@ function togglePauseKey(){
 function pauseGame(){
   if(G.mode !== "playing") return;
   G.mode = "paused"; AudioSys.stopMusic();
-  $("saveInfo").textContent = "Waktu " + fmtTime(G.runTime);
+  /* Jeda selalu menyimpan progres otomatis — keluar ke menu / menutup game tidak menghilangkan run ini */
+  writeRunSave();
+  $("saveInfo").textContent = "Tersimpan otomatis ✓";
   renderPauseSkills();
   showScreen("scrPause");
 }
@@ -1928,11 +1930,17 @@ function resumeGame(){
   G.mode = "playing"; showScreen(null);
   AudioSys.ensure(); AudioSys.startMusic();
 }
-function saveRun(){
+/* Tulis simpanan run saat ini ke penyimpanan (dipakai tombol Simpan & simpan otomatis) */
+function writeRunSave(){
+  if(!G.player) return;
+  if(G.mode !== "playing" && G.mode !== "paused" && G.mode !== "levelup") return;
   store.data.save = { elapsed:Math.round(G.runTime), score:G.score, lives:G.lives, weapon:G.player.weapon, runKills:G.runKills, level:G.level, xp:G.xp, skills:Object.assign({}, G.skills), difficulty:G.difficulty || store.data.difficulty, daily:!!G.dailyMode, runCoins:G.runCoins, bestCombo:G.bestCombo };
-  store.save(); updateMenuMeta();
+  store.save();
+}
+function saveRun(){
+  writeRunSave(); updateMenuMeta();
   $("saveInfo").textContent = "Tersimpan ✓";
-  setTimeout(()=>{ $("saveInfo").textContent = "Waktu " + fmtTime(G.runTime); }, 1600);
+  setTimeout(()=>{ $("saveInfo").textContent = "Tersimpan otomatis ✓"; }, 1600);
 }
 
 /* ---------- Banner ---------- */
@@ -1991,6 +1999,8 @@ $("btnResume").addEventListener("click", resumeGame);
 $("btnSaveRun").addEventListener("click", saveRun);
 $("btnPauseSettings").addEventListener("click", ()=> openSettings("pause"));
 $("btnQuit").addEventListener("click", ()=>{
+  /* Keluar ke menu TIDAK menghapus progres: simpan dulu agar bisa dilanjutkan dari menu utama */
+  writeRunSave();
   G.mode = "menu"; G.enemies = []; G.bullets = []; G.ebullets = []; G.gems = []; G.missiles = []; G.rings = []; G.boss = null;
   G.bossPending = false; G.flash = 0; G.slowT = 0; G.combo = 0; G.comboT = 0;
   $("bossBarWrap").style.display = "none";
@@ -1998,6 +2008,15 @@ $("btnQuit").addEventListener("click", ()=>{
 });
 $("btnAgain").addEventListener("click", ()=> startGame(false, G.dailyMode));
 $("btnOverMenu").addEventListener("click", ()=>{ G.mode = "menu"; updateMenuMeta(); showScreen("scrMenu"); });
+
+/* Simpan otomatis saat aplikasi disembunyikan / halaman ditutup di tengah permainan:
+   jeda + tulis simpanan, jadi progres tidak hilang walau game tertutup mendadak */
+document.addEventListener("visibilitychange", ()=>{
+  if(document.hidden && G.mode === "playing") pauseGame();
+});
+window.addEventListener("pagehide", ()=>{
+  if(G.mode === "playing" || G.mode === "paused" || G.mode === "levelup") writeRunSave();
+});
 
 /* Pengaturan */
 document.querySelectorAll("#segQuality button").forEach(b=>{
