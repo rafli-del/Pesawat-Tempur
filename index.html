@@ -7,16 +7,16 @@
     <meta name="theme-color" content="#070b16" />
     <link rel="icon" href="data:," />
     <title>Arcade Tembak-tembakan 2D</title>
-    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Lobby hangar baru, pesawat Aetherion termahal, mode campaign 5 level dan Boss Rush, rank Bronze sampai Legendary, misi harian dan hadiah login berhadiah diamond, spin berlian untuk skin langka, galeri musuh, tambah teman dan chat, akun cloud save, 4 latar, dan 5 level kesulitan." />
+    <meta name="description" content="Arcade Tembak-tembakan 2D — game pesawat luar angkasa gratis yang bisa dimainkan langsung di browser HP atau PC. Tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global (Firebase) melawan semua pemain. Lobby hangar baru, pesawat Aetherion termahal, mode campaign 5 level dan Boss Rush, rank Bronze sampai Legendary, misi harian dan hadiah login berhadiah diamond, spin berlian untuk skin langka, galeri musuh, tambah teman dan chat, akun cloud save, Season Pass, klan, turnamen mingguan, duel teman dan 1v1 live race, 4 latar, dan 5 level kesulitan." />
     <meta name="keywords" content="game tembak-tembakan, arcade 2d, game pesawat, space shooter, game gratis, game browser, game HP, tembak-tembakan 2D" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="rfyjntan" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:title" content="Arcade Tembak-tembakan 2D — Game Pesawat Gratis" />
-    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: lobby hangar, auto-fire, XP dan skill acak, senjata laser dan plasma, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, mode campaign dan Boss Rush, misi harian, spin berlian, teman dan chat, akun cloud save, dan 5 level kesulitan. Main langsung, tanpa install." />
+    <meta property="og:description" content="Game pesawat luar angkasa gratis di browser: lobby hangar, auto-fire, XP dan skill acak, senjata laser dan plasma, boss dengan HP yang makin besar, leaderboard global melawan semua pemain, mode campaign dan Boss Rush, misi harian, spin berlian, teman dan chat, akun cloud save, Season Pass, klan, turnamen mingguan, duel teman dan 1v1 live race, dan 5 level kesulitan. Main langsung, tanpa install." />
     <meta property="og:url" content="https://rafli-del.github.io/Pesawat-Tempur/" />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: lobby hangar, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless, campaign, dan Boss Rush dengan 5 level kesulitan, plus teman, chat, dan akun cloud save."}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tembak-tembakan 2D","inLanguage":"id","applicationCategory":"Game","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"},"author":{"@type":"Person","name":"rfyjntan"},"description":"Game pesawat luar angkasa 2D gratis di browser: lobby hangar, tembak musuh otomatis, kumpulkan XP, pilih skill acak saat naik level, lawan boss yang HP-nya makin besar makin lama bertahan, dan kejar skor tertinggi di leaderboard global melawan semua pemain. Mode endless, campaign, dan Boss Rush dengan 5 level kesulitan, plus teman, chat, akun cloud save, Season Pass, klan, dan 1v1 live race."}</script>
     <style>
       /* Font lokal — tanpa permintaan jaringan, halaman selalu bisa dibuka */
       @font-face{
@@ -650,6 +650,40 @@
         background:var(--panel); color:var(--ink); font-weight:700; font-size:15px; padding:11px 10px;
       }
       #bootHelp button.main{ background:var(--cyan); border-color:var(--cyan); color:#04222b; }
+
+      /* ===== v16: Season Pass, Klan, Turnamen, Duel, AFK, Prestige ===== */
+      .lbSeason{ cursor:pointer; }
+      .spRow{ display:flex; gap:8px; align-items:stretch; margin:0 0 8px; }
+      .spTier{ flex:0 0 52px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:8px 2px; font-family:'Orbitron',sans-serif; }
+      .spTier b{ font-size:17px; line-height:1; }
+      .spTier small{ font-size:9.5px; color:var(--muted); font-weight:700; letter-spacing:.06em; margin-top:3px; }
+      .spCell{ flex:1; min-width:0; background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:8px 10px; display:flex; flex-direction:column; gap:5px; }
+      .spCell.prem{ border-color:rgba(255,197,61,.55); background:rgba(255,197,61,.06); }
+      .spCell .rw{ font-weight:800; font-size:14px; line-height:1.3; }
+      .spCell .tg{ font-size:10.5px; font-weight:800; letter-spacing:.08em; color:var(--muted); }
+      .spCell.prem .tg{ color:var(--amber); }
+      .spRow.locked .spCell, .spRow.locked .spTier{ opacity:.55; }
+      .spRow.done .spTier{ border-color:var(--green); color:var(--green); }
+      .spClaim{ border:1px solid var(--cyan); background:rgba(49,230,255,.13); color:var(--ink); border-radius:9px; font-weight:800; font-size:13px; padding:7px 8px; cursor:pointer; font-family:inherit; }
+      .spClaim:active{ transform:scale(.96); }
+      .spClaim:disabled{ border-color:var(--line); background:transparent; color:var(--muted); cursor:default; }
+      .spXpOuter{ height:12px; background:var(--panel2); border:1px solid var(--line); border-radius:99px; overflow:hidden; }
+      .spXpFill{ height:100%; background:linear-gradient(90deg,#f59e0b,#ffc53d); border-radius:99px; transition:width .4s; }
+      .rankRow{ display:flex; gap:10px; align-items:center; background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:9px 12px; margin:0 0 8px; }
+      .rankRow.me{ border-color:var(--cyan); background:rgba(49,230,255,.08); }
+      .rankRow .rk{ flex:0 0 38px; font-family:'Orbitron',sans-serif; font-weight:800; font-size:16px; text-align:center; }
+      .rankRow .who{ flex:1; min-width:0; }
+      .rankRow .who b{ display:block; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .rankRow .who small{ color:var(--muted); font-weight:600; font-size:12.5px; }
+      .rankRow .sc{ font-family:'Orbitron',sans-serif; font-weight:800; font-size:15px; color:var(--amber); white-space:nowrap; }
+      .prestBadge{ display:inline-block; background:linear-gradient(90deg,#713f12,#f59e0b); color:#fff7e0; border-radius:99px; padding:2px 10px; font-size:12px; font-weight:800; vertical-align:middle; }
+      .afkBig{ font-family:'Orbitron',sans-serif; font-size:34px; color:var(--amber); text-align:center; margin:6px 0 2px; }
+      /* ===== 1v1 LIVE RACE ===== */
+      #raceBar{ position:absolute; top:8px; left:50%; transform:translateX(-50%); z-index:7; background:rgba(4,12,24,.85); border:1px solid var(--amber); color:var(--ink); border-radius:99px; padding:6px 14px; font-size:13.5px; font-weight:700; white-space:nowrap; max-width:96%; overflow:hidden; text-overflow:ellipsis; pointer-events:none; }
+      #raceOverlay{ position:fixed; inset:0; z-index:80; display:none; align-items:center; justify-content:center; background:rgba(3,8,18,.55); pointer-events:none; }
+      #raceOverlay .roBox{ text-align:center; padding:20px; }
+      #raceOverlay .roBig{ font-family:'Orbitron',sans-serif; font-size:46px; font-weight:800; color:#fff; text-shadow:0 4px 24px rgba(0,0,0,.8); line-height:1.15; }
+      #raceOverlay .roSub{ color:var(--amber); font-weight:800; font-size:16px; margin-top:8px; text-shadow:0 2px 10px rgba(0,0,0,.8); }
     </style>
     <script>
       /* Penjaga buka: kalau mesin game tidak jalan dalam 6 detik, tampilkan bantuan */
@@ -701,6 +735,8 @@
           <div id="bossBarOuter"><div id="bossBar"></div></div>
         </div>
 
+        <div id="raceBar" style="display:none;" role="status" aria-label="Skor live race"></div>
+
         <div id="dragHint">👆 Geser layar untuk bergerak — pesawat menembak otomatis</div>
 
         <div id="tutBar">
@@ -711,6 +747,8 @@
         </div>
 
         <div id="toasts"></div>
+
+        <div id="raceOverlay"><div class="roBox"><div class="roBig" id="raceOvBig">🏁</div><div class="roSub" id="raceOvSub"></div></div></div>
 
         <!-- ===== MAIN MENU ===== -->
         <section class="screen open" id="scrMenu">
@@ -815,6 +853,26 @@
               <button class="mbtn" id="btnAccount">
                 <span style="font-size:19px; line-height:1;">🔐</span>
                 Akun <span class="sub" id="acctInfo">Tamu · daftar agar progres tidak hilang</span>
+              </button>
+              <button class="mbtn" id="btnSeason">
+                <span style="font-size:19px; line-height:1;">🎫</span>
+                Season Pass <span class="sub" id="seasonInfo">20 tier hadiah · gratis + premium</span>
+              </button>
+              <button class="mbtn" id="btnClan">
+                <span style="font-size:19px; line-height:1;">🛡️</span>
+                Klan <span class="sub" id="clanInfo">Bikin / gabung klan &amp; misi bareng</span>
+              </button>
+              <button class="mbtn" id="btnTourn">
+                <span style="font-size:19px; line-height:1;">🏟️</span>
+                Turnamen Mingguan <span class="sub" id="tournInfo">Reset tiap Senin · top 10 dapat 💎</span>
+              </button>
+              <button class="mbtn" id="btnDuel">
+                <span style="font-size:19px; line-height:1;">⚔️</span>
+                Duel Teman <span class="sub" id="duelInfo">Adu skor misi harian vs teman</span>
+              </button>
+              <button class="mbtn" id="btnAfk" style="display:none;">
+                <span style="font-size:19px; line-height:1;">🎁</span>
+                Hadiah Kembali <span class="sub" id="afkInfo">Koin menunggumu!</span>
               </button>
               <button class="mbtn" id="btnSpin">
                 <span style="font-size:19px; line-height:1;">🎰</span>
@@ -1100,6 +1158,9 @@
           <div class="card">
             <h2>📣 Pengumuman</h2>
             <div class="howList">
+              <div class="row"><div class="ic">🏁</div><p>BARU: 1v1 LIVE RACE lawan teman!<small>Tantang temanmu dari menu Duel Teman (tombol 🏁 Live): dia menerima, hitung mundur bersama, lalu kalian main BARENGAN 90 detik di misi yang sama dengan bar skor LIVE di atas layar. Pemenang +250 koin! (Duel arena tembak-tembakan real-time tidak dibuat — tanpa server hasilnya lag; versi race ini yang stabil di HP.)</small></p></div>
+              <div class="row"><div class="ic">🎫</div><p>BARU: Season Pass, Klan, Turnamen &amp; Duel!<small>Season Pass 20 tier berhadiah (jalur gratis + premium, ada skin eksklusif Starfall), Klan dengan misi &amp; chat bareng, Turnamen Mingguan (reset tiap Senin, top 10 dapat diamond), dan Duel Teman adu skor misi harian. Fitur online memakai rules Firebase terbaru — teksnya ada di layar Akun.</small></p></div>
+              <div class="row"><div class="ic">⭐</div><p>BARU: Prestige &amp; Hadiah Kembali<small>Prestige mereset Level Pilot &amp; koin demi pengali skor permanen + lencana profil (atur di layar Profil). Lama tidak main? Koin hadiah kembali menunggumu saat membuka game lagi — makin lama absen, makin besar (maks 10 jam dihitung).</small></p></div>
               <div class="row"><div class="ic">💠</div><p>Pesawat baru: AETHERION<small>Jet putih-perak bermesin ganda api biru dari foto referensi — pesawat termahal di Hanggar (2.500 koin) dengan spesial NOVA BEAM dan tembakan plasma biru.</small></p></div>
               <div class="row"><div class="ic">🎖️</div><p>Mode Kampanye hadir<small>5 level cerita berurutan dengan boss penjaga berbeda — tuntaskan untuk bonus koin dan membuka level berikutnya.</small></p></div>
               <div class="row"><div class="ic">🌆</div><p>4 latar permainan<small>Space Galaxy, Cyber City, Asteroid Field (ada rintangan batu beterbangan!), dan Alien Planet — pilih di Lobi sebelum main.</small></p></div>
@@ -1186,6 +1247,9 @@
               <p class="secLbl">🔐 AKUN</p>
               <p style="color:var(--muted); font-weight:600; font-size:13.5px; margin:0 0 6px; line-height:1.4;">Status akun: <b id="profAcctVal" style="color:var(--ink);">Tamu</b> — dengan akun, progresmu (koin, diamond, pesawat, upgrade, statistik) tersimpan di cloud dan ikut saat login di HP lain.</p>
               <button class="mbtn" id="btnProfAccount" style="margin:0 0 4px;">🔐 Kelola Akun <span class="sub">Daftar / login · simpan progres ke cloud</span></button>
+              <p class="secLbl">⭐ PRESTIGE / REBIRTH</p>
+              <p style="color:var(--muted); font-weight:600; font-size:13.5px; margin:0 0 6px; line-height:1.45;" id="prestInfo">Prestige mereset <b style="color:var(--ink);">Level Pilot &amp; semua koinmu</b> jadi 0 — sebagai gantinya kamu dapat <b style="color:var(--ink);">pengali skor permanen</b> dan lencana khusus di profil. Pesawat, upgrade, diamond, pencapaian &amp; skor tertinggi TIDAK ikut direset.</p>
+              <button class="mbtn" id="btnPrestige" style="margin:0 0 4px;">⭐ Prestige Sekarang <span class="sub" id="prestSub">Butuh Level Pilot 5</span></button>
               <p class="secLbl">STATISTIK SINGKAT</p>
               <div class="statGrid" id="profStats"></div>
               <p class="secLbl">🖼️ BACKGROUND PROFIL</p>
@@ -1280,6 +1344,152 @@
               <p class="frHint">Kalau rules belum diperbarui, layar Akun/Teman akan menampilkan pesan ramah "belum aktif" — bukan error — dan game tetap bisa dimainkan seperti biasa.</p>
             </div>
             <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== SEASON PASS ===== -->
+        <section class="screen" id="scrSeason">
+          <div class="card cardFlex">
+            <h2>🎫 Season Pass</h2>
+            <div class="growScroll">
+              <p class="lbNote" id="spHeadInfo">—</p>
+              <div class="spXpOuter"><div class="spXpFill" id="spXpFill" style="width:0%;"></div></div>
+              <p class="frMsg" id="spXpText" style="margin-top:6px;">—</p>
+              <div id="spPremBox"></div>
+              <p class="secLbl">🎁 JALUR HADIAH — 20 TIER</p>
+              <div id="spList"></div>
+              <p class="frHint">XP Season didapat dari setiap permainan selesai (skor, musuh hancur &amp; boss), menuntaskan kampanye, dan mengklaim misi/login harian. Season berganti tiap awal bulan — tier &amp; XP direset, hadiah yang sudah diklaim tetap milikmu.</p>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== KLAN (GUILD) ===== -->
+        <section class="screen" id="scrClan">
+          <div class="card cardFlex">
+            <h2>🛡️ Klan</h2>
+            <div class="growScroll">
+              <div id="clanOff" class="frOffBox" style="display:none;">
+                <b>🌙 Fitur Klan belum aktif</b>
+                <p>Server game belum mengizinkan fitur Klan (rules Firebase-nya belum diperbarui). Ini bukan error di HP kamu — pemilik game perlu menempel rules baru sekali saja di Firebase Console. Setelah itu klan langsung menyala untuk semua pemain.</p>
+                <button class="mbtn btnRules2" style="justify-content:center; width:100%;">📋 Buka Rules Firebase</button>
+              </div>
+              <div id="clanMain">
+                <div id="clanNone">
+                  <p class="lbNote">Gabung klan untuk misi bareng, chat klan, dan naik papan peringkat klan. Belum ada klan yang cocok? Bikin klanmu sendiri!</p>
+                  <p class="secLbl" style="margin-top:2px;">➕ BIKIN KLAN BARU</p>
+                  <div class="nickRow">
+                    <input class="txtIn" id="clanNameInput" type="text" maxlength="24" placeholder="Nama klan (3–24 karakter)" autocomplete="off" enterkeyhint="done" />
+                    <button class="gBtn use" id="btnClanCreate" style="border-radius:10px;">Bikin</button>
+                  </div>
+                  <p class="frMsg" id="clanMsg"></p>
+                  <p class="secLbl">🔍 GABUNG KLAN LAIN</p>
+                  <div id="clanJoinList"><div class="frEmpty">Memuat daftar klan…</div></div>
+                </div>
+                <div id="clanMine" style="display:none;">
+                  <p class="secLbl" style="margin-top:2px;">🛡️ KLAN KAMU</p>
+                  <div class="frRow"><div class="who" style="flex:1; min-width:0;"><b id="clanMyName" style="font-size:17px;">—</b><small id="clanMyMeta" style="display:block; color:var(--muted); font-weight:600;">—</small></div></div>
+                  <button class="mbtn" id="btnClanChat" style="justify-content:center; width:100%; margin:0 0 8px;">💬 Chat Klan <span class="sub">Ngobrol dengan semua anggota</span></button>
+                  <p class="secLbl">🎯 MISI KLAN MINGGU INI</p>
+                  <div id="clanMissionBox"></div>
+                  <p class="secLbl">👥 ANGGOTA</p>
+                  <div id="clanMemberList"></div>
+                  <button class="mbtn pink" id="btnClanLeave" style="justify-content:center; width:100%; margin-top:4px;">Keluar dari Klan</button>
+                </div>
+                <p class="secLbl">🏆 PERINGKAT KLAN — SKOR MINGGU INI</p>
+                <div id="clanBoard"><div class="frEmpty">Memuat peringkat klan…</div></div>
+                <p class="frHint">Peringkat dihitung dari total skor semua anggota minggu ini (reset tiap Senin). Kontribusimu tercatat otomatis setiap permainan selesai.</p>
+              </div>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== CHAT KLAN ===== -->
+        <section class="screen" id="scrClanChat">
+          <div class="card cardFlex">
+            <h2 id="clanChatTitle">💬 Chat Klan</h2>
+            <p class="lbNote" style="margin:0 0 8px;">Semua anggota klan bisa membaca &amp; menulis di sini.</p>
+            <div class="growScroll" id="clanChatMsgs" style="display:flex; flex-direction:column; gap:6px; padding:2px;"></div>
+            <p class="frMsg" id="clanChatMsg"></p>
+            <div class="nickRow" style="margin-top:6px;">
+              <input class="txtIn" id="clanChatInput" type="text" maxlength="500" placeholder="Tulis pesan ke klan…" autocomplete="off" enterkeyhint="send" />
+              <button class="gBtn use" id="btnClanChatSend" style="border-radius:10px;">Kirim ➤</button>
+            </div>
+            <div class="backRow"><button class="ghostBtn" id="btnClanChatBack">‹ Kembali ke Klan</button></div>
+          </div>
+        </section>
+
+        <!-- ===== TURNAMEN MINGGUAN ===== -->
+        <section class="screen" id="scrTourn">
+          <div class="card cardFlex">
+            <h2>🏟️ Turnamen Mingguan</h2>
+            <div class="growScroll">
+              <div id="tournOff" class="frOffBox" style="display:none;">
+                <b>🌙 Turnamen belum aktif</b>
+                <p>Server game belum mengizinkan fitur Turnamen (rules Firebase-nya belum diperbarui). Ini bukan error di HP kamu — pemilik game perlu menempel rules baru sekali saja di Firebase Console.</p>
+                <button class="mbtn btnRules2" style="justify-content:center; width:100%;">📋 Buka Rules Firebase</button>
+              </div>
+              <div id="tournMain">
+                <p class="lbNote" id="tournHead">—</p>
+                <div id="tournClaimBox"></div>
+                <p class="secLbl" style="margin-top:2px;">🏆 PAPAN MINGGU INI</p>
+                <div id="tournList"><div class="frEmpty">Memuat papan turnamen…</div></div>
+                <p class="frHint">Skor terbaikmu minggu ini tercatat otomatis setiap permainan selesai (mode Endless &amp; Harian). Hadiah: 🥇 50 💎 · 🥈 35 💎 · 🥉 25 💎 · peringkat 4–10: 12 💎 — klaim di sini setelah minggu berganti.</p>
+              </div>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== DUEL TEMAN ===== -->
+        <section class="screen" id="scrDuel">
+          <div class="card cardFlex">
+            <h2>⚔️ Duel Teman</h2>
+            <div class="growScroll">
+              <div id="duelOff" class="frOffBox" style="display:none;">
+                <b>🌙 Duel belum aktif</b>
+                <p>Server game belum mengizinkan fitur Duel (rules Firebase-nya belum diperbarui). Ini bukan error di HP kamu — pemilik game perlu menempel rules baru sekali saja di Firebase Console.</p>
+                <button class="mbtn btnRules2" style="justify-content:center; width:100%;">📋 Buka Rules Firebase</button>
+              </div>
+              <div id="duelMain">
+                <p class="secLbl" style="margin-top:2px;">🏁 1V1 LIVE RACE — MAIN BARENG 90 DETIK!</p>
+                <p class="lbNote">Ini duel versi LIVE: tantang teman (tombol <b>🏁 Live</b> di daftar teman bawah), temanmu menerima, hitung mundur bersama — lalu kalian main <b>BERSAMAAN di misi &amp; kesulitan yang sama</b> selama <b>90 detik</b>, masing-masing di HP sendiri, dengan <b>bar skor live</b> di atas layar. Skor tertinggi menang: <b>pemenang +250 🪙</b>, seri +100 🪙, kalah +40 🪙. Hasilnya tersimpan di riwayat race di bawah.</p>
+                <div id="raceOff" class="frOffBox" style="display:none;">
+                  <b>🌙 Live Race belum aktif</b>
+                  <p>Server game belum mengizinkan fitur Live Race (rules Firebase-nya belum diperbarui). Ini bukan error di HP kamu — pemilik game perlu menempel rules baru sekali saja di Firebase Console.</p>
+                  <button class="mbtn btnRules2" style="justify-content:center; width:100%;">📋 Buka Rules Firebase</button>
+                </div>
+                <div id="raceMain">
+                  <p class="secLbl" id="raceReqLbl">📥 TANTANGAN LIVE MASUK</p>
+                  <div id="raceReqList"><div class="frEmpty">Memuat…</div></div>
+                  <p class="secLbl">🏁 RACE AKTIF &amp; RIWAYAT</p>
+                  <div id="raceList"><div class="frEmpty">Memuat…</div></div>
+                </div>
+                <p class="secLbl">⚔️ DUEL ASINKRON — MAIN BERGANTIAN</p>
+                <p class="lbNote">Tantang temanmu, lalu kalian <b>bergantian main Tantangan Harian yang sama</b> (susunan musuh hari ini identik untuk semua). Skor tertinggi menang: <b>pemenang +200 🪙</b>, seri +75 🪙 untuk berdua, kalah tetap +25 🪙. Duel berlaku untuk hari ini saja.</p>
+                <p class="secLbl" style="margin-top:2px;">⚔️ TANTANG TEMAN</p>
+                <div id="duelFriendList"><div class="frEmpty">Memuat daftar teman…</div></div>
+                <p class="secLbl">📜 DUEL KAMU</p>
+                <div id="duelList"><div class="frEmpty">Memuat duel…</div></div>
+                <p class="frHint">Belum punya teman? Tambahkan dulu lewat menu 👥 Teman memakai ID pemain.</p>
+              </div>
+            </div>
+            <div class="backRow"><button class="ghostBtn" data-back>Kembali</button></div>
+          </div>
+        </section>
+
+        <!-- ===== HADIAH KEMBALI (AFK) ===== -->
+        <section class="screen" id="scrAfk">
+          <div class="card">
+            <h2>🎁 Selamat Datang Kembali!</h2>
+            <p class="tagline" style="text-align:center;" id="afkDesc">Kamu pergi cukup lama, Pilot. Selama kamu absen, hanggar menyiapkan hadiah kembalimu:</p>
+            <div class="afkBig" id="afkAmt">+0 🪙</div>
+            <p class="tagline" style="text-align:center;" id="afkHours">—</p>
+            <div class="menuBtns">
+              <button class="mbtn primary" id="btnAfkClaim" style="justify-content:center;">🎁 Klaim Hadiah</button>
+              <button class="mbtn" id="btnAfkClose" style="justify-content:center;">Nanti Saja</button>
+            </div>
           </div>
         </section>
 
@@ -1397,6 +1607,12 @@ function mergeSavedData(base, other){
   out.diamonds = Math.max(base.diamonds || 0, other.diamonds || 0);
   out.rushBest = Math.max(base.rushBest || 0, other.rushBest || 0);
   out.rushBosses = Math.max(base.rushBosses || 0, other.rushBosses || 0);
+  /* v16: prestige ambil yang terbesar; klan & cap waktu ikut salinan lain bila ada */
+  out.prestige = Math.max(base.prestige || 0, other.prestige || 0);
+  if(other.clanId){ out.clanId = other.clanId; out.clanName = other.clanName || base.clanName || ""; }
+  out.lastSeen = Math.max(base.lastSeen || 0, other.lastSeen || 0);
+  (function(){ const d = new Date(); const mk = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+    if(other.season && other.season.key === mk && (!base.season || base.season.key !== mk || (other.season.xp || 0) > (base.season.xp || 0))) out.season = other.season; })();
   out.gallery = Object.assign({}, base.gallery || {}, other.gallery || {});
   out.profile = other.profile || base.profile || { bg:"nebula", banner:"pilot" };
   const loot = (base.spinLoot || []).slice();
@@ -1514,7 +1730,7 @@ const DIFF_ORDER = ["easy","normal","hard","extreme","impossible"];
 function diffOf(id){ return DIFFS[id] || DIFFS.normal; }
 /* Kesulitan yang sedang dipakai run ini (dikunci saat run mulai / dilanjutkan) */
 function curDiff(){ return diffOf(G.difficulty || store.data.difficulty); }
-function addScore(base){ G.score += Math.round(base * curDiff().scoreMul); }
+function addScore(base){ G.score += Math.round(base * curDiff().scoreMul * prestigeMul()); }
 function fmtScoreMul(m){ return ("×" + m).replace(".", ","); }
 
 /* ---------- Leaderboard: 10 skor tertinggi (perangkat ini) ---------- */
@@ -2714,7 +2930,7 @@ function killEnemy(e, idx){
   registerKill();
   const base = e.type==="elite" ? 400 : e.type==="alien" ? 220 : e.type==="shooter" ? 150 : e.type==="kamikaze" ? 130 : e.type==="dart" ? 120 : 100;
   const pts = Math.round(base * curDiff().scoreMul * comboMul());
-  G.score += pts; G.runKills++; store.data.stats.kills++;
+  G.score += Math.round(pts * prestigeMul()); G.runKills++; store.data.stats.kills++;
   G.runCoins += e.type==="elite" ? 5 : e.type==="alien" ? 3 : e.type==="shooter" ? 2 : 1;
   explode(e.x, e.y, e.type==="elite" ? "#ff3860" : e.type==="alien" ? "#fb923c" : e.type==="shooter" ? "#ffc53d" : "#ff7a4d", e.type==="elite" ? 30 : e.type==="shooter" || e.type==="alien" ? 20 : 13, e.type==="elite");
   if(e.type==="elite"){ G.rings.push({ x:e.x, y:e.y, r:8, t:0, color:"#ffc53d" }); G.shake = Math.max(G.shake, 6); }
@@ -2739,7 +2955,7 @@ function killBoss(){
   $("bossBarWrap").style.display = "none";
   registerKill();
   const bossPts = Math.round((2000 + G.bossCount * 400) * curDiff().scoreMul * comboMul());
-  G.score += bossPts; store.data.stats.bosses++;
+  G.score += Math.round(bossPts * prestigeMul()); store.data.stats.bosses++;
   G.runCoins += 30;
   G.nextBossAt = G.runTime + 90;
   /* juice: slow-mo sebentar + cincin kejut + getaran besar */
@@ -2960,7 +3176,7 @@ function update(dt){
   if(minute > G.lastMinute){
     G.lastMinute = minute;
     const bonus = Math.round(300 * curDiff().scoreMul);
-    G.score += bonus;
+    G.score += Math.round(bonus * prestigeMul());
     showBanner("BERTAHAN " + minute + " MENIT!", "Bonus +" + bonus + " — musuh makin ganas!");
     floatText(W/2, H*0.3, "+" + bonus, "#3dff9a");
     updateHUD();
@@ -3108,7 +3324,7 @@ function update(dt){
           rk.hp -= b.dmg; G.runHits++;
           if(rk.hp <= 0){
             const rpts = Math.round(25 * curDiff().scoreMul * comboMul());
-            G.score += rpts;
+            G.score += Math.round(rpts * prestigeMul());
             floatText(rk.x, rk.y, "+" + rpts, "#d8cfc2");
             explode(rk.x, rk.y, "#9c8468", 15); explode(rk.x, rk.y, "#6b5a4a", 9);
             AudioSys.explosion(false);
@@ -3934,7 +4150,7 @@ function updateMenuMeta(){
   const snm = $("lbShipName"); if(snm) snm.textContent = shipDef().name;
   const sds = $("lbShipDesc"); if(sds) sds.textContent = "Pesawat terpilih · " + (store.data.coins || 0).toLocaleString("id-ID") + " 🪙 di dompet";
   const mi = $("lbModeInfo"); if(mi){ const dd2 = diffOf(store.data.difficulty); mi.textContent = dd2.label + " · " + bgDef(store.data.bg).name + " · Skor " + fmtScoreMul(dd2.scoreMul); }
-  const scd = $("lbSeasonCd"); if(scd){ const now2 = new Date(); const end2 = new Date(now2.getFullYear(), now2.getMonth() + 1, 1); const ms2 = end2 - now2; scd.textContent = "berakhir dlm " + Math.floor(ms2 / 86400000) + "h " + Math.floor(ms2 % 86400000 / 3600000) + "j"; }
+  const scd = $("lbSeasonCd"); if(scd){ const now2 = new Date(); const end2 = new Date(now2.getFullYear(), now2.getMonth() + 1, 1); const ms2 = end2 - now2; const dLeft = Math.floor(ms2 / 86400000); scd.textContent = dLeft >= 1 ? ("berakhir dlm " + dLeft + " hari") : ("berakhir dlm " + Math.max(1, Math.floor(ms2 / 3600000)) + " jam"); }
   const dN = $("dotNotice"); if(dN) dN.style.display = store.data.noticeSeen ? "none" : "";
   const dNT = $("dotNoticeTop"); if(dNT) dNT.style.display = store.data.noticeSeen ? "none" : "";
   const dE = $("dotEvent"); if(dE) dE.style.display = (store.data.campaign || 0) >= 5 ? "none" : "";
@@ -4824,6 +5040,85 @@ const FB_RULES_TEXT = `{
           }
         }
       }
+    },
+    "clans": {
+      ".read": true,
+      "$cid": {
+        ".write": "!data.exists()",
+        ".validate": "newData.hasChildren(['name', 'created']) && newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 24 && newData.child('created').isNumber()"
+      }
+    },
+    "clanMembers": {
+      ".read": true,
+      "$cid": {
+        "$pid": {
+          ".write": true,
+          ".validate": "!newData.exists() || (newData.hasChildren(['name', 'ts']) && newData.child('name').isString() && newData.child('name').val().length <= 20 && newData.child('ts').isNumber())"
+        }
+      }
+    },
+    "clanChats": {
+      "$cid": {
+        ".read": true,
+        "$msg": {
+          ".write": "!data.exists()",
+          ".validate": "newData.hasChildren(['from', 'text', 'ts']) && newData.child('from').isString() && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 500 && newData.child('ts').isNumber()"
+        }
+      }
+    },
+    "clanContrib": {
+      ".read": true,
+      "$cid": {
+        "$week": {
+          "$pid": {
+            ".write": true,
+            ".validate": "newData.hasChildren(['kills', 'score']) && newData.child('kills').isNumber() && newData.child('kills').val() >= 0 && newData.child('score').isNumber() && newData.child('score').val() >= 0"
+          }
+        }
+      }
+    },
+    "clanClaims": {
+      "$cid": {
+        "$week": {
+          "$pid": {
+            ".read": true,
+            ".write": true,
+            ".validate": "newData.hasChildren(['ts']) && newData.child('ts').isNumber()"
+          }
+        }
+      }
+    },
+    "tournament": {
+      "$week": {
+        ".read": true,
+        "$pid": {
+          ".write": true,
+          ".validate": "newData.hasChildren(['name', 'score']) && newData.child('name').isString() && newData.child('name').val().length <= 20 && newData.child('score').isNumber() && newData.child('score').val() >= 0"
+        }
+      }
+    },
+    "tournClaims": {
+      "$week": {
+        "$pid": {
+          ".read": true,
+          ".write": true,
+          ".validate": "newData.hasChildren(['ts']) && newData.child('ts').isNumber()"
+        }
+      }
+    },
+    "duels": {
+      ".read": true,
+      "$id": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['from', 'to', 'date']) && newData.child('from').isString() && newData.child('to').isString() && newData.child('date').isString()"
+      }
+    },
+    "races": {
+      ".read": true,
+      "$id": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['from', 'to', 'status']) && newData.child('from').isString() && newData.child('to').isString() && newData.child('status').isString()"
+      }
     }
   }
 }`;
@@ -5353,6 +5648,1117 @@ window.addEventListener("pagehide", ()=>{
 });
 (function(){ const rt = $("rulesText"); if(rt) rt.value = FB_RULES_TEXT; })();
 updateOnlineMeta();
+
+/* =====================================================================
+   v16: SEASON PASS · KLAN · TURNAMEN MINGGUAN · DUEL TEMAN · AFK · PRESTIGE
+   Fitur online memakai Firebase yang sama (REST + polling). Bila rules
+   belum diperbarui, server menjawab 401/403 → layar menampilkan pesan
+   ramah "belum aktif", bukan error. PvP real-time memang tidak dibuat:
+   Duel Teman adalah adu skor bergantian di Tantangan Harian yang sama.
+   ===================================================================== */
+function fbPatch(path, data){ return fbReq(path, { method:"PATCH", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(data) }); }
+
+/* ---------- Migrasi data v16 ---------- */
+if(typeof store.data.prestige !== "number") store.data.prestige = 0;
+if(typeof store.data.clanId !== "string") store.data.clanId = "";
+if(typeof store.data.clanName !== "string") store.data.clanName = "";
+if(typeof store.data.tournClaim !== "string") store.data.tournClaim = "";
+if(!store.data.clanClaim || typeof store.data.clanClaim !== "object") store.data.clanClaim = {};
+if(typeof store.data.lastSeen !== "number") store.data.lastSeen = 0;
+if(!("afkPending" in store.data)) store.data.afkPending = null;
+if(!store.data.season || typeof store.data.season !== "object") store.data.season = null;
+
+/* ---------- PRESTIGE / REBIRTH ---------- */
+function prestigeMul(){ return 1 + 0.25 * (store.data.prestige || 0); }
+function prestigeRoman(){
+  const n = store.data.prestige || 0;
+  const table = [[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];
+  let r = "", x = n;
+  table.forEach(p=>{ while(x >= p[0]){ r += p[1]; x -= p[0]; } });
+  return n > 0 ? r : "—";
+}
+function fmtMul(m){ return ("×" + m.toFixed(2)).replace(".", ",").replace(/,?0+$/, ""); }
+let prestArm = false, prestArmTimer = null;
+function renderPrestige(){
+  const btn = $("btnPrestige"); if(!btn) return;
+  const pp = pilotProgress(store.data.stats.gems || 0);
+  const sub = $("prestSub");
+  const info = $("prestInfo");
+  if(info && (store.data.prestige || 0) > 0){
+    info.innerHTML = 'Kamu sudah Prestige <span class="prestBadge">⭐ ' + prestigeRoman() + '</span> — pengali skormu sekarang <b style="color:var(--ink);">' + fmtMul(prestigeMul()) + ' permanen</b> dan berlaku di semua mode. Prestige lagi untuk menaikkan pengali +0,25 (Level Pilot &amp; koin direset lagi).';
+  }
+  if(pp.lvl < 5){
+    btn.disabled = true;
+    if(sub) sub.textContent = "Butuh Level Pilot 5 — sekarang Lv. " + pp.lvl;
+  } else {
+    btn.disabled = false;
+    if(sub) sub.textContent = prestArm ? "⚠️ Yakin? Ketuk sekali lagi — Lv. Pilot & " + (store.data.coins || 0).toLocaleString("id-ID") + " 🪙 direset!" : ("Reset Lv. Pilot & koin → pengali jadi " + fmtMul(prestigeMul() + 0.25));
+  }
+}
+function doPrestige(){
+  const pp = pilotProgress(store.data.stats.gems || 0);
+  if(pp.lvl < 5) return;
+  if(!prestArm){
+    prestArm = true; renderPrestige();
+    prestArmTimer = setTimeout(()=>{ prestArm = false; renderPrestige(); }, 3200);
+    return;
+  }
+  clearTimeout(prestArmTimer); prestArm = false;
+  store.data.prestige = (store.data.prestige || 0) + 1;
+  store.data.coins = 0;
+  store.data.stats.gems = 0;
+  store.save();
+  AudioSys.ensure(); AudioSys.levelup();
+  showInfoToast("⭐", "PRESTIGE " + prestigeRoman() + "!", "Pengali skor permanenmu kini " + fmtMul(prestigeMul()) + " — lencana baru terpampang di profilmu!");
+  renderPrestige(); renderProfile(); updateMenuMeta(); updateHUD();
+}
+
+/* ---------- SEASON PASS ---------- */
+const SP_XP_PER_TIER = 50, SP_TIERS_N = 20, SP_PREMIUM_COST = 75;
+SHIPS.push({ id:"starfall", icon:"🌠", name:"Starfall", cost:0, seasonOnly:true, desc:"🎫 EKSKLUSIF SEASON PASS (Tier 20 gratis) — jet emas-biru penjelajah bintang: damage +1, peluru tembus, tembakan rapat. Tembakan: plasma emas menyala.", speedMul:1.2, dmg:1, fireMul:0.82, lives:0, pierce:1, r:15, c1:"#fef9c3", c2:"#fbbf24", c3:"#0369a1", c4:"#082f49", wing:"#0284c7", glow:"#fde047", wide:1.0, sweep:1.22, bCol:"#fbbf24", bCore:"#fffbeb", bShape:"plasma" });
+function seasonKey(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"); }
+function seasonStore(){
+  const k = seasonKey();
+  if(!store.data.season || store.data.season.key !== k) store.data.season = { key:k, xp:0, premium:false, cf:{}, cp:{} };
+  if(!store.data.season.cf) store.data.season.cf = {};
+  if(!store.data.season.cp) store.data.season.cp = {};
+  return store.data.season;
+}
+function spTierReached(){ return Math.min(SP_TIERS_N, Math.floor((seasonStore().xp || 0) / SP_XP_PER_TIER)); }
+function spRewardFree(n){
+  if(n === 20) return { coins:300, ship:"starfall" };
+  const r = { coins: 60 + n * 20 };
+  if(n % 5 === 0) r.dia = (n / 5) * 3;
+  return r;
+}
+function spRewardPrem(n){
+  if(n === 20) return { coins:1000, dia:50 };
+  if(n === 10) return { dia:10, loot:"banner:champion" };
+  const r = { coins: 150 + n * 30 };
+  if(n % 4 === 0) r.dia = 5 + Math.floor(n / 2);
+  return r;
+}
+function spRewardText(r){
+  const parts = [];
+  if(r.coins) parts.push(r.coins.toLocaleString("id-ID") + " 🪙");
+  if(r.dia) parts.push(r.dia + " 💎");
+  if(r.ship) parts.push("🌠 Skin STARFALL");
+  if(r.loot === "banner:champion") parts.push("🎌 Banner Juara Galaksi");
+  return parts.join(" + ");
+}
+function spGrant(r){
+  if(r.coins) store.data.coins = (store.data.coins || 0) + r.coins;
+  if(r.dia) store.data.diamonds = (store.data.diamonds || 0) + r.dia;
+  if(r.ship && (store.data.shipsOwned || []).indexOf(r.ship) < 0) store.data.shipsOwned.push(r.ship);
+  if(r.loot && (store.data.spinLoot || []).indexOf(r.loot) < 0) store.data.spinLoot.push(r.loot);
+  store.save();
+}
+function addSeasonXp(n){
+  if(!(n > 0)) return;
+  const s = seasonStore();
+  const before = spTierReached();
+  s.xp = (s.xp || 0) + n;
+  store.save();
+  const after = spTierReached();
+  if(after > before) showInfoToast("🎫", "Tier Season naik!", "Kamu mencapai Tier " + after + " — klaim hadiahnya di Season Pass!");
+  if($("scrSeason").classList.contains("open")) renderSeason();
+  updateMenuMeta();
+}
+function openSeason(){ renderSeason(); showScreen("scrSeason"); }
+function renderSeason(){
+  const s = seasonStore();
+  const reached = spTierReached();
+  const now = new Date();
+  const endD = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const monthName = now.toLocaleDateString("id-ID", { month:"long", year:"numeric" });
+  $("spHeadInfo").innerHTML = "🏆 <b>Season 1 — " + monthName + "</b> · berakhir " + endD.toLocaleDateString("id-ID", { day:"numeric", month:"long", year:"numeric" }) + "<br>Jalur kamu: " + (s.premium ? "👑 <b>PREMIUM</b> — semua hadiah terbuka" : "<b>Gratis</b> — buka Premium untuk hadiah kolom kanan");
+  const inTier = reached >= SP_TIERS_N ? SP_XP_PER_TIER : (s.xp - reached * SP_XP_PER_TIER);
+  $("spXpFill").style.width = (reached >= SP_TIERS_N ? 100 : (inTier / SP_XP_PER_TIER * 100)) + "%";
+  $("spXpText").textContent = reached >= SP_TIERS_N
+    ? "🌟 Tier MAKS 20/20 · Total " + s.xp + " XP — semua tier terbuka!"
+    : "Tier " + reached + "/" + SP_TIERS_N + " · " + s.xp + " XP · butuh " + (SP_XP_PER_TIER - inTier) + " XP lagi ke Tier " + (reached + 1);
+  const pb = $("spPremBox"); pb.innerHTML = "";
+  if(!s.premium){
+    const b = document.createElement("button");
+    b.className = "mbtn"; b.style.cssText = "justify-content:center; width:100%; margin:0 0 4px; border-color:var(--amber);";
+    b.innerHTML = "👑 Buka Jalur PREMIUM — " + SP_PREMIUM_COST + " 💎 <span class='sub'>Saldo: " + (store.data.diamonds || 0) + " 💎 · berlaku season ini</span>";
+    b.disabled = (store.data.diamonds || 0) < SP_PREMIUM_COST;
+    b.addEventListener("click", ()=>{
+      if((store.data.diamonds || 0) < SP_PREMIUM_COST) return;
+      store.data.diamonds -= SP_PREMIUM_COST;
+      seasonStore().premium = true; store.save();
+      AudioSys.ensure(); AudioSys.ach();
+      showInfoToast("👑", "Jalur Premium aktif!", "Semua hadiah premium tier yang sudah tercapai kini bisa diklaim.");
+      renderSeason(); updateMenuMeta();
+    });
+    pb.appendChild(b);
+  } else {
+    pb.innerHTML = '<p class="frMsg" style="color:var(--amber);">👑 Jalur PREMIUM aktif — klaim hadiah premium di tiap tier yang tercapai!</p>';
+  }
+  const list = $("spList"); list.innerHTML = "";
+  for(let n = 1; n <= SP_TIERS_N; n++){
+    const row = document.createElement("div");
+    row.className = "spRow" + (reached >= n ? " done" : " locked");
+    const tier = document.createElement("div"); tier.className = "spTier";
+    tier.innerHTML = "<b>" + n + "</b><small>TIER</small>";
+    row.appendChild(tier);
+    [["cf", spRewardFree(n), false], ["cp", spRewardPrem(n), true]].forEach(cfg=>{
+      const cell = document.createElement("div");
+      cell.className = "spCell" + (cfg[2] ? " prem" : "");
+      cell.innerHTML = '<span class="tg">' + (cfg[2] ? "👑 PREMIUM" : "GRATIS") + '</span><span class="rw">' + spRewardText(cfg[1]) + "</span>";
+      const btn = document.createElement("button");
+      btn.className = "spClaim";
+      const claimed = !!s[cfg[0]][n];
+      const lockedPrem = cfg[2] && !s.premium;
+      if(claimed){ btn.textContent = "Diklaim ✓"; btn.disabled = true; }
+      else if(lockedPrem){ btn.textContent = "🔒 Butuh Premium"; btn.disabled = true; }
+      else if(reached >= n){
+        btn.textContent = "🎁 Klaim";
+        btn.addEventListener("click", ()=>{
+          const ss = seasonStore();
+          if(ss[cfg[0]][n]) return;
+          ss[cfg[0]][n] = true;
+          spGrant(cfg[1]);
+          AudioSys.ensure(); AudioSys.ach();
+          showInfoToast("🎁", "Hadiah Tier " + n + " diklaim!", spRewardText(cfg[1]));
+          renderSeason(); updateMenuMeta();
+        });
+      }
+      else { btn.textContent = "🔒 Tier " + n; btn.disabled = true; }
+      cell.appendChild(btn);
+      row.appendChild(cell);
+    });
+    list.appendChild(row);
+  }
+}
+/* Hanggar: Starfall tidak dijual — tombolnya harus menunjuk ke Season Pass */
+const _rgV16 = renderGarage;
+renderGarage = function(){
+  _rgV16();
+  try{
+    if((store.data.shipsOwned || []).indexOf("starfall") >= 0) return;
+    const list = $("shipList"); if(!list) return;
+    for(let i = 0; i < list.children.length; i++){
+      const card = list.children[i];
+      const b = card.querySelector(".tx b");
+      if(b && b.textContent === "Starfall"){
+        const old = card.querySelector("button.gBtn");
+        if(old){
+          const nb = old.cloneNode(false);
+          nb.textContent = "🎫 Season Pass T20";
+          nb.disabled = false;
+          nb.addEventListener("click", ()=> openSeason());
+          old.replaceWith(nb);
+        }
+      }
+    }
+  }catch(e){}
+};
+
+/* ---------- TURNAMEN MINGGUAN ---------- */
+let tournReady = null, tournMyRank = 0, tournMyBest = 0;
+function weekKeyOf(d){
+  d = d ? new Date(d.getFullYear(), d.getMonth(), d.getDate()) : (()=>{ const t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); })();
+  const back = (d.getDay() + 6) % 7;
+  d.setDate(d.getDate() - back);
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function prevWeekKey(){ const d = new Date(); d.setDate(d.getDate() - 7); return weekKeyOf(d); }
+function tournRewardFor(rank){ return rank === 1 ? 50 : rank === 2 ? 35 : rank === 3 ? 25 : (rank >= 4 && rank <= 10) ? 12 : 0; }
+function tournSubmit(score){
+  if(!(score > 0)) return;
+  const wk = weekKeyOf();
+  fbGet("/tournament/" + wk + "/" + myId())
+    .then(cur=>{
+      tournReady = true;
+      if(!cur || typeof cur.score !== "number" || score > cur.score){
+        return fbPut("/tournament/" + wk + "/" + myId(), { name: myName(), score: Math.round(score), ts: Date.now() });
+      }
+    })
+    .catch(e=>{ if(e && e.code === "denied") tournReady = false; });
+}
+function openTourn(){ showScreen("scrTourn"); renderTournShell(); tournLoad(); }
+function renderTournShell(){
+  const off = tournReady === false;
+  $("tournOff").style.display = off ? "" : "none";
+  $("tournMain").style.display = off ? "none" : "";
+}
+function tournBoardRows(data){
+  const rows = [];
+  if(data && typeof data === "object") Object.keys(data).forEach(pid=>{
+    const e = data[pid];
+    if(e && typeof e === "object" && typeof e.score === "number" && isFinite(e.score)) rows.push({ pid: pid, name: e.name || "Pemain", score: e.score, ts: e.ts || 0 });
+  });
+  rows.sort((a, b)=> b.score - a.score || a.ts - b.ts);
+  return rows;
+}
+function tournLoad(){
+  const wk = weekKeyOf();
+  fbGet("/tournament/" + wk).then(data=>{
+    tournReady = true; renderTournShell();
+    const rows = tournBoardRows(data);
+    const myIdx = rows.findIndex(r => r.pid === myId());
+    tournMyRank = myIdx >= 0 ? myIdx + 1 : 0;
+    tournMyBest = myIdx >= 0 ? rows[myIdx].score : 0;
+    const mon = fmtDateID(wk);
+    const sunD = (()=>{ const p = wk.split("-"); const d = new Date(+p[0], +p[1] - 1, +p[2]); d.setDate(d.getDate() + 6); return d.toLocaleDateString("id-ID", { day:"numeric", month:"long", year:"numeric" }); })();
+    $("tournHead").innerHTML = "📅 Minggu ini: <b>" + mon + " – " + sunD + "</b> · reset Senin 00.00<br>" +
+      (tournMyRank ? ("Skor terbaikmu: <b>" + tournMyBest.toLocaleString("id-ID") + "</b> · peringkat <b>#" + tournMyRank + "</b> dari " + rows.length + " pemain") : "Kamu belum punya skor minggu ini — main sekali untuk masuk papan!");
+    const list = $("tournList"); list.innerHTML = "";
+    if(!rows.length) list.innerHTML = '<div class="frEmpty">Belum ada skor minggu ini. Jadilah yang pertama!</div>';
+    rows.slice(0, 50).forEach((r, i)=>{
+      const row = document.createElement("div");
+      row.className = "rankRow" + (r.pid === myId() ? " me" : "");
+      row.innerHTML = '<span class="rk">' + (i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : "#" + (i + 1)) + '</span><div class="who"><b>' + escapeHtml(r.name) + (r.pid === myId() ? " (kamu)" : "") + '</b><small>' + (i < 10 ? ("Hadiah akhir minggu: " + tournRewardFor(i + 1) + " 💎") : "Di luar zona hadiah") + '</small></div><span class="sc">' + r.score.toLocaleString("id-ID") + "</span>";
+      list.appendChild(row);
+    });
+    updateMenuMeta();
+    tournClaimLoad();
+  }).catch(e=>{
+    if(e && e.code === "denied"){ tournReady = false; renderTournShell(); }
+    else { const l = $("tournList"); if(l) l.innerHTML = '<div class="frEmpty">📡 Gagal memuat papan — periksa internetmu, lalu buka lagi layar ini.</div>'; }
+  });
+}
+function tournClaimLoad(){
+  const pw = prevWeekKey();
+  const box = $("tournClaimBox"); if(!box) return;
+  box.innerHTML = "";
+  if(store.data.tournClaim === pw) { box.innerHTML = '<p class="frMsg">🎁 Hadiah turnamen minggu lalu sudah kamu klaim ✓</p>'; return; }
+  fbGet("/tournament/" + pw).then(data=>{
+    const rows = tournBoardRows(data);
+    const idx = rows.findIndex(r => r.pid === myId());
+    if(idx < 0) return;
+    const rank = idx + 1, reward = tournRewardFor(rank);
+    if(!reward){ box.innerHTML = '<p class="frMsg">Minggu lalu kamu peringkat #' + rank + ' — belum masuk top 10. Minggu ini gas lagi! 💪</p>'; return; }
+    fbGet("/tournClaims/" + pw + "/" + myId()).then(claim=>{
+      if(claim){ store.data.tournClaim = pw; store.save(); box.innerHTML = '<p class="frMsg">🎁 Hadiah turnamen minggu lalu sudah kamu klaim ✓</p>'; return; }
+      box.innerHTML = "";
+      const b = document.createElement("button");
+      b.className = "mbtn primary"; b.style.cssText = "justify-content:center; width:100%; margin:0 0 6px;";
+      b.innerHTML = "🎁 Klaim Hadiah Minggu Lalu — Peringkat #" + rank + " · +" + reward + " 💎";
+      b.addEventListener("click", ()=>{
+        b.disabled = true; b.textContent = "⏳ Mengklaim…";
+        fbPut("/tournClaims/" + pw + "/" + myId(), { ts: Date.now() }).then(()=>{
+          store.data.tournClaim = pw;
+          store.data.diamonds = (store.data.diamonds || 0) + reward;
+          store.save(); AudioSys.ensure(); AudioSys.ach();
+          showInfoToast("🏟️", "Hadiah turnamen diterima!", "Peringkat #" + rank + " minggu lalu: +" + reward + " 💎");
+          tournClaimLoad(); updateMenuMeta();
+        }).catch(()=>{ b.disabled = false; b.textContent = "🎁 Coba Klaim Lagi"; });
+      });
+      box.appendChild(b);
+    }).catch(()=>{});
+  }).catch(()=>{});
+}
+
+/* ---------- KLAN (GUILD) ---------- */
+let clanReady = null, clanData = null, clanLoading = false, clanFailed = false;
+const CLAN_MISSION_TARGET = 300, CLAN_MISSION_COINS = 150, CLAN_MISSION_DIA = 6;
+function myClanId(){ return store.data.clanId || ""; }
+function clanLoad(){
+  if(clanLoading) return;
+  clanLoading = true;
+  Promise.all([ fbGet("/clans"), fbGet("/clanMembers"), fbGet("/clanContrib") ])
+    .then(res=>{
+      clanLoading = false; clanReady = true; clanFailed = false;
+      clanData = { clans: res[0] || {}, members: res[1] || {}, contrib: res[2] || {} };
+      if(store.data.clanId && !(clanData.members[store.data.clanId] && clanData.members[store.data.clanId][myId()])){
+        /* tidak lagi tercatat sebagai anggota (mis. data server dibersihkan) */
+        if(!clanData.clans[store.data.clanId]){ store.data.clanId = ""; store.data.clanName = ""; store.save(); }
+      }
+      if($("scrClan").classList.contains("open")) renderClan();
+      updateMenuMeta();
+    })
+    .catch(e=>{
+      clanLoading = false;
+      if(e && e.code === "denied"){ clanReady = false; if($("scrClan").classList.contains("open")) renderClan(); updateMenuMeta(); }
+      else { clanFailed = true; if($("scrClan").classList.contains("open")) renderClan(); }
+    });
+}
+function openClan(){ showScreen("scrClan"); renderClan(); clanLoad(); }
+function clanWeekTotals(cid){
+  const wk = weekKeyOf();
+  const per = (clanData && clanData.contrib[cid] && clanData.contrib[cid][wk]) || {};
+  let kills = 0, score = 0;
+  Object.keys(per).forEach(pid=>{ kills += per[pid].kills || 0; score += per[pid].score || 0; });
+  return { kills: kills, score: score };
+}
+function renderClan(){
+  const off = clanReady === false;
+  $("clanOff").style.display = off ? "" : "none";
+  $("clanMain").style.display = off ? "none" : "";
+  if(off) return;
+  const cid = myClanId();
+  $("clanNone").style.display = cid ? "none" : "";
+  $("clanMine").style.display = cid ? "" : "none";
+  const joinBox = $("clanJoinList");
+  if(!cid){
+    joinBox.innerHTML = "";
+    if(!clanData) joinBox.innerHTML = clanFailed ? '<div class="frEmpty">📡 Gagal memuat daftar klan — periksa internetmu, lalu buka lagi layar ini.</div>' : '<div class="frEmpty">Memuat daftar klan…</div>';
+    else {
+      const ids = Object.keys(clanData.clans || {});
+      if(!ids.length) joinBox.innerHTML = '<div class="frEmpty">Belum ada klan sama sekali. Bikin klan pertama di atas!</div>';
+      ids.sort((a, b)=> String((clanData.clans[a] || {}).name || "").localeCompare(String((clanData.clans[b] || {}).name || ""))).forEach(id=>{
+        const c = clanData.clans[id] || {};
+        const nMem = Object.keys((clanData.members || {})[id] || {}).length;
+        const row = document.createElement("div"); row.className = "frRow";
+        row.innerHTML = '<div class="who"><b>🛡️ ' + escapeHtml(c.name || "Klan") + '</b><small>' + nMem + ' anggota · skor minggu ini ' + clanWeekTotals(id).score.toLocaleString("id-ID") + '</small></div>';
+        const jb = document.createElement("button"); jb.className = "frBtn"; jb.textContent = "Gabung";
+        jb.addEventListener("click", ()=> clanJoin(id, c.name || "Klan"));
+        row.appendChild(jb);
+        joinBox.appendChild(row);
+      });
+    }
+  }
+  if(cid){
+    const c = (clanData && clanData.clans[cid]) || {};
+    $("clanMyName").textContent = "🛡️ " + (store.data.clanName || c.name || "Klan");
+    const mems = (clanData && clanData.members[cid]) || {};
+    const memIds = Object.keys(mems);
+    $("clanMyMeta").textContent = memIds.length + " anggota · kamu " + (c.leader === myId() ? "pemimpin 👑" : "anggota") + " · skor minggu ini " + clanWeekTotals(cid).score.toLocaleString("id-ID");
+    const ml = $("clanMemberList"); ml.innerHTML = "";
+    if(!clanData) ml.innerHTML = '<div class="frEmpty">Memuat anggota…</div>';
+    else if(!memIds.length) ml.innerHTML = '<div class="frEmpty">Data anggota belum termuat — buka lagi layar ini sebentar lagi.</div>';
+    memIds.sort((a, b)=>{
+      const la = a === c.leader ? 0 : 1, lb = b === c.leader ? 0 : 1;
+      if(la !== lb) return la - lb;
+      return String((mems[a] || {}).name || "").localeCompare(String((mems[b] || {}).name || ""));
+    }).forEach(pid=>{
+      const m = mems[pid] || {};
+      const contrib = (((clanData.contrib[cid] || {})[weekKeyOf()] || {})[pid]) || {};
+      const row = document.createElement("div"); row.className = "frRow";
+      row.innerHTML = '<span class="onDot' + (isOnline(pid) ? " on" : "") + '"></span><div class="who"><b>' + escapeHtml(m.name || "Pemain") + (pid === myId() ? " (kamu)" : "") + (pid === c.leader ? " 👑" : "") + '</b><small>' + (isOnline(pid) ? "🟢 Online" : "⚪ Offline") + ' · kontribusi minggu ini: ' + (contrib.score || 0).toLocaleString("id-ID") + ' skor · ' + (contrib.kills || 0) + ' musuh</small></div>';
+      ml.appendChild(row);
+    });
+    /* Misi klan mingguan */
+    const mb = $("clanMissionBox"); mb.innerHTML = "";
+    const tot = clanWeekTotals(cid);
+    const wk = weekKeyOf();
+    const claimed = !!store.data.clanClaim[wk];
+    const done = tot.kills >= CLAN_MISSION_TARGET;
+    const wrap = document.createElement("div");
+    wrap.className = "misRow" + (claimed ? " claimed" : done ? " done" : "");
+    wrap.innerHTML = '<div class="top"><span class="ic">🎯</span><div style="flex:1; min-width:0;"><b>Misi Klan: Sapu Bersih</b><small>Seluruh anggota bersama-sama menghancurkan ' + CLAN_MISSION_TARGET + ' musuh minggu ini</small></div><span class="reward">+' + CLAN_MISSION_COINS + ' 🪙<br>+' + CLAN_MISSION_DIA + ' 💎</span></div>' +
+      '<div class="misBarOuter"><div class="misBar" style="width:' + Math.min(100, tot.kills / CLAN_MISSION_TARGET * 100) + '%"></div></div>' +
+      '<div style="margin-top:8px;"><small style="color:var(--muted); font-weight:700;">Progres klan: ' + tot.kills.toLocaleString("id-ID") + " / " + CLAN_MISSION_TARGET + " musuh</small></div>";
+    const cb = document.createElement("button");
+    cb.className = "gBtn" + (done && !claimed ? " use" : "");
+    cb.style.cssText = "width:100%; margin-top:9px;";
+    if(claimed){ cb.textContent = "Sudah Diklaim ✓"; cb.disabled = true; }
+    else if(done){ cb.textContent = "🎁 Klaim +" + CLAN_MISSION_COINS + " 🪙 + " + CLAN_MISSION_DIA + " 💎"; cb.addEventListener("click", clanMissionClaim); }
+    else { cb.textContent = "Belum Selesai — main untuk menambah progres klan!"; cb.disabled = true; }
+    wrap.appendChild(cb);
+    mb.appendChild(wrap);
+  }
+  /* Peringkat klan */
+  const board = $("clanBoard"); board.innerHTML = "";
+  if(!clanData) board.innerHTML = clanFailed ? '<div class="frEmpty">📡 Gagal memuat peringkat — periksa internetmu.</div>' : '<div class="frEmpty">Memuat peringkat klan…</div>';
+  else {
+    const ids = Object.keys(clanData.clans || {});
+    if(!ids.length) board.innerHTML = '<div class="frEmpty">Belum ada klan. Bikin klan pertama dan pimpin peringkat!</div>';
+    const rows = ids.map(id=>({ id: id, name: (clanData.clans[id] || {}).name || "Klan", members: Object.keys((clanData.members || {})[id] || {}).length, score: clanWeekTotals(id).score }));
+    rows.sort((a, b)=> b.score - a.score);
+    rows.slice(0, 10).forEach((r, i)=>{
+      const row = document.createElement("div");
+      row.className = "rankRow" + (r.id === cid ? " me" : "");
+      row.innerHTML = '<span class="rk">' + (i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : "#" + (i + 1)) + '</span><div class="who"><b>🛡️ ' + escapeHtml(r.name) + (r.id === cid ? " (klanmu)" : "") + '</b><small>' + r.members + ' anggota</small></div><span class="sc">' + r.score.toLocaleString("id-ID") + "</span>";
+      board.appendChild(row);
+    });
+  }
+}
+let clanBusy = false;
+function clanCreate(){
+  if(clanBusy) return;
+  const msg = $("clanMsg");
+  const name = cleanNick($("clanNameInput").value);
+  if(name.length < 3){ msg.textContent = "⚠️ Nama klan minimal 3 karakter."; return; }
+  clanBusy = true; msg.textContent = "⏳ Membuat klan " + name + "…";
+  fbPost("/clans", { name: name, leader: myId(), created: Date.now() })
+    .then(res=>{
+      const cid = res && res.name;
+      if(!cid) throw new Error("noid");
+      return fbPut("/clanMembers/" + cid + "/" + myId(), { name: myName(), ts: Date.now(), role: "leader" }).then(()=>{
+        store.data.clanId = cid; store.data.clanName = name; store.save();
+        clanBusy = false; msg.textContent = "";
+        showInfoToast("🛡️", "Klan dibuat!", name + " resmi berdiri — ajak temanmu gabung!");
+        clanData = null; renderClan(); clanLoad(); updateMenuMeta();
+      });
+    })
+    .catch(e=>{
+      clanBusy = false;
+      if(e && e.code === "denied"){ clanReady = false; renderClan(); }
+      else msg.textContent = "📡 Gagal membuat klan — periksa internetmu lalu coba lagi.";
+    });
+}
+function clanJoin(cid, cname){
+  if(clanBusy) return;
+  clanBusy = true;
+  fbPut("/clanMembers/" + cid + "/" + myId(), { name: myName(), ts: Date.now(), role: "member" })
+    .then(()=>{
+      store.data.clanId = cid; store.data.clanName = cname; store.save();
+      clanBusy = false;
+      showInfoToast("🛡️", "Selamat bergabung!", "Kamu sekarang anggota " + cname + ".");
+      clanData = null; renderClan(); clanLoad(); updateMenuMeta();
+    })
+    .catch(e=>{
+      clanBusy = false;
+      if(e && e.code === "denied"){ clanReady = false; renderClan(); }
+      else showInfoToast("📡", "Gagal gabung klan", "Periksa internetmu lalu coba lagi.");
+    });
+}
+let clanLeaveArm = false, clanLeaveTimer = null;
+function clanLeave(){
+  const cid = myClanId(); if(!cid) return;
+  const btn = $("btnClanLeave");
+  if(!clanLeaveArm){
+    clanLeaveArm = true;
+    btn.innerHTML = "⚠️ Yakin keluar? Ketuk sekali lagi untuk keluar dari klan";
+    clanLeaveTimer = setTimeout(()=>{ clanLeaveArm = false; btn.innerHTML = "Keluar dari Klan"; }, 3000);
+    return;
+  }
+  clearTimeout(clanLeaveTimer); clanLeaveArm = false;
+  btn.innerHTML = "Keluar dari Klan";
+  fbDel("/clanMembers/" + cid + "/" + myId()).catch(()=>{}).then(()=>{
+    store.data.clanId = ""; store.data.clanName = ""; store.save();
+    showInfoToast("👋", "Kamu keluar dari klan", "Gabung klan lain atau bikin klanmu sendiri kapan saja.");
+    clanData = null; renderClan(); clanLoad(); updateMenuMeta();
+  });
+}
+function clanMissionClaim(){
+  const cid = myClanId(); if(!cid) return;
+  const wk = weekKeyOf();
+  if(store.data.clanClaim[wk]) return;
+  fbGet("/clanClaims/" + cid + "/" + wk + "/" + myId()).then(claim=>{
+    if(claim){ store.data.clanClaim[wk] = true; store.save(); renderClan(); return; }
+    return fbPut("/clanClaims/" + cid + "/" + wk + "/" + myId(), { ts: Date.now() }).then(()=>{
+      store.data.clanClaim[wk] = true;
+      store.data.coins = (store.data.coins || 0) + CLAN_MISSION_COINS;
+      store.data.diamonds = (store.data.diamonds || 0) + CLAN_MISSION_DIA;
+      store.save(); AudioSys.ensure(); AudioSys.ach();
+      showInfoToast("🎯", "Misi klan tuntas!", "+" + CLAN_MISSION_COINS + " 🪙 + " + CLAN_MISSION_DIA + " 💎 untukmu.");
+      renderClan(); updateMenuMeta();
+    });
+  }).catch(e=>{ if(e && e.code === "denied"){ clanReady = false; renderClan(); } });
+}
+function clanContribSubmit(){
+  const cid = myClanId(); if(!cid) return;
+  const wk = weekKeyOf();
+  const kills = (G.runKills || 0) + (G.runBosses || 0);
+  const score = Math.round(G.score || 0);
+  if(kills <= 0 && score <= 0) return;
+  const path = "/clanContrib/" + cid + "/" + wk + "/" + myId();
+  fbGet(path).then(cur=>{
+    const c = (cur && typeof cur === "object") ? cur : {};
+    return fbPut(path, { name: myName(), kills: (c.kills || 0) + kills, score: (c.score || 0) + score, ts: Date.now() });
+  }).then(()=>{ clanReady = true; }).catch(e=>{ if(e && e.code === "denied") clanReady = false; });
+}
+
+/* ---------- CHAT KLAN ---------- */
+let clanChatSig = "", clanChatLoading = false, clanChatSendBusy = false;
+function openClanChat(){
+  if(!myClanId()) return;
+  $("clanChatTitle").textContent = "💬 Chat — " + (store.data.clanName || "Klan");
+  $("clanChatMsgs").innerHTML = "";
+  $("clanChatMsg").textContent = "";
+  clanChatSig = "";
+  showScreen("scrClanChat");
+  clanChatLoad(true);
+}
+function clanChatLoad(scroll){
+  const cid = myClanId();
+  if(!cid || clanChatLoading) return;
+  clanChatLoading = true;
+  fbGet("/clanChats/" + cid).then(data=>{
+    clanChatLoading = false; clanReady = true;
+    const msgs = [];
+    if(data && typeof data === "object") Object.keys(data).forEach(k=>{
+      const m = data[k];
+      if(m && typeof m === "object" && typeof m.text === "string") msgs.push(m);
+    });
+    msgs.sort((a, b)=> (a.ts || 0) - (b.ts || 0));
+    const recent = msgs.slice(-120);
+    const sig = recent.length + "|" + (recent.length ? (recent[recent.length - 1].ts + ":" + recent[recent.length - 1].text) : "");
+    if(sig === clanChatSig){ if(scroll){ const bx = $("clanChatMsgs"); if(bx) bx.scrollTop = bx.scrollHeight; } return; }
+    clanChatSig = sig;
+    const box = $("clanChatMsgs"); box.innerHTML = "";
+    if(!recent.length) box.innerHTML = '<div class="frEmpty">Belum ada pesan di chat klan. Sapa anggota klanmu duluan! 👋</div>';
+    recent.forEach(m=>{
+      const d = document.createElement("div");
+      d.className = "chatB " + (m.from === myId() ? "me" : "them");
+      d.innerHTML = escapeHtml(m.text) + "<small>" + (m.from === myId() ? "Kamu" : escapeHtml(m.name || "Anggota")) + " · " + chatTime(m.ts) + "</small>";
+      box.appendChild(d);
+    });
+    box.scrollTop = box.scrollHeight;
+  }).catch(e=>{
+    clanChatLoading = false;
+    if(e && e.code === "denied"){ clanReady = false; $("clanChatMsg").textContent = "🌙 Chat klan belum aktif — rules Firebase belum diperbarui."; }
+  });
+}
+async function clanChatSend(){
+  const cid = myClanId();
+  if(!cid || clanChatSendBusy) return;
+  const inp = $("clanChatInput");
+  const text = inp.value.trim().slice(0, 500);
+  if(!text) return;
+  clanChatSendBusy = true;
+  try{
+    await fbPost("/clanChats/" + cid, { from: myId(), name: myName(), text: text, ts: Date.now() });
+    inp.value = ""; clanChatSig = ""; clanChatLoad(true);
+  }catch(e){
+    if(e && e.code === "denied"){ clanReady = false; $("clanChatMsg").textContent = "🌙 Chat klan belum aktif — rules Firebase belum diperbarui."; }
+    else $("clanChatMsg").textContent = "📡 Pesan gagal terkirim — periksa internetmu lalu coba lagi.";
+  }
+  finally{ clanChatSendBusy = false; }
+}
+
+/* ---------- DUEL TEMAN (adu skor bergantian di Tantangan Harian yang sama) ---------- */
+let duelReady = null, duelCache = null, duelLoading = false, duelPendingCount = 0, duelFailed = false;
+const DUEL_WIN = 200, DUEL_TIE = 75, DUEL_LOSE = 25;
+function duelLoad(){
+  if(duelLoading) return;
+  duelLoading = true;
+  fbGet("/duels").then(data=>{
+    duelLoading = false; duelReady = true; duelFailed = false;
+    duelCache = (data && typeof data === "object") ? data : {};
+    duelPendingCount = 0;
+    Object.keys(duelCache).forEach(id=>{
+      const d = duelCache[id];
+      if(!d || d.date !== todayStr()) return;
+      const mine = d.from === myId() ? d.fromScore : d.to === myId() ? d.toScore : undefined;
+      if(mine === null || mine === undefined){ if(d.from === myId() || d.to === myId()) duelPendingCount++; }
+    });
+    if($("scrDuel").classList.contains("open")) renderDuel();
+    updateMenuMeta();
+  }).catch(e=>{
+    duelLoading = false;
+    if(e && e.code === "denied"){ duelReady = false; if($("scrDuel").classList.contains("open")) renderDuel(); updateMenuMeta(); }
+    else { duelFailed = true; if($("scrDuel").classList.contains("open")) renderDuel(); }
+  });
+}
+function openDuel(){ showScreen("scrDuel"); renderDuel(); frLoad(); duelLoad(); }
+function myDuels(){
+  if(!duelCache) return [];
+  return Object.keys(duelCache).map(id=>({ id: id, d: duelCache[id] }))
+    .filter(x => x.d && (x.d.from === myId() || x.d.to === myId()))
+    .sort((a, b)=> (b.d.ts || 0) - (a.d.ts || 0)).slice(0, 15);
+}
+function duelHasOpenWith(fid){
+  return myDuels().some(x => x.d.date === todayStr() &&
+    ((x.d.from === myId() && x.d.to === fid) || (x.d.from === fid && x.d.to === myId())) &&
+    (x.d.fromScore == null || x.d.toScore == null));
+}
+function renderDuel(){
+  const off = duelReady === false;
+  $("duelOff").style.display = off ? "" : "none";
+  $("duelMain").style.display = off ? "none" : "";
+  if(off) return;
+  const fl = $("duelFriendList"); fl.innerHTML = "";
+  const fIds = Object.keys(frFriends || {});
+  if(!fIds.length) fl.innerHTML = '<div class="frEmpty">Kamu belum punya teman. Tambahkan teman lewat menu 👥 Teman dulu, baru bisa duel!</div>';
+  fIds.sort((a, b)=> String((frFriends[a] || {}).name || "").localeCompare(String((frFriends[b] || {}).name || ""))).forEach(fid=>{
+    const f = frFriends[fid] || {};
+    const row = document.createElement("div"); row.className = "frRow";
+    row.innerHTML = '<span class="onDot' + (isOnline(fid) ? " on" : "") + '"></span><div class="who"><b>' + escapeHtml(f.name || "Pemain") + '</b><small>' + (isOnline(fid) ? "🟢 Online" : "⚪ Offline") + ' · ' + escapeHtml(fid) + '</small></div>';
+    const b = document.createElement("button"); b.className = "frBtn";
+    if(duelHasOpenWith(fid)){ b.textContent = "Duel berjalan…"; b.disabled = true; }
+    else {
+      b.textContent = "⚔️ Tantang";
+      b.addEventListener("click", ()=> duelChallenge(fid, f.name || "Pemain"));
+    }
+    row.appendChild(b);
+    const b2 = document.createElement("button"); b2.className = "frBtn";
+    if(racePending || raceHasOpenWith(fid)){ b2.textContent = "🏁 Race…"; b2.disabled = true; }
+    else {
+      b2.textContent = "🏁 Live";
+      b2.addEventListener("click", ()=> raceChallenge(fid, f.name || "Pemain"));
+    }
+    row.appendChild(b2);
+    fl.appendChild(row);
+  });
+  const dl = $("duelList"); dl.innerHTML = "";
+  const mine = myDuels();
+  if(!duelCache) dl.innerHTML = duelFailed ? '<div class="frEmpty">📡 Gagal memuat duel — periksa internetmu, lalu buka lagi layar ini.</div>' : '<div class="frEmpty">Memuat duel…</div>';
+  else if(!mine.length) dl.innerHTML = '<div class="frEmpty">Belum ada duel. Tantang temanmu di atas!</div>';
+  mine.forEach(x=>{
+    const d = x.d;
+    const iAmFrom = d.from === myId();
+    const oppName = iAmFrom ? (d.toName || "Pemain") : (d.fromName || "Pemain");
+    const myScore = iAmFrom ? d.fromScore : d.toScore;
+    const opScore = iAmFrom ? d.toScore : d.fromScore;
+    const paid = iAmFrom ? d.paidFrom : d.paidTo;
+    const row = document.createElement("div"); row.className = "frRow";
+    let status = "", action = null;
+    if(myScore != null && opScore != null){
+      if(myScore > opScore){ status = "🏆 MENANG! " + myScore.toLocaleString("id-ID") + " vs " + opScore.toLocaleString("id-ID"); action = { reward: DUEL_WIN }; }
+      else if(myScore < opScore){ status = "💔 Kalah — " + myScore.toLocaleString("id-ID") + " vs " + opScore.toLocaleString("id-ID"); action = { reward: DUEL_LOSE }; }
+      else { status = "🤝 SERI! " + myScore.toLocaleString("id-ID") + " vs " + opScore.toLocaleString("id-ID"); action = { reward: DUEL_TIE }; }
+    }
+    else if(d.date !== todayStr()) status = "⌛ Kedaluwarsa — duel ini untuk " + fmtDateID(d.date);
+    else if(myScore == null) status = "🎯 Giliranmu! Main Tantangan Harian untuk mencatat skor.";
+    else status = "⏳ Skormu " + myScore.toLocaleString("id-ID") + " — menunggu lawan main…";
+    row.innerHTML = '<div class="who"><b>⚔️ vs ' + escapeHtml(oppName) + '</b><small>' + fmtDateID(d.date) + ' · ' + status + '</small></div>';
+    if(action){
+      const b = document.createElement("button"); b.className = "frBtn";
+      if(paid){ b.textContent = "+" + action.reward + " 🪙 ✓"; b.disabled = true; }
+      else {
+        b.textContent = "Klaim +" + action.reward + " 🪙";
+        b.addEventListener("click", ()=> duelClaim(x.id, iAmFrom, action.reward, b));
+      }
+      row.appendChild(b);
+    } else if(myScore == null && d.date === todayStr()){
+      const b = document.createElement("button"); b.className = "frBtn"; b.textContent = "▶ Main Misi Harian";
+      b.addEventListener("click", ()=>{ store.data.save = null; store.save(); startGame(false, true); });
+      row.appendChild(b);
+    }
+    dl.appendChild(row);
+  });
+}
+let duelBusy = false;
+function duelChallenge(fid, fname){
+  if(duelBusy) return;
+  duelBusy = true;
+  fbPost("/duels", { from: myId(), fromName: myName(), to: fid, toName: fname, date: todayStr(), ts: Date.now() })
+    .then(()=>{
+      duelBusy = false;
+      showInfoToast("⚔️", "Tantangan terkirim!", "Duel vs " + fname + " dimulai — main Tantangan Harian untuk mencatat skormu.");
+      duelCache = null; renderDuel(); duelLoad();
+    })
+    .catch(e=>{
+      duelBusy = false;
+      if(e && e.code === "denied"){ duelReady = false; renderDuel(); }
+      else showInfoToast("📡", "Gagal mengirim tantangan", "Periksa internetmu lalu coba lagi.");
+    });
+}
+function duelClaim(id, iAmFrom, reward, btn){
+  const patch = {};
+  patch[iAmFrom ? "paidFrom" : "paidTo"] = true;
+  btn.disabled = true; btn.textContent = "⏳…";
+  fbPatch("/duels/" + id, patch).then(()=>{
+    store.data.coins = (store.data.coins || 0) + reward;
+    store.save(); AudioSys.ensure(); AudioSys.ach();
+    showInfoToast("⚔️", "Hadiah duel diterima!", "+" + reward + " 🪙 masuk ke dompetmu.");
+    if(duelCache && duelCache[id]) duelCache[id][iAmFrom ? "paidFrom" : "paidTo"] = true;
+    renderDuel(); updateMenuMeta();
+  }).catch(e=>{
+    btn.disabled = false; btn.textContent = "Klaim +" + reward + " 🪙";
+    if(e && e.code === "denied"){ duelReady = false; renderDuel(); }
+  });
+}
+function duelRecordScore(score){
+  if(!(score > 0)) return;
+  fbGet("/duels").then(data=>{
+    if(!data || typeof data !== "object") return;
+    duelReady = true;
+    Object.keys(data).forEach(id=>{
+      const d = data[id];
+      if(!d || d.date !== todayStr()) return;
+      if(d.from === myId() && d.fromScore == null) fbPatch("/duels/" + id, { fromScore: Math.round(score) }).catch(()=>{});
+      else if(d.to === myId() && d.toScore == null) fbPatch("/duels/" + id, { toScore: Math.round(score) }).catch(()=>{});
+    });
+  }).catch(e=>{ if(e && e.code === "denied") duelReady = false; });
+}
+
+/* ---------- HADIAH AFK / KEMBALI ---------- */
+const AFK_MIN_MS = 3600 * 1000, AFK_PER_HOUR = 25, AFK_CAP_HOURS = 10;
+(function afkDetect(){
+  const now = Date.now();
+  const last = store.data.lastSeen || 0;
+  if(last > 0 && now - last >= AFK_MIN_MS && !store.data.afkPending){
+    const hours = Math.floor((now - last) / AFK_MIN_MS);
+    store.data.afkPending = { coins: Math.min(AFK_CAP_HOURS, hours) * AFK_PER_HOUR, hours: hours, ts: now };
+  }
+  store.data.lastSeen = now;
+  store.save();
+})();
+function openAfk(){
+  const p = store.data.afkPending;
+  if(!p){ showScreen("scrMenu"); return; }
+  $("afkAmt").textContent = "+" + p.coins.toLocaleString("id-ID") + " 🪙";
+  $("afkHours").textContent = "Kamu absen ±" + p.hours + " jam · dihitung " + Math.min(AFK_CAP_HOURS, p.hours) + " jam × " + AFK_PER_HOUR + " 🪙 (maks " + AFK_CAP_HOURS + " jam)";
+  showScreen("scrAfk");
+}
+function afkClaim(){
+  const p = store.data.afkPending;
+  if(!p) return;
+  store.data.coins = (store.data.coins || 0) + p.coins;
+  store.data.afkPending = null;
+  store.save();
+  AudioSys.ensure(); AudioSys.ach();
+  showInfoToast("🎁", "Hadiah kembali diklaim!", "+" + p.coins + " 🪙 — selamat datang kembali, Pilot!");
+  G.mode = "menu";
+  updateMenuMeta(); showScreen("scrMenu");
+}
+setInterval(()=>{ if(!document.hidden){ store.data.lastSeen = Date.now(); store.save(); } }, 25000);
+window.addEventListener("pagehide", ()=>{ try{ store.data.lastSeen = Date.now(); store.save(); }catch(e){} });
+setTimeout(()=>{ if(store.data.afkPending && $("scrMenu").classList.contains("open")) openAfk(); }, 1500);
+
+/* ---------- Kait ke mesin game (pembungkus v16) ---------- */
+const _goV16 = gameOver;
+gameOver = function(){
+  _goV16();
+  if(G.tutorial) return;
+  /* Season XP dari run ini */
+  if((G.score || 0) > 0){
+    addSeasonXp(Math.min(40, 1 + Math.floor(G.score / 1500) + Math.floor((G.runKills || 0) / 15) + (G.runBosses || 0) * 2));
+  }
+  if(!G.bossRush){
+    tournSubmit(G.score);
+    if(G.dailyMode) duelRecordScore(G.score);
+  }
+  clanContribSubmit();
+};
+const _cvV16 = campaignVictory;
+campaignVictory = function(){ _cvV16(); addSeasonXp(12); clanContribSubmit(); };
+const _cmV16 = claimMission;
+claimMission = function(id){
+  const was = !!(missionsStore().claimed || {})[id];
+  _cmV16(id);
+  if(!was && (missionsStore().claimed || {})[id]) addSeasonXp(8);
+};
+const _clV16 = claimLogin;
+claimLogin = function(){
+  const was = loginInfo().claimedToday;
+  _clV16();
+  if(!was && loginInfo().claimedToday) addSeasonXp(4);
+};
+const _ummV16 = updateMenuMeta;
+updateMenuMeta = function(){
+  _ummV16();
+  const si = $("seasonInfo");
+  if(si) si.textContent = "Tier " + spTierReached() + "/20 · " + (seasonStore().xp || 0) + " XP" + (seasonStore().premium ? " · 👑 PREMIUM" : "");
+  const ci = $("clanInfo");
+  if(ci) ci.textContent = clanReady === false ? "Belum aktif — butuh rules Firebase baru" : (myClanId() ? ("🛡️ " + (store.data.clanName || "Klan")) : "Bikin / gabung klan & misi bareng");
+  const ti = $("tournInfo");
+  if(ti) ti.textContent = tournReady === false ? "Belum aktif — butuh rules Firebase baru" : (tournMyRank ? ("Peringkatmu minggu ini: #" + tournMyRank + " · " + tournMyBest.toLocaleString("id-ID")) : "Reset tiap Senin · top 10 dapat 💎");
+  const di = $("duelInfo");
+  if(di) di.textContent = duelReady === false ? "Belum aktif — butuh rules Firebase baru" : (duelPendingCount > 0 ? ("⚔️ " + duelPendingCount + " duel menunggumu hari ini!") : "Adu skor misi harian vs teman");
+  const ba = $("btnAfk");
+  if(ba){
+    const p = store.data.afkPending;
+    ba.style.display = p ? "" : "none";
+    if(p){ const ai = $("afkInfo"); if(ai) ai.textContent = "+" + p.coins + " 🪙 dari " + p.hours + " jam absen — klaim di sini!"; }
+  }
+};
+const _rpV16 = renderProfile;
+renderProfile = function(){
+  _rpV16();
+  renderPrestige();
+  if((store.data.prestige || 0) > 0){
+    const pm = $("profMeta");
+    if(pm) pm.innerHTML = escapeHtml(pm.textContent) + ' · <span class="prestBadge">⭐ Prestige ' + prestigeRoman() + " · skor " + fmtMul(prestigeMul()) + "</span>";
+    const sg = $("profStats");
+    if(sg) sg.innerHTML += '<div class="cell"><small>PRESTIGE ⭐</small><b>' + prestigeRoman() + " · " + fmtMul(prestigeMul()) + '</b></div><div class="cell"><small>SEASON PASS 🎫</small><b>Tier ' + spTierReached() + " / 20</b></div>";
+  }
+};
+
+/* ---------- Kabel tombol v16 ---------- */
+$("btnSeason").addEventListener("click", openSeason);
+$("btnClan").addEventListener("click", openClan);
+$("btnTourn").addEventListener("click", openTourn);
+$("btnDuel").addEventListener("click", openDuel);
+$("btnAfk").addEventListener("click", openAfk);
+$("btnAfkClaim").addEventListener("click", afkClaim);
+$("btnAfkClose").addEventListener("click", ()=>{ G.mode = "menu"; updateMenuMeta(); showScreen("scrMenu"); });
+$("btnPrestige").addEventListener("click", doPrestige);
+$("btnClanCreate").addEventListener("click", clanCreate);
+$("clanNameInput").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); clanCreate(); } });
+$("btnClanLeave").addEventListener("click", clanLeave);
+$("btnClanChat").addEventListener("click", openClanChat);
+$("btnClanChatBack").addEventListener("click", ()=>{ openClan(); });
+$("btnClanChatSend").addEventListener("click", clanChatSend);
+$("clanChatInput").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); clanChatSend(); } });
+document.querySelectorAll(".btnRules2").forEach(b => b.addEventListener("click", openAccount));
+(function(){ const ls = document.querySelector(".lbSeason"); if(ls) ls.addEventListener("click", openSeason); })();
+setInterval(()=>{ if($("scrClanChat").classList.contains("open")) clanChatLoad(false); }, 3000);
+setInterval(()=>{ if($("scrDuel").classList.contains("open")) duelLoad(); }, 6000);
+setInterval(()=>{ if($("scrClan").classList.contains("open")) clanLoad(); }, 8000);
+setTimeout(()=>{ duelLoad(); }, 5000);
+updateMenuMeta();
+
+/* =====================================================================
+   1v1 LIVE RACE — main BARENG 90 detik lawan teman, skor live.
+   Bukan duel arena real-time: sinkronisasi posisi/peluru per frame akan
+   lag tanpa server. Di sini kedua pemain main bersamaan di seed harian
+   & kesulitan yang sama (musuh identik), skor lawan mengalir lewat
+   Firebase (polling seperti leaderboard global) ke bar skor live.
+   Node: /races/<id> {from, to, status, seed, diff, startAt,
+   fromScore/toScore (live), fromFinal/toFinal, fromDone/toDone, paid…}
+   ===================================================================== */
+let raceReady = null, raceCache = null, raceLoading = false, raceFailed = false, racePending = null, raceReqCount = 0, raceStarting = false;
+const RACE_DUR = 90000, RACE_WIN = 250, RACE_TIE = 100, RACE_LOSE = 40;
+function raceLoad(){
+  if(raceLoading) return;
+  raceLoading = true;
+  fbGet("/races").then(data=>{
+    raceLoading = false; raceReady = true; raceFailed = false;
+    raceCache = (data && typeof data === "object") ? data : {};
+    raceReqCount = Object.keys(raceCache).filter(id=>{
+      const r = raceCache[id];
+      return r && r.to === myId() && r.status === "waiting";
+    }).length;
+    if($("scrDuel").classList.contains("open")) renderRaces();
+    updateMenuMeta();
+  }).catch(e=>{
+    raceLoading = false;
+    if(e && e.code === "denied"){ raceReady = false; if($("scrDuel").classList.contains("open")) renderRaces(); updateMenuMeta(); }
+    else { raceFailed = true; if($("scrDuel").classList.contains("open")) renderRaces(); }
+  });
+}
+function myRaces(){
+  if(!raceCache) return [];
+  return Object.keys(raceCache).map(id=>({ id: id, r: raceCache[id] }))
+    .filter(x => x.r && (x.r.from === myId() || x.r.to === myId()))
+    .sort((a, b)=> (b.r.ts || 0) - (a.r.ts || 0)).slice(0, 10);
+}
+function raceHasOpenWith(fid){
+  return myRaces().some(x =>
+    ((x.r.from === myId() && x.r.to === fid) || (x.r.from === fid && x.r.to === myId())) &&
+    (x.r.status === "waiting" || x.r.status === "countdown" || x.r.status === "racing"));
+}
+function raceChallenge(fid, fname){
+  if(racePending){ showInfoToast("🏁", "Satu race dulu ya", "Selesaikan / batalkan race yang sedang menunggu dulu."); return; }
+  const seed = dateSeed(todayStr());
+  const diff = store.data.difficulty || "normal";
+  fbPost("/races", { from: myId(), fromName: myName(), to: fid, toName: fname, status: "waiting", seed: seed, diff: diff, ts: Date.now() })
+    .then(res=>{
+      const id = res && res.name;
+      if(!id) throw new Error("noid");
+      raceReady = true;
+      racePending = { id: id, isFrom: true, oppName: fname, seed: seed, diff: diff, startAt: 0 };
+      showInfoToast("🏁", "Tantangan LIVE terkirim!", "Menunggu " + fname + " menerima — balapan mulai otomatis begitu dia terima. Tetap di dekat game ya!");
+      raceCache = null; if($("scrDuel").classList.contains("open")) renderRaces();
+      raceLoad();
+    })
+    .catch(e=>{
+      if(e && e.code === "denied"){ raceReady = false; renderRaces(); }
+      else showInfoToast("📡", "Gagal mengirim tantangan live", "Periksa internetmu lalu coba lagi.");
+    });
+}
+function raceAccept(id){
+  const r = raceCache && raceCache[id];
+  if(!r || racePending) return;
+  const startAt = Date.now() + 5000;
+  fbPatch("/races/" + id, { status: "countdown", startAt: startAt })
+    .then(()=>{
+      racePending = { id: id, isFrom: false, oppName: r.fromName || "Pemain", seed: r.seed, diff: r.diff || "normal", startAt: startAt };
+      showRaceOverlay("🏁 Bersiap…", "Lawan: " + (r.fromName || "Pemain"));
+    })
+    .catch(e=>{ if(e && e.code === "denied"){ raceReady = false; renderRaces(); } });
+}
+function raceDecline(id){
+  fbPatch("/races/" + id, { status: "declined" }).then(()=> raceLoad()).catch(()=> raceLoad());
+}
+function raceCancel(id){
+  fbPatch("/races/" + id, { status: "cancelled" }).then(()=>{
+    if(racePending && racePending.id === id) racePending = null;
+    raceLoad();
+  }).catch(()=>{});
+}
+function raceOutcome(x){
+  const r = x.r, meFrom = r.from === myId();
+  const myF = meFrom ? r.fromFinal : r.toFinal;
+  const opF = meFrom ? r.toFinal : r.fromFinal;
+  const expired = Date.now() > ((r.startAt || r.ts || 0) + RACE_DUR + 90000);
+  let my = myF, op = opF;
+  if(my == null || op == null){
+    if(!expired) return null;
+    if(my == null) my = meFrom ? (r.fromScore || 0) : (r.toScore || 0);
+    if(op == null) op = meFrom ? (r.toScore || 0) : (r.fromScore || 0);
+  }
+  return { my: my, op: op, reward: my > op ? RACE_WIN : (my < op ? RACE_LOSE : RACE_TIE), win: my > op, tie: my === op, paid: meFrom ? !!r.paidFrom : !!r.paidTo };
+}
+function renderRaces(){
+  const off = raceReady === false;
+  const ro = $("raceOff"); if(ro) ro.style.display = off ? "" : "none";
+  const rm = $("raceMain"); if(rm) rm.style.display = off ? "none" : "";
+  if(off) return;
+  const rq = $("raceReqList"); if(!rq) return;
+  const reqs = myRaces().filter(x => x.r.to === myId() && x.r.status === "waiting");
+  $("raceReqLbl").textContent = "📥 TANTANGAN LIVE MASUK" + (reqs.length ? " (" + reqs.length + ")" : "");
+  rq.innerHTML = "";
+  if(!raceCache) rq.innerHTML = raceFailed ? '<div class="frEmpty">📡 Gagal memuat — periksa internetmu.</div>' : '<div class="frEmpty">Memuat…</div>';
+  else if(!reqs.length) rq.innerHTML = '<div class="frEmpty">Belum ada tantangan live masuk. Tantang temanmu lewat tombol 🏁 Live di daftar teman!</div>';
+  reqs.forEach(x=>{
+    const r = x.r;
+    const row = document.createElement("div"); row.className = "frRow";
+    row.innerHTML = '<div class="who"><b>🏁 ' + escapeHtml(r.fromName || "Pemain") + '</b><small>Live Race 90 detik · kesulitan ' + escapeHtml(diffOf(r.diff || "normal").label) + ' · ' + agoText(r.ts) + '</small></div>';
+    const ok = document.createElement("button"); ok.className = "frBtn"; ok.textContent = "✓ Terima & Balapan!";
+    ok.addEventListener("click", ()=> raceAccept(x.id));
+    const no = document.createElement("button"); no.className = "frBtn warn"; no.textContent = "✕ Tolak";
+    no.addEventListener("click", ()=> raceDecline(x.id));
+    row.appendChild(ok); row.appendChild(no);
+    rq.appendChild(row);
+  });
+  const dl = $("raceList"); dl.innerHTML = "";
+  const mine = myRaces().filter(x => !(x.r.to === myId() && x.r.status === "waiting"));
+  if(!raceCache) dl.innerHTML = raceFailed ? '<div class="frEmpty">📡 Gagal memuat riwayat race — periksa internetmu.</div>' : '<div class="frEmpty">Memuat…</div>';
+  else if(!mine.length) dl.innerHTML = '<div class="frEmpty">Belum ada race. Hasil race kamu (menang/kalah, skor, lawan, tanggal) tersimpan di sini.</div>';
+  mine.forEach(x=>{
+    const r = x.r, meFrom = r.from === myId();
+    const oppName = meFrom ? (r.toName || "Pemain") : (r.fromName || "Pemain");
+    const row = document.createElement("div"); row.className = "frRow";
+    let status = "", actionBtn = null;
+    if(r.status === "declined") status = "❌ Ditolak lawan";
+    else if(r.status === "cancelled") status = "🚫 Dibatalkan";
+    else if(r.status === "waiting" && meFrom) status = "⏳ Menunggu " + oppName + " menerima…";
+    else if(r.status === "waiting") status = "📥 Menunggu keputusanmu";
+    else {
+      const oc = raceOutcome(x);
+      if(!oc) status = "🏁 Race berjalan / menunggu hasil lawan…";
+      else if(oc.win) status = "🏆 MENANG! " + oc.my.toLocaleString("id-ID") + " vs " + oc.op.toLocaleString("id-ID");
+      else if(oc.tie) status = "🤝 SERI! " + oc.my.toLocaleString("id-ID") + " vs " + oc.op.toLocaleString("id-ID");
+      else status = "💔 Kalah — " + oc.my.toLocaleString("id-ID") + " vs " + oc.op.toLocaleString("id-ID");
+      if(oc) actionBtn = oc;
+    }
+    row.innerHTML = '<div class="who"><b>🏁 vs ' + escapeHtml(oppName) + '</b><small>' + lbDateStr(r.ts || Date.now()) + ' · ' + status + '</small></div>';
+    if(r.status === "waiting" && meFrom){
+      const cb = document.createElement("button"); cb.className = "frBtn warn"; cb.textContent = "Batalkan";
+      cb.addEventListener("click", ()=> raceCancel(x.id));
+      row.appendChild(cb);
+    }
+    if(actionBtn){
+      const b = document.createElement("button"); b.className = "frBtn";
+      if(actionBtn.paid){ b.textContent = "+" + actionBtn.reward + " 🪙 ✓"; b.disabled = true; }
+      else {
+        b.textContent = "Klaim +" + actionBtn.reward + " 🪙";
+        b.addEventListener("click", ()=> raceClaim(x.id, meFrom, actionBtn.reward, b));
+      }
+      row.appendChild(b);
+    }
+    dl.appendChild(row);
+  });
+}
+function raceClaim(id, meFrom, reward, btn){
+  const patch = {};
+  patch[meFrom ? "paidFrom" : "paidTo"] = true;
+  btn.disabled = true; btn.textContent = "⏳…";
+  fbPatch("/races/" + id, patch).then(()=>{
+    store.data.coins = (store.data.coins || 0) + reward;
+    store.save(); AudioSys.ensure(); AudioSys.ach();
+    showInfoToast("🏁", "Hadiah race diterima!", "+" + reward + " 🪙 masuk ke dompetmu.");
+    if(raceCache && raceCache[id]) raceCache[id][meFrom ? "paidFrom" : "paidTo"] = true;
+    renderRaces(); updateMenuMeta();
+  }).catch(e=>{
+    btn.disabled = false; btn.textContent = "Klaim +" + reward + " 🪙";
+    if(e && e.code === "denied"){ raceReady = false; renderRaces(); }
+  });
+}
+/* ---------- Ruang tunggu & hitung mundur bersama ---------- */
+function showRaceOverlay(big, sub){
+  const ov = $("raceOverlay"); if(!ov) return;
+  ov.style.display = "flex";
+  $("raceOvBig").textContent = big;
+  $("raceOvSub").textContent = sub || "";
+}
+function hideRaceOverlay(){ const ov = $("raceOverlay"); if(ov) ov.style.display = "none"; }
+setInterval(()=>{
+  if(!racePending) return;
+  fbGet("/races/" + racePending.id).then(r=>{
+    if(!racePending) return;
+    if(!r){ racePending = null; hideRaceOverlay(); return; }
+    if(r.status === "declined" || r.status === "cancelled"){
+      showInfoToast("🏁", "Tantangan live batal", "Lawan menolak / membatalkan tantangan live ini.");
+      racePending = null; hideRaceOverlay();
+      raceCache = null; raceLoad();
+      return;
+    }
+    if(r.status === "countdown" && r.startAt) racePending.startAt = r.startAt;
+    if(r.status === "waiting") showRaceOverlay("⏳ Menunggu lawan…", "Tantangan live untuk " + racePending.oppName + " — balapan mulai otomatis saat diterima");
+  }).catch(()=>{});
+}, 1200);
+setInterval(()=>{
+  if(!racePending || !racePending.startAt || raceStarting) return;
+  const left = racePending.startAt - Date.now();
+  if(left <= 0){ const rp = racePending; hideRaceOverlay(); startRaceRun(rp); }
+  else showRaceOverlay("🏁 " + Math.ceil(left / 1000), "Balapan vs " + racePending.oppName + " — misi & kesulitan sama persis. Siap-siap!");
+}, 200);
+function startRaceRun(rp){
+  if(raceStarting) return;
+  raceStarting = true;
+  racePending = null;
+  store.data.save = null; store.save();
+  startGame(false, true);
+  G.liveRace = { id: rp.id, isFrom: rp.isFrom, oppName: rp.oppName, endAt: (rp.startAt || Date.now()) + RACE_DUR, oppScore: 0, oppDone: false, oppFinal: null, lastPush: 0, lastPoll: 0, finished: false };
+  fbPatch("/races/" + rp.id, { status: "racing" }).catch(()=>{});
+  showBanner("🏁 1v1 LIVE RACE!", "90 detik vs " + rp.oppName + " — skor tertinggi menang!");
+  raceBarShow(true);
+  raceStarting = false;
+}
+/* ---------- Bar skor live + pengiriman skor + batas 90 detik ---------- */
+function raceBarShow(on){ const b = $("raceBar"); if(b) b.style.display = on ? "" : "none"; }
+function raceBarRender(lr, left){
+  const el = $("raceBar"); if(!el) return;
+  const mine = Math.round(G.score || 0);
+  const opp = lr.oppFinal != null ? Math.round(lr.oppFinal) : Math.round(lr.oppScore || 0);
+  const lead = mine > opp ? "🟢 UNGGUL" : (mine < opp ? "🔴 TERTINGGAL" : "⚪ SERI");
+  el.innerHTML = "🏁 Kamu <b>" + mine.toLocaleString("id-ID") + "</b> · " + escapeHtml(lr.oppName) + " <b>" + opp.toLocaleString("id-ID") + "</b>" + (lr.oppDone ? " ✓selesai" : "") + " · ⏱️ " + Math.floor(left / 60) + ":" + String(left % 60).padStart(2, "0") + " · " + lead;
+}
+function raceFinalPatch(lr, score){
+  const p = {};
+  p[lr.isFrom ? "fromFinal" : "toFinal"] = Math.round(score || 0);
+  p[lr.isFrom ? "fromDone" : "toDone"] = true;
+  fbPatch("/races/" + lr.id, p).catch(()=>{});
+}
+setInterval(()=>{
+  const lr = G.liveRace;
+  if(!lr){ raceBarShow(false); return; }
+  if(G.mode === "menu"){
+    if(!lr.finished){ lr.finished = true; raceFinalPatch(lr, G.score); }
+    raceBarShow(false); G.liveRace = null; return;
+  }
+  if(G.mode !== "playing" && G.mode !== "paused" && G.mode !== "levelup" && G.mode !== "over") return;
+  const left = Math.max(0, Math.ceil((lr.endAt - Date.now()) / 1000));
+  raceBarRender(lr, left);
+  raceBarShow(G.mode !== "over");
+  if(G.mode !== "playing" && G.mode !== "levelup") return;
+  if(Date.now() - lr.lastPush > 3000){
+    lr.lastPush = Date.now();
+    const p = {}; p[lr.isFrom ? "fromScore" : "toScore"] = Math.round(G.score || 0);
+    fbPatch("/races/" + lr.id, p).catch(()=>{});
+  }
+  if(Date.now() - lr.lastPoll > 2500){
+    lr.lastPoll = Date.now();
+    fbGet("/races/" + lr.id).then(r=>{
+      if(!r || !G.liveRace) return;
+      lr.oppScore = lr.isFrom ? (r.toScore || 0) : (r.fromScore || 0);
+      lr.oppDone = lr.isFrom ? !!r.toDone : !!r.fromDone;
+      const of = lr.isFrom ? r.toFinal : r.fromFinal;
+      lr.oppFinal = (of != null) ? of : null;
+    }).catch(()=>{});
+  }
+  if(Date.now() >= lr.endAt && !lr.finished){
+    lr.finished = true;
+    raceFinalPatch(lr, G.score);
+    raceBarShow(false);
+    showInfoToast("🏁", "Waktu habis!", "Skor akhirmu " + Math.round(G.score || 0).toLocaleString("id-ID") + " — hasil & hadiah race ada di menu Duel Teman.");
+    gameOver();
+  }
+}, 500);
+const _goRace = gameOver;
+gameOver = function(){
+  const lr = G.liveRace;
+  if(lr && !lr.finished){ lr.finished = true; raceFinalPatch(lr, G.score); }
+  if(lr) raceBarShow(false);
+  _goRace();
+};
+/* Setiap permainan BARU yang bukan race membersihkan sisa status race lama */
+const _sgRace = startGame;
+startGame = function(a, b, c){
+  _sgRace(a, b, c);
+  if(!raceStarting){ G.liveRace = null; raceBarShow(false); }
+};
+const _odRace = openDuel;
+openDuel = function(){ _odRace(); renderRaces(); raceLoad(); };
+const _ummRace = updateMenuMeta;
+updateMenuMeta = function(){
+  _ummRace();
+  if(raceReqCount > 0){
+    const di = $("duelInfo");
+    if(di) di.textContent = "🏁 " + raceReqCount + " tantangan LIVE menunggumu!";
+  }
+};
+setInterval(()=>{ if($("scrDuel").classList.contains("open")) raceLoad(); }, 6000);
+setTimeout(()=>{ raceLoad(); }, 6500);
 
 /* ---------- Mulai ---------- */
 window.addEventListener("resize", resize);
