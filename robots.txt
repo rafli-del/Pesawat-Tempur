@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rafli-del.github.io/Pesawat-Tempur/sitemap.xml
